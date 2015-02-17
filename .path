@@ -1,0 +1,9 @@
+#rvm
+PATH=$PATH:$HOME/.rvm/bin
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # Load RVM into a shell session *as a function*
+
+#mongodb
+PATH=$PATH:~/Applications/mongodb-osx-x86_64-2.6.3/bin:~/.PATH
+
+# php from brew
+PATH=$PATH:/usr/local/Cellar/php54/5.4.24/bin

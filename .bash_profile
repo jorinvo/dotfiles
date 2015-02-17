@@ -46,3 +46,29 @@ complete -W "NSGlobalDomain" defaults;
 
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
+
+
+
+# rbenv completion
+# Thanks to https://github.com/sstephenson/rbenv/blob/master/completions/rbenv.bash
+_rbenv() {
+	COMPREPLY=()
+	local word="${COMP_WORDS[COMP_CWORD]}"
+
+	if [ "$COMP_CWORD" -eq 1 ]; then
+		COMPREPLY=( $(compgen -W "$(rbenv commands)" -- "$word") )
+	else
+		local words=("${COMP_WORDS[@]}")
+		unset words[0]
+		unset words[$COMP_CWORD]
+		local completions=$(rbenv completions "${words[@]}")
+		COMPREPLY=( $(compgen -W "$completions" -- "$word") )
+	fi
+}
+
+complete -F _rbenv rbenv
+
+
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
