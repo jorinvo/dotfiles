@@ -127,13 +127,13 @@ function codepoint() {
 	fi;
 }
 
-# `e` with no arguments opens the current directory in the editor, otherwise
+# `e` with no arguments opens the current directory in Atom Editor, otherwise
 # opens the given location
 function e() {
 	if [ "$1" = "" ] ; then
-		exec $EDITOR .
+		atom .
 	else
-		exec $EDITOR "$1"
+		atom "$1"
 	fi
 }
 
