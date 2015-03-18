@@ -7,7 +7,7 @@ git pull origin master;
 function linkAtom() {
 	# create links to atom config files
 	for file in $(pwd)/atom/*; do
-		ln -s $file ~/.atom;
+		ln -sf $file ~/.atom;
 	done;
 }
 
