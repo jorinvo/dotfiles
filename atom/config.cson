@@ -1,0 +1,48 @@
+"*":
+  editor:
+    invisibles: {}
+    fontSize: 17
+  core:
+    disabledPackages: [
+      "welcome"
+      "atom-color-highlight"
+      "SFTP-deployment"
+      "git-plus"
+      "linter-jsxhint"
+      "linter-jshint"
+    ]
+    themes: [
+      "seti-ui"
+      "seti-syntax"
+    ]
+    audioBeep: false
+  "exception-reporting":
+    userId: "4b873c95-5c84-bae8-43b3-7ff01cd0be7c"
+  welcome:
+    showOnStartup: false
+  metrics:
+    userId: "b1e0d31cf3536bd0a9bb843d2cce91bb4fec9e38"
+  tabs: {}
+  emmet: {}
+  autosave:
+    enabled: true
+  autoprefixer: {}
+  "atom-color-highlight": {}
+  minimap:
+    displayPluginsControls: false
+    plugins:
+      "find-and-replace": false
+      "git-diff": false
+      "highlight-selected": false
+      "color-highlight": false
+    minimapScrollIndicator: false
+    autoToggle: true
+  "git-diff":
+    showIconsInEditorGutter: true
+  linter: {}
+  "linter-jshint": {}
+  "autocomplete-plus": {}
+  react: {}
+  "linter-js-standard": {}
+  "tab-smart-sort": {}
+  "linter-jsxhint": {}
