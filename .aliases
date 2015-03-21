@@ -41,7 +41,7 @@ alias week='date +%V'
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
 # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update -g; sudo gem update --system; sudo gem update'
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update --system; sudo gem update'
 
 # Recursively delete `.DS_Store` files
 alias rmds="find . -type f -name '*.DS_Store' -ls -delete"
@@ -119,8 +119,6 @@ alias htw='ssh s0545431@uranus.f4.htw-berlin.de'
 # Youtube Downloader
 alias yt='youtube-dl'
 alias yt-audio='youtube-dl --verbose --extract-audio --audio-format "mp3" -o "%(title)s.%(ext)s"'
-
-alias
 
 #git
 alias g="git"

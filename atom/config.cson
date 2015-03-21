@@ -1,7 +1,6 @@
 "*":
   editor:
     invisibles: {}
-    fontSize: 17
   core:
     disabledPackages: [
       "welcome"
@@ -10,6 +9,9 @@
       "git-plus"
       "linter-jsxhint"
       "linter-jshint"
+      "linter-js-standard"
+      "subword-navigation"
+      "linter-rubocop"
     ]
     themes: [
       "seti-ui"

@@ -98,9 +98,6 @@ sudo systemsetup -setrestartfreeze on
 # Never go into computer sleep mode
 sudo systemsetup -setcomputersleep Off > /dev/null
 
-# Disable Notification Center and remove the menu bar icon
-# launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
-
 # Disable smart quotes as they’re annoying when typing code
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
@@ -434,7 +431,7 @@ defaults write com.apple.mail DisableSendAnimations -bool true
 defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
 # Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
-defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" -string "@\\U21a9"
+defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
 
 # Display emails in threaded mode, sorted by date (oldest at the top)
 defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"

@@ -23,3 +23,10 @@
   'cmd-shift-c': 'editor:toggle-line-comments'
 '.platform-darwin':
   'cmd-k cmd-b': 'tree-view:toggle'
+# '.platform-darwin atom-text-editor':
+#   'ctrl-backspace': 'subword-navigation:delete-left'
+#   'ctrl-delete': 'subword-navigation:delete-right'
+#   'ctrl-left': 'subword-navigation:move-left'
+#   'ctrl-right': 'subword-navigation:move-right'
+#   'ctrl-shift-left': 'subword-navigation:select-left'
+#   'ctrl-shift-right': 'subword-navigation:select-right'
