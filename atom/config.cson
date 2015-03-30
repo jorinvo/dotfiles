@@ -12,6 +12,7 @@
       "linter-js-standard"
       "subword-navigation"
       "linter-rubocop"
+      "minimap"
     ]
     themes: [
       "seti-ui"
