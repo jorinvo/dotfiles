@@ -13,6 +13,9 @@
       "subword-navigation"
       "linter-rubocop"
       "minimap"
+      "ruby-test"
+      "seeing-is-believing"
+      "unity-ui"
     ]
     themes: [
       "seti-ui"
@@ -49,3 +52,19 @@
   "linter-js-standard": {}
   "tab-smart-sort": {}
   "linter-jsxhint": {}
+  "linter-rubocop":
+    rubocopExecutablePath: "/Users/jorin/.rvm/gems/ruby-2.1.5/bin/rubocop"
+  "linter-ruby":
+    rubyExecutablePath: "/Users/jorin/.rvm/rubies/ruby-2.1.5/bin/ruby"
+  "seeing-is-believing":
+    "ruby-command": "/Users/jorin/.rvm/rubies/ruby-2.1.5/bin/ruby"
+    flags: [
+      "--alignment-strategy"
+      "chunk"
+      "--number-of-captures"
+      "300"
+      "--line-length"
+      "1000"
+      "--timeout"
+      "12"
+    ]
