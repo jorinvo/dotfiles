@@ -16,6 +16,8 @@
       "ruby-test"
       "seeing-is-believing"
       "unity-ui"
+      "atom-beautify"
+      "script"
     ]
     themes: [
       "seti-ui"
