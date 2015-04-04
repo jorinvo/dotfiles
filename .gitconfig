@@ -18,6 +18,13 @@
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
 
+	undo = reset --soft HEAD^
+
+	# Use this shortcuts with git to have auto-completion
+	p = push
+	pr = pull --rebase
+	co = checkout
+
 
 [apply]
 
