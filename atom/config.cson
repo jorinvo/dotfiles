@@ -6,18 +6,17 @@
       "welcome"
       "atom-color-highlight"
       "SFTP-deployment"
-      "git-plus"
       "linter-jsxhint"
       "linter-jshint"
       "linter-js-standard"
       "subword-navigation"
-      "linter-rubocop"
       "minimap"
       "ruby-test"
       "seeing-is-believing"
       "unity-ui"
       "atom-beautify"
       "script"
+      "git-blame"
     ]
     themes: [
       "seti-ui"
@@ -70,3 +69,6 @@
       "--timeout"
       "12"
     ]
+  "git-blame": {}
+  "git-plus":
+    gitPath: "/usr/local/bin/git"
