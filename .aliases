@@ -4,7 +4,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-# alias c='cd'
+alias e='atom'
 
 alias ka='killall'
 alias h=history
