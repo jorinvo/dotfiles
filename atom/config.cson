@@ -17,6 +17,7 @@
       "atom-beautify"
       "script"
       "git-blame"
+      "linter-ruby"
     ]
     themes: [
       "seti-ui"
