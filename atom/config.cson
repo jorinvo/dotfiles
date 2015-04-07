@@ -10,7 +10,6 @@
       "linter-jshint"
       "linter-js-standard"
       "subword-navigation"
-      "minimap"
       "ruby-test"
       "seeing-is-believing"
       "unity-ui"
@@ -55,11 +54,11 @@
   "tab-smart-sort": {}
   "linter-jsxhint": {}
   "linter-rubocop":
-    rubocopExecutablePath: "/Users/jorin/.rvm/gems/ruby-2.1.5/bin/rubocop"
+    rubocopExecutablePath: "/usr/bin/rubocop"
   "linter-ruby":
-    rubyExecutablePath: "/Users/jorin/.rvm/rubies/ruby-2.1.5/bin/ruby"
+    rubyExecutablePath: "/usr/bin/ruby"
   "seeing-is-believing":
-    "ruby-command": "/Users/jorin/.rvm/rubies/ruby-2.1.5/bin/ruby"
+    "ruby-command": "/usr/bin/ruby"
     flags: [
       "--alignment-strategy"
       "chunk"

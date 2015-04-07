@@ -1,8 +1,10 @@
 # Easier navigation: .., ..., ...., ....., ~ and -
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
+
+alias ..="c .."
+alias ...="c ../.."
+alias ....="c ../../.."
+alias .....="c ../../../.."
+alias p="c ~/projects"
 
 alias e='atom'
 
