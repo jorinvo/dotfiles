@@ -72,3 +72,7 @@ complete -F _rbenv rbenv
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+
+# Start Rbenv
+[ -x /usr/local/bin/rbenv ] && eval "$(rbenv init -)"

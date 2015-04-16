@@ -24,6 +24,7 @@
 	p = push
 	pr = pull --rebase
 	co = checkout
+	bd = branch -d
 
 [apply]
 

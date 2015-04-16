@@ -1,6 +1,8 @@
 "*":
   editor:
     invisibles: {}
+    fontSize: 15
+    lineHeight: 1.4
   core:
     disabledPackages: [
       "welcome"
@@ -9,20 +11,21 @@
       "linter-jsxhint"
       "linter-jshint"
       "linter-js-standard"
-      "subword-navigation"
       "ruby-test"
       "seeing-is-believing"
       "unity-ui"
       "atom-beautify"
       "script"
-      "git-blame"
       "linter-ruby"
-    ]
-    themes: [
-      "seti-ui"
-      "seti-syntax"
+      "emmet"
+      "git-plus"
+      "minimap"
     ]
     audioBeep: false
+    themes: [
+      "seti-ui"
+      "one-dark-syntax"
+    ]
   "exception-reporting":
     userId: "4b873c95-5c84-bae8-43b3-7ff01cd0be7c"
   welcome:
@@ -48,7 +51,8 @@
     showIconsInEditorGutter: true
   linter: {}
   "linter-jshint": {}
-  "autocomplete-plus": {}
+  "autocomplete-plus":
+    includeCompletionsFromAllBuffers: true
   react: {}
   "linter-js-standard": {}
   "tab-smart-sort": {}
@@ -72,3 +76,5 @@
   "git-blame": {}
   "git-plus":
     gitPath: "/usr/local/bin/git"
+  "autocomplete-ruby":
+    port: 17406

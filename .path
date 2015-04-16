@@ -7,3 +7,6 @@ PATH=$PATH:~/Applications/mongodb-osx-x86_64-2.6.3/bin:~/.PATH
 
 # php from brew
 PATH=$PATH:/usr/local/Cellar/php54/5.4.24/bin
+
+# For homebrew
+PATH="/usr/local/bin:$PATH"
