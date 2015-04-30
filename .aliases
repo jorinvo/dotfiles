@@ -1,5 +1,3 @@
-# Easier navigation: .., ..., ...., ....., ~ and -
-
 alias ..="c .."
 alias ...="c ../.."
 alias ....="c ../../.."
