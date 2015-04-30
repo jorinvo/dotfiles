@@ -5,6 +5,7 @@ alias ...="c ../.."
 alias ....="c ../../.."
 alias .....="c ../../../.."
 alias p="c ~/projects"
+alias cg="c ~/go/src/github.com/jorin-vogel"
 
 alias e='atom'
 
