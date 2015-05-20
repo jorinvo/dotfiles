@@ -1,25 +1,19 @@
 "*":
   editor:
-    invisibles: {}
+    invisibles:
+      {}
     fontSize: 15
     lineHeight: 1.4
   core:
     disabledPackages: [
       "welcome"
-      "atom-color-highlight"
       "SFTP-deployment"
-      "linter-jsxhint"
+      "git-blame"
+      "go-format"
+      "go-oracle"
+      "go-plus"
       "linter-jshint"
-      "linter-js-standard"
-      "ruby-test"
-      "seeing-is-believing"
-      "unity-ui"
-      "atom-beautify"
-      "script"
-      "linter-ruby"
-      "emmet"
-      "git-plus"
-      "minimap"
+      "linter-jsxhint"
     ]
     audioBeep: false
     themes: [
@@ -28,53 +22,33 @@
     ]
   "exception-reporting":
     userId: "4b873c95-5c84-bae8-43b3-7ff01cd0be7c"
-  welcome:
-    showOnStartup: false
   metrics:
     userId: "b1e0d31cf3536bd0a9bb843d2cce91bb4fec9e38"
-  tabs: {}
-  emmet: {}
+  tabs:
+    {}
+  emmet:
+    {}
   autosave:
     enabled: true
-  autoprefixer: {}
-  "atom-color-highlight": {}
-  minimap:
-    displayPluginsControls: false
-    plugins:
-      "find-and-replace": false
-      "git-diff": false
-      "highlight-selected": false
-      "color-highlight": false
-    minimapScrollIndicator: false
-    autoToggle: true
+  autoprefixer:
+    {}
+  "atom-color-highlight":
+    {}
   "git-diff":
     showIconsInEditorGutter: true
-  linter: {}
-  "linter-jshint": {}
+  linter:
+    {}
+  "linter-jshint":
+    {}
   "autocomplete-plus":
     includeCompletionsFromAllBuffers: true
-  react: {}
-  "linter-js-standard": {}
-  "tab-smart-sort": {}
-  "linter-jsxhint": {}
+  react:
+    {}
+  "linter-js-standard":
+    {}
+  "tab-smart-sort":
+    {}
+  "linter-jsxhint":
+    {}
   "linter-rubocop":
     rubocopExecutablePath: "/usr/bin/rubocop"
-  "linter-ruby":
-    rubyExecutablePath: "/usr/bin/ruby"
-  "seeing-is-believing":
-    "ruby-command": "/usr/bin/ruby"
-    flags: [
-      "--alignment-strategy"
-      "chunk"
-      "--number-of-captures"
-      "300"
-      "--line-length"
-      "1000"
-      "--timeout"
-      "12"
-    ]
-  "git-blame": {}
-  "git-plus":
-    gitPath: "/usr/local/bin/git"
-  "autocomplete-ruby":
-    port: 17406
