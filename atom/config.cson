@@ -7,13 +7,14 @@
   core:
     disabledPackages: [
       "welcome"
-      "SFTP-deployment"
       "git-blame"
       "go-format"
       "go-oracle"
       "go-plus"
       "linter-jshint"
+      "SFTP-deployment"
       "linter-jsxhint"
+      "scope-inspector"
     ]
     audioBeep: false
     themes: [
@@ -52,3 +53,9 @@
     {}
   "linter-rubocop":
     rubocopExecutablePath: "/usr/bin/rubocop"
+  "scope-inspector":
+    userId: "86b0158bfbb54093f95ca277e6d432b546ac0ffb"
+    showHoistingIndicators: false
+    showSidebar: false
+  goto:
+    moreIgnoredNames: "node_modules"
