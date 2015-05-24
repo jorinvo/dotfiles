@@ -18,16 +18,16 @@ shopt -s histappend;
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell;
 
+
+# Unfortuantely Atom Editor has some problems with packages updates/install
+# if this stuff is enabled ...
+
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
-for option in autocd globstar; do
-	shopt -s "$option" 2> /dev/null;
-done;
-
-
-# Unfortuantely Atom Editor has some problems with packages updates/install
-# if this is enabled ...
+# for option in autocd globstar; do
+# 	shopt -s "$option" 2> /dev/null;
+# done;
 
 # Add tab completion for many Bash commands
 # if which brew &> /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
@@ -37,46 +37,6 @@ done;
 # fi;
 
 # Enable tab completion for `g` by marking it as an alias for `git`
-if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
-	complete -o default -o nospace -F _git g;
-fi;
-
-# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
-
-# Add tab completion for `defaults read|write NSGlobalDomain`
-# You could just use `-g` instead, but I like being explicit
-complete -W "NSGlobalDomain" defaults;
-
-# Add `killall` tab completion for common apps
-complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
-
-
-
-# rbenv completion
-# Thanks to https://github.com/sstephenson/rbenv/blob/master/completions/rbenv.bash
-_rbenv() {
-	COMPREPLY=()
-	local word="${COMP_WORDS[COMP_CWORD]}"
-
-	if [ "$COMP_CWORD" -eq 1 ]; then
-		COMPREPLY=( $(compgen -W "$(rbenv commands)" -- "$word") )
-	else
-		local words=("${COMP_WORDS[@]}")
-		unset words[0]
-		unset words[$COMP_CWORD]
-		local completions=$(rbenv completions "${words[@]}")
-		COMPREPLY=( $(compgen -W "$completions" -- "$word") )
-	fi
-}
-
-complete -F _rbenv rbenv
-
-
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-
-# Start Rbenv
-[ -x /usr/local/bin/rbenv ] && eval "$(rbenv init -)"
+# if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
+# 	complete -o default -o nospace -F _git g;
+# fi;
