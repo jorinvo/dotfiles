@@ -40,3 +40,6 @@ shopt -s cdspell;
 # if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
 # 	complete -o default -o nospace -F _git g;
 # fi;
+
+# Enable rbenv if it exists
+which rbenv &> /dev/null && eval "$(rbenv init -)"
