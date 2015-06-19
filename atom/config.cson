@@ -2,8 +2,9 @@
   editor:
     invisibles:
       {}
-    fontSize: 15
     lineHeight: 1.4
+    fontSize: 15
+    fontFamily: "Fira Mono"
   core:
     disabledPackages: [
       "welcome"
@@ -18,8 +19,8 @@
     ]
     audioBeep: false
     themes: [
-      "seti-ui"
-      "one-dark-syntax"
+      "one-light-ui"
+      "one-light-syntax"
     ]
   "exception-reporting":
     userId: "4b873c95-5c84-bae8-43b3-7ff01cd0be7c"
@@ -52,10 +53,17 @@
   "linter-jsxhint":
     {}
   "linter-rubocop":
-    rubocopExecutablePath: "/usr/bin/rubocop"
+    rubocopExecutablePath: "/Users/jorin/.rbenv/shims/rubocop"
+    executablePath: "/Users/jorin/.rbenv/shims/rubocop"
   "scope-inspector":
     userId: "86b0158bfbb54093f95ca277e6d432b546ac0ffb"
     showHoistingIndicators: false
     showSidebar: false
   goto:
     moreIgnoredNames: "node_modules"
+  "atom-ternjs":
+    {}
+  "atom-beautify":
+    {}
+  "one-light-ui":
+    {}
