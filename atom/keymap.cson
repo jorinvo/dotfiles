@@ -19,8 +19,8 @@
 # You can find more information about keymaps in these guides:
 # * https://atom.io/docs/latest/customizing-atom#customizing-key-bindings
 # * https://atom.io/docs/latest/advanced/keymaps
-'.workspace .editor:not(.mini)':
-  'cmd-shift-c': 'editor:toggle-line-comments'
+'.atom-workspace .atom-text-editor:not(.mini)':
+  'cmd-shift-c': 'atom-text-editor:toggle-line-comments'
 '.platform-darwin':
   'cmd-k cmd-b': 'tree-view:toggle'
 # '.platform-darwin atom-text-editor':

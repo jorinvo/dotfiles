@@ -3,8 +3,8 @@
     invisibles:
       {}
     lineHeight: 1.4
-    fontSize: 15
     fontFamily: "Fira Mono"
+    fontSize: 17
   core:
     disabledPackages: [
       "welcome"
@@ -12,10 +12,12 @@
       "go-format"
       "go-oracle"
       "go-plus"
-      "linter-jshint"
       "SFTP-deployment"
       "linter-jsxhint"
       "scope-inspector"
+      "autocomplete-ruby"
+      "linter-eslint"
+      "linter-jshint"
     ]
     audioBeep: false
     themes: [
@@ -41,7 +43,7 @@
   linter:
     {}
   "linter-jshint":
-    {}
+    disableWhenNoJshintrcFileInPath: true
   "autocomplete-plus":
     includeCompletionsFromAllBuffers: true
   react:
@@ -64,6 +66,18 @@
   "atom-ternjs":
     {}
   "atom-beautify":
-    {}
+    _analyticsUserId: "5a940c9e-f1fc-4565-88a2-415d77b8e9f3"
   "one-light-ui":
     {}
+  "linter-eslint":
+    disableWhenNoEslintrcFileInPath: true
+  "linter-tidy":
+    {}
+  "linter-bootlint":
+    {}
+  "git-log":
+    {}
+  "ruby-test":
+    {}
+  "circle-ci":
+    apiToken: "03f3628ecc0c11b78c279971c8c92f5c22ede163"
