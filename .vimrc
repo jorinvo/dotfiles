@@ -68,8 +68,6 @@ set ignorecase smartcase
 set noerrorbells
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
-" Don’t show the intro message when starting Vim
-set shortmess=atI
 " Show the filename in the window titlebar
 set title
 
@@ -124,7 +122,6 @@ endif
 " Airline
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
-
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
@@ -164,3 +161,10 @@ set fileformats+=mac
 set history=1000
 set viminfo^=!
 set sessionoptions-=options
+
+" Shortcut Mappings
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
