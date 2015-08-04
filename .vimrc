@@ -64,23 +64,14 @@ set list
 set hlsearch
 " Ignore case of searches
 set ignorecase smartcase
-" Enable mouse in all modes
-set mouse=a
 " Disable error bells
 set noerrorbells
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
 " Don’t show the intro message when starting Vim
 set shortmess=atI
-" Show the current mode
-set showmode
 " Show the filename in the window titlebar
 set title
-" Use relative line numbers
-if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
-endif
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -105,8 +96,7 @@ if has("autocmd")
 endif
 
 
-set visualbell                 "no sound, pls
-set autoread                   "to reload files changed outside vim
+set autoread "to reload files changed outside vim
 
 " swap files are boring
 set noswapfile
@@ -117,10 +107,6 @@ if exists("&undodir")
 	set undodir=~/.vim/undo
 endif
 
-
-
-set autoindent
-set backspace=indent,eol,start
 set complete-=i
 set smarttab
 
@@ -165,25 +151,9 @@ if has('path_extra')
   setglobal tags-=./tags tags-=./tags; tags^=./tags;
 endif
 
-if &shell =~# 'fish$'
-  set shell=/bin/bash
-endif
-
 set autoread
 set fileformats+=mac
 
-if &history < 1000
-  set history=1000
-endif
-if &tabpagemax < 50
-  set tabpagemax=50
-endif
-if !empty(&viminfo)
-  set viminfo^=!
-endif
+set history=1000
+set viminfo^=!
 set sessionoptions-=options
-
-" Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^linux'
-  set t_Co=16
-endif
