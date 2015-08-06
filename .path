@@ -3,3 +3,7 @@ PATH="/usr/local/bin:$PATH"
 
 # go tools
 PATH=$PATH:$HOME/go/bin
+
+# haskell binaries from cabal
+PATH=$PATH:$HOME/Library/Haskell/bin
+
