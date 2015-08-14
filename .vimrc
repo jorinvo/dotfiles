@@ -31,6 +31,8 @@ autocmd ColorScheme * highlight LineNr cterm=NONE ctermfg=256 ctermbg=NONE
 
 " Enable syntax highlighting
 syntax on
+" Enable spell checking. See :help mkspell 
+set spell spelllang=en_us
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
 " Allow cursor keys in insert mode
@@ -139,10 +141,6 @@ if !&sidescrolloff
 endif
 set display+=lastline
 
-if &encoding ==# 'latin1' && has('gui_running')
-  set encoding=utf-8
-endif
-
 if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
@@ -168,3 +166,5 @@ set sessionoptions-=options
 nmap <leader>l :bnext<CR>
 " Move to the previous buffer
 nmap <leader>h :bprevious<CR>
+
+nnoremap ; :
