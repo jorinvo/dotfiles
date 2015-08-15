@@ -35,8 +35,6 @@ syntax on
 set spell spelllang=en_us
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
-" Allow cursor keys in insert mode
-set esckeys
 " Allow backspace in insert mode
 set backspace=indent,eol,start
 " Optimize for fast terminal connections
@@ -44,11 +42,12 @@ set ttyfast
 " Add the g flag to search/replace by default
 set gdefault
 " Change mapleader
-let mapleader=","
+"let mapleader=","
 " Don’t add empty newlines at the end of files
 set binary
 set noeol
-
+" auto save when switching windows
+au FocusLost * :wa
 " Respect modeline in files
 set modeline
 set modelines=4
@@ -57,6 +56,9 @@ set exrc
 set secure
 " Enable line numbers
 set number
+" Not sure if it really helps me.
+" Also it makes hjkl moves way slower.
+set relativenumber
 " Highlight current line
 set cursorline
 " Make tabs as wide as two spaces
@@ -98,14 +100,17 @@ endif
 
 set autoread "to reload files changed outside vim
 
+
 " swap files are boring
 set noswapfile
 set nobackup
 set nowb
 " Centralize undo history
 if exists("&undodir")
-	set undodir=~/.vim/undo
+  set undodir=~/.vim/undo
 endif
+" tells Vim to create <FILENAME>.un~ files whenever you edit a file
+"set undofile
 
 set complete-=i
 set smarttab
@@ -168,3 +173,15 @@ nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
 
 nnoremap ; :
+
+" Jump to first character or column
+noremap <silent> 0 :call FirstCharOrFirstCol()<cr>
+
+function! FirstCharOrFirstCol()
+  let current_col = virtcol('.')
+  normal ^
+  let first_char = virtcol('.')
+  if current_col == first_char
+    normal 0
+  endif
+endfunction
