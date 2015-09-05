@@ -5,12 +5,19 @@ cd "$(dirname "${BASH_SOURCE}")";
 git pull origin master;
 
 function doIt() {
-	rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" \
-		--exclude "README.md" --exclude "LICENSE-MIT.txt" --exclude "brew.sh" \
-		--exclude ".vimrc" \
-		-avh --no-perms . ~;
+	ln -sf $(pwd)/bin ~/bin;
+	ln -sf $(pwd)/vimrc ~/.vimrc;
+	ln -sf $(pwd)/aliases ~/.aliases;
+	ln -sf $(pwd)/bash_profile ~/.bash_profile;
+	ln -sf $(pwd)/bash_prompt ~/.bash_prompt;
+	ln -sf $(pwd)/bashrc ~/.bashrc;
+	ln -sf $(pwd)/exports ~/.exports;
+	ln -sf $(pwd)/functions ~/.functions;
+	ln -sf $(pwd)/gitconfig ~/.gitconfig;
+	ln -sf $(pwd)/inputrc ~/.inputrc;
+	ln -sf $(pwd)/path ~/.path;
+	ln -sf $(pwd)/psqlrc ~/.psqlrc;
 	source ~/.bash_profile;
-	ln -s $(pwd)/.vimrc ~;
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
