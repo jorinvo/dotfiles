@@ -8,17 +8,21 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 Plugin 'Soares/solarized.vim'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-vinegar'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/syntastic'
-Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'terryma/vim-expand-region'
+Plugin 'tpope/vim-rsi'
+Plugin 'tpope/vim-sleuth'
+Plugin 'tpope/vim-vinegar'
+Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
-Plugin 'marijnh/tern_for_vim'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-commentary'
+Plugin 'bronson/vim-visual-star-search'
+"Plugin 'marijnh/tern_for_vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required by Vundle
@@ -88,18 +92,16 @@ noremap <leader>ss :call StripWhitespace()<CR>
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 " Automatic commands
-if has("autocmd")
-	" Enable file type detection
-	filetype on
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-	" Treat .md files as Markdown
-	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-endif
+" Enable file type detection
+filetype on
+" Treat .json files as .js
+autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+" Treat .md files as Markdown
+autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+" autocmd BufRead,BufNewFile *.md set complete+=kspell
 
 
 set autoread "to reload files changed outside vim
-
 
 " swap files are boring
 set noswapfile
@@ -107,10 +109,9 @@ set nobackup
 set nowb
 " Centralize undo history
 if exists("&undodir")
+  set undofile
   set undodir=~/.vim/undo
 endif
-" tells Vim to create <FILENAME>.un~ files whenever you edit a file
-"set undofile
 
 set complete-=i
 set smarttab
@@ -158,30 +159,41 @@ if has('path_extra')
   setglobal tags-=./tags tags-=./tags; tags^=./tags;
 endif
 
-set autoread
 set fileformats+=mac
 
 set history=1000
 set viminfo^=!
 set sessionoptions-=options
 
+
 " Shortcut Mappings
 
+" No surprises with long lines
+nmap j gj
+:nmap k gk
+
 " Move to the next buffer
-nmap <leader>l :bnext<CR>
+"nmap <leader>l :bnext<CR>
 " Move to the previous buffer
-nmap <leader>h :bprevious<CR>
+"nmap <leader>h :bprevious<CR>
 
 nnoremap ; :
 
 " Jump to first character or column
-noremap <silent> 0 :call FirstCharOrFirstCol()<cr>
+"nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
 
-function! FirstCharOrFirstCol()
-  let current_col = virtcol('.')
-  normal ^
-  let first_char = virtcol('.')
-  if current_col == first_char
-    normal 0
-  endif
-endfunction
+"function! FirstCharOrFirstCol()
+"  let current_col = virtcol('.')
+"  normal ^
+"  let first_char = virtcol('.')
+"  if current_col == first_char
+"    normal 0
+"  endif
+"endfunction
+
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+nmap n nzz
+nmap N Nzz
+
