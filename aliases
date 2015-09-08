@@ -6,6 +6,7 @@ alias p="c ~/projects"
 alias cg="c ~/go/src/github.com/jorin-vogel"
 
 alias e='vim'
+alias e.='vim .'
 
 alias ka='killall'
 alias h=history

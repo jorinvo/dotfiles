@@ -22,6 +22,11 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
 Plugin 'bronson/vim-visual-star-search'
+Plugin 'rking/ag.vim'
+Plugin 'edsono/vim-matchit'
+Plugin 'tpope/vim-abolish'
+Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'Townk/vim-autoclose'
 "Plugin 'marijnh/tern_for_vim'
 
 " All of your Plugins must be added before the following line
@@ -45,8 +50,6 @@ set backspace=indent,eol,start
 set ttyfast
 " Add the g flag to search/replace by default
 set gdefault
-" Change mapleader
-"let mapleader=","
 " Don’t add empty newlines at the end of files
 set binary
 set noeol
@@ -78,18 +81,14 @@ set noerrorbells
 set nostartofline
 " Show the filename in the window titlebar
 set title
+" Allow to hide unsaved buffer
+set hidden
 
-" Strip trailing whitespace (,ss)
-function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
-endfunction
-noremap <leader>ss :call StripWhitespace()<CR>
-" Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
+" Softtabs, 2 spaces
+set tabstop=2
+set shiftwidth=2
+set shiftround
+set expandtab
 
 " Automatic commands
 " Enable file type detection
@@ -122,10 +121,6 @@ set ttimeout
 set ttimeoutlen=100
 
 set incsearch
-" Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
-endif
 
 " Airline
 " Enable the list of buffers
@@ -165,31 +160,61 @@ set history=1000
 set viminfo^=!
 set sessionoptions-=options
 
+set splitbelow
+set splitright
+
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 
 " Shortcut Mappings
 
+let mapleader = " "
+
+nmap <leader>w :w<CR>
+nnoremap <leader>t a</<C-X><C-O>
+nnoremap <leader>/ :noh<CR>
+nnoremap <leader>s :% s//
+
 " No surprises with long lines
-nmap j gj
-:nmap k gk
+nmap <silent> j gj
+nmap <silent> k gk
 
 " Move to the next buffer
-"nmap <leader>l :bnext<CR>
+nmap <leader>l :bnext<CR>
 " Move to the previous buffer
-"nmap <leader>h :bprevious<CR>
+nmap <leader>h :bprevious<CR>
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
 
 nnoremap ; :
 
 " Jump to first character or column
-"nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
-
-"function! FirstCharOrFirstCol()
-"  let current_col = virtcol('.')
-"  normal ^
-"  let first_char = virtcol('.')
-"  if current_col == first_char
-"    normal 0
-"  endif
-"endfunction
+nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
+function! FirstCharOrFirstCol()
+  let current_col = virtcol('.')
+  normal ^
+  let first_char = virtcol('.')
+  if current_col == first_char
+    normal! 0
+  endif
+endfunction
 
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -197,3 +222,29 @@ vmap <C-v> <Plug>(expand_region_shrink)
 nmap n nzz
 nmap N Nzz
 
+" Strip trailing whitespace
+function! StripWhitespace()
+	let save_cursor = getpos(".")
+	let old_query = getreg('/')
+	:%s/\s\+$//e
+	call setpos('.', save_cursor)
+	call setreg('/', old_query)
+endfunction
+noremap <leader>f :call StripWhitespace()<CR>
+
+" Save a file as root (,W)
+noremap <leader>W :w !sudo tee % > /dev/null<CR>
+
+" Syntastic 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_css_checkers = ['csslint']
+let g:syntastic_markdown_checkers = ['mdl']
