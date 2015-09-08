@@ -2,8 +2,6 @@
 
 cd "$(dirname "${BASH_SOURCE}")";
 
-git pull origin master;
-
 function doIt() {
 	ln -sf $(pwd)/bin ~/bin;
 	ln -sf $(pwd)/vimrc ~/.vimrc;
@@ -17,6 +15,7 @@ function doIt() {
 	ln -sf $(pwd)/inputrc ~/.inputrc;
 	ln -sf $(pwd)/path ~/.path;
 	ln -sf $(pwd)/psqlrc ~/.psqlrc;
+	ln -sf $(pwd)/atom/config.cson ~/.atom/config.cson;
 	source ~/.bash_profile;
 }
 
