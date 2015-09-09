@@ -13,7 +13,6 @@ Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'terryma/vim-expand-region'
 Plugin 'tpope/vim-rsi'
 Plugin 'tpope/vim-sleuth'
 Plugin 'tpope/vim-vinegar'
@@ -24,10 +23,11 @@ Plugin 'tpope/vim-commentary'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'rking/ag.vim'
 Plugin 'edsono/vim-matchit'
-Plugin 'tpope/vim-abolish'
-Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'terryma/vim-expand-region'
+" Plugin 'tpope/vim-abolish'
+" Plugin 'terryma/vim-multiple-cursors'
 " Plugin 'Townk/vim-autoclose'
-"Plugin 'marijnh/tern_for_vim'
+" Plugin 'marijnh/tern_for_vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required by Vundle
@@ -40,7 +40,7 @@ autocmd ColorScheme * highlight LineNr cterm=NONE ctermfg=256 ctermbg=NONE
 
 " Enable syntax highlighting
 syntax on
-" Enable spell checking. See :help mkspell 
+" Enable spell checking. See :help mkspell
 set spell spelllang=en_us
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
@@ -175,19 +175,33 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+" Strip trailing whitespace
+function! StripWhitespace()
+	let save_cursor = getpos(".")
+	let old_query = getreg('/')
+	:%s/\s\+$//e
+	call setpos('.', save_cursor)
+	call setreg('/', old_query)
+endfunction
+autocmd BufWrite * :call StripWhitespace()
 
 " Shortcut Mappings
 
 let mapleader = " "
 
+" Switch between the last two files
+nnoremap <leader><leader> <c-^>
+
 nmap <leader>w :w<CR>
-nnoremap <leader>t a</<C-X><C-O>
+" Save a file as root (,W)
+" noremap <leader>W :w !sudo tee % > /dev/null<CR>
 nnoremap <leader>/ :noh<CR>
 nnoremap <leader>s :% s//
 
 " No surprises with long lines
 nmap <silent> j gj
 nmap <silent> k gk
+
 
 " Move to the next buffer
 nmap <leader>l :bnext<CR>
@@ -199,9 +213,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
-
-" Switch between the last two files
-nnoremap <leader><leader> <c-^>
 
 nnoremap ; :
 
@@ -216,26 +227,13 @@ function! FirstCharOrFirstCol()
   endif
 endfunction
 
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
+" vmap v <Plug>(expand_region_expand)
+" vmap <C-v> <Plug>(expand_region_shrink)
 
 nmap n nzz
 nmap N Nzz
 
-" Strip trailing whitespace
-function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
-endfunction
-noremap <leader>f :call StripWhitespace()<CR>
-
-" Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
-
-" Syntastic 
+" Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
