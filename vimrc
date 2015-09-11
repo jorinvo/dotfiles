@@ -23,10 +23,10 @@ Plugin 'tpope/vim-commentary'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'rking/ag.vim'
 Plugin 'edsono/vim-matchit'
+Plugin 'jiangmiao/auto-pairs'
 " Plugin 'terryma/vim-expand-region'
 " Plugin 'tpope/vim-abolish'
 " Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'Townk/vim-autoclose'
 " Plugin 'marijnh/tern_for_vim'
 
 " All of your Plugins must be added before the following line
@@ -53,8 +53,6 @@ set gdefault
 " Don’t add empty newlines at the end of files
 set binary
 set noeol
-" auto save when switching windows
-au FocusLost * :wa
 " Respect modeline in files
 set modeline
 set modelines=4
