@@ -15,8 +15,6 @@
       "SFTP-deployment"
       "linter-jsxhint"
       "scope-inspector"
-      "autocomplete-ruby"
-      "linter-rubocop"
       "linter-coffeelint"
       "linter-eslint"
       "linter-js-standard"
@@ -50,7 +48,6 @@
   tabs:
     enableVcsColoring: true
     alwaysShowTabBar: false
-    usePreviewTabs: true
   "tree-view": {}
   pigments: {}
   linter:
@@ -63,3 +60,4 @@
   "git-plus": {}
   "find-and-replace":
     scrollToResultOnLiveSearch: true
+  "file-icons": {}
