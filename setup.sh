@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
 # Install command-line tools using Homebrew.
+# Also install some node and ruby packages.
 
 # Ask for the administrator password upfront.
 sudo -v
 
 # Keep-alive: update existing `sudo` time stamp until the script has finished.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+#
+# Homebrew
+#
 
 # Make sure we’re using the latest Homebrew.
 brew update
@@ -39,20 +44,46 @@ brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
 brew install homebrew/dupes/screen
 brew install homebrew/php/php55 --with-gmp
+brwe install vim
 
 # Install other useful binaries.
 brew install ack
-#brew install exiv2
+brew install the_silver_searcher
 brew install git
 brew install imagemagick --with-webp
 brew install lua
 brew install rename
 brew install speedtest_cli
 brew install tree
+brew install youtube-dl
 
-# Install Node.js. Note: this installs `npm` too, using the recommended
-# installation method.
-brew install node
+# Install node version manager.
+# See Node section below.
+brew install nvm
+
+# Install Rbenv for managing Ruby versions.
+# See Ruby section below.
+brew install rbenv ruby-build
 
 # Remove outdated versions from the cellar.
 brew cleanup
+
+#
+# Node Packages
+#
+
+nvm install
+# Add NVM's working directory to your $HOME path (if it doesn't exist):
+mkdir ~/.nvm
+# Copy nvm-exec to NVM's working directory
+cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+
+npm install -g trash
+
+#
+# Ruby Gems
+#
+
+rbenv install 2.2.2
+rbenv global 2.2.2
+gem install bundler
