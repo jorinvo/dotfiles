@@ -17,6 +17,7 @@ function doIt() {
 	ln -sf $(pwd)/psqlrc ~/.psqlrc;
 	ln -sf $(pwd)/atom/config.cson ~/.atom/config.cson;
 	ln -sf $(pwd)/atom/keymap.cson ~/.atom/keymap.cson;
+	ln -sf $(pwd)/atom/styles.less ~/.atom/styles.less;
 	source ~/.bash_profile;
 }
 

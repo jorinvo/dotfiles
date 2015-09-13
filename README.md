@@ -28,12 +28,13 @@ When setting up a new Mac, you may want to set some sensible OS X defaults:
 ./osx
 ```
 
-### Install Homebrew formulae
+### Install Homebrew formulae and other packages
 
-When setting up a new Mac, you may want to install some common [Homebrew](http://brew.sh/) formulae (after installing Homebrew, of course):
+When setting up a new Mac, you may want to install some common [Homebrew](http://brew.sh/) formulae (after installing Homebrew, of course).
+This also includes some Node packages and Ruby Gems:
 
 ```bash
-./brew.sh
+./setup.sh
 ```
 
 ## Feedback
