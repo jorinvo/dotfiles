@@ -20,11 +20,11 @@
       "linter-js-standard"
     ]
     audioBeep: false
+    projectHome: "/Users/jorin/projects"
     themes: [
       "one-light-ui"
       "one-light-syntax"
     ]
-    projectHome: "/Users/jorin/projects"
   autosave:
     enabled: true
   "git-diff":
@@ -61,3 +61,4 @@
   "find-and-replace":
     scrollToResultOnLiveSearch: true
   "file-icons": {}
+  "one-light-ui": {}
