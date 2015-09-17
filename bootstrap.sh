@@ -15,9 +15,13 @@ function doIt() {
 	ln -sf $(pwd)/inputrc ~/.inputrc;
 	ln -sf $(pwd)/path ~/.path;
 	ln -sf $(pwd)/psqlrc ~/.psqlrc;
-	ln -sf $(pwd)/atom/config.cson ~/.atom/config.cson;
-	ln -sf $(pwd)/atom/keymap.cson ~/.atom/keymap.cson;
-	ln -sf $(pwd)/atom/styles.less ~/.atom/styles.less;
+  if [ -d "~/.atom" ]; then
+    ln -sf $(pwd)/atom/config.cson ~/.atom/config.cson;
+    ln -sf $(pwd)/atom/keymap.cson ~/.atom/keymap.cson;
+    ln -sf $(pwd)/atom/styles.less ~/.atom/styles.less;
+  else
+    echo ".atom directory doesn't exist."
+  fi
 	source ~/.bash_profile;
 }
 

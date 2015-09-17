@@ -1,41 +1,47 @@
 set nocompatible
 
 filetype off " required by Vundle
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
 
-Plugin 'Soares/solarized.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bling/vim-airline'
-Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'tpope/vim-rsi'
-Plugin 'tpope/vim-sleuth'
-Plugin 'tpope/vim-vinegar'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-commentary'
-Plugin 'bronson/vim-visual-star-search'
-Plugin 'rking/ag.vim'
-Plugin 'edsono/vim-matchit'
-Plugin 'jiangmiao/auto-pairs'
-" Plugin 'terryma/vim-expand-region'
-" Plugin 'tpope/vim-abolish'
-" Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'marijnh/tern_for_vim'
+"Check if Vundle is installed
+if isdirectory("~/.vim/bundle/Vundle.vim")
+  " set the runtime path to include Vundle and initialize
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
+  " let Vundle manage Vundle, required
+  Plugin 'gmarik/Vundle.vim'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required by Vundle
-filetype plugin indent on    " required by Vundle
+  " My plugins:
+
+  Plugin 'Soares/solarized.vim'
+  Plugin 'airblade/vim-gitgutter'
+  Plugin 'bling/vim-airline'
+  Plugin 'kien/ctrlp.vim'
+  Plugin 'scrooloose/syntastic'
+  Plugin 'Valloric/YouCompleteMe'
+  Plugin 'tpope/vim-rsi'
+  Plugin 'tpope/vim-sleuth'
+  Plugin 'tpope/vim-vinegar'
+  Plugin 'tpope/vim-speeddating'
+  Plugin 'tpope/vim-surround'
+  Plugin 'tpope/vim-repeat'
+  Plugin 'tpope/vim-commentary'
+  Plugin 'bronson/vim-visual-star-search'
+  Plugin 'rking/ag.vim'
+  Plugin 'edsono/vim-matchit'
+  Plugin 'jiangmiao/auto-pairs'
+  " Plugin 'terryma/vim-expand-region'
+  " Plugin 'tpope/vim-abolish'
+  " Plugin 'terryma/vim-multiple-cursors'
+  " Plugin 'marijnh/tern_for_vim'
+
+  " All of your Plugins must be added before the following line
+  call vundle#end()            " required by Vundle
+  filetype plugin indent on    " required by Vundle
+endif " End Vundle
 
 
 " Theme
-colorscheme solarized
+silent! colorscheme solarized
 autocmd ColorScheme * highlight LineNr cterm=NONE ctermfg=256 ctermbg=NONE
 
 " Enable syntax highlighting
@@ -230,15 +236,17 @@ nmap n nzz
 nmap N Nzz
 
 " Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+if exists("*Syntastic")
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-" let g:syntastic_javascript_checkers = ['standard']
-let g:syntastic_css_checkers = ['csslint']
-let g:syntastic_markdown_checkers = ['mdl']
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  let g:syntastic_javascript_checkers = ['eslint']
+  " let g:syntastic_javascript_checkers = ['standard']
+  let g:syntastic_css_checkers = ['csslint']
+  let g:syntastic_markdown_checkers = ['mdl']
+endif " End Syntastic

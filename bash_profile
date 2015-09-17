@@ -41,4 +41,4 @@ which rbenv &> /dev/null && eval "$(rbenv init -)"
 
 # Use nvm (installed via Homebrew)
 export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+which brew &> /dev/null && source $(brew --prefix nvm)/nvm.sh
