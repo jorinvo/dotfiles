@@ -1,3 +1,6 @@
+# Use trash instead of rm to keep deleting files safe.
+which trash &> /dev/null && alias rm=trash
+
 alias ..="c .."
 alias ...="c ../.."
 alias ....="c ../../.."
