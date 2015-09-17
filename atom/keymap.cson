@@ -29,3 +29,6 @@
 'atom-text-editor':
   "cmd-'": 'expand-region:expand'
   "ctrl-cmd-'": 'expand-region:shrink'
+
+'.pdf-view':
+  'ctrl-g': 'pdf-view:go-to-page'

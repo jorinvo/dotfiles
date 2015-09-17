@@ -3,8 +3,8 @@
     invisibles: {}
     lineHeight: 1.4
     fontFamily: "Fira Mono"
-    fontSize: 17
     autoIndentOnPaste: false
+    fontSize: 17
   core:
     disabledPackages: [
       "welcome"
@@ -62,3 +62,8 @@
     scrollToResultOnLiveSearch: true
   "file-icons": {}
   "one-light-ui": {}
+  "save-session":
+    dataSaveFolder: "/Users/jorin/.atom/packages/save-session/projects"
+  "linter-less":
+    ignoreUndefinedVariables: true
+    strictUnits: true

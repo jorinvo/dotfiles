@@ -9,8 +9,17 @@
  * http://lesscss.org
  */
 
-:host .highlights .highlight-selected .region,
-atom-text-editor .highlights .highlight-selected .region,
+// Highlighted text
+atom-text-editor::shadow .highlights .selection .region {
+  // background-color: #A4FCB9;
+  background-color: #FFCDDC;
+}
 atom-text-editor::shadow .highlights .highlight-selected .region {
-  border-color: #A626A4;
+  // border-color: #42E769;
+  border-color: #F979A0;
+}
+
+// Markdown
+atom-text-editor[data-grammar="source gfm"] {
+  // font-size: 13px;
 }
