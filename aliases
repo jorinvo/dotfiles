@@ -127,7 +127,7 @@ alias yt-audio='youtube-dl --verbose --extract-audio --audio-format "mp3" -o "%(
 
 #git
 alias g="git"
-alias gd="git diff"
+alias gd="git d"
 alias ga="git add"
 alias gaa="git add --all"
 alias gst="git status -sb"

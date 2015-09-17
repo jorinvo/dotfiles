@@ -1,11 +1,12 @@
 set nocompatible
 
-filetype off " required by Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+runtime autoload/vundle.vim
 
 "Check if Vundle is installed
-if isdirectory("~/.vim/bundle/Vundle.vim")
+if exists( '*vundle#rc' )
+  filetype off
   " set the runtime path to include Vundle and initialize
-  set rtp+=~/.vim/bundle/Vundle.vim
   call vundle#begin()
   " let Vundle manage Vundle, required
   Plugin 'gmarik/Vundle.vim'
