@@ -66,8 +66,6 @@ set number
 set relativenumber
 " Highlight current line
 set cursorline
-" Make tabs as wide as two spaces
-set tabstop=2
 set list
 " Highlight searches
 set hlsearch
