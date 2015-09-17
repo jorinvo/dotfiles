@@ -72,11 +72,12 @@ brew cleanup
 # Node Packages
 #
 
-nvm install
 # Add NVM's working directory to your $HOME path (if it doesn't exist):
 mkdir ~/.nvm
 # Copy nvm-exec to NVM's working directory
 cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+nvm install node
+nvm alias default node
 
 npm install -g trash
 
