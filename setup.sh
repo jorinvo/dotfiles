@@ -79,7 +79,7 @@ cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 nvm install node
 nvm alias default node
 
-npm install -g trash
+npm install -g trash less
 
 #
 # Ruby Gems

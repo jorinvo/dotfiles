@@ -30,6 +30,11 @@ if exists( '*vundle#rc' )
   " Plugin 'Valloric/YouCompleteMe'
   " Plugin 'rking/ag.vim'
   " Plugin 'edsono/vim-matchit'
+  " Plugin 'pangloss/vim-javascript'
+  " Plugin 'hail2u/vim-css3-syntax'
+  " Plugin 'groenewege/vim-less'
+  " Plugin 'ap/vim-css-color'
+
   " Plugin 'terryma/vim-expand-region'
   " Plugin 'tpope/vim-abolish'
   " Plugin 'terryma/vim-multiple-cursors'
@@ -249,5 +254,10 @@ if exists("*Syntastic")
   let g:syntastic_javascript_checkers = ['eslint']
   " let g:syntastic_javascript_checkers = ['standard']
   let g:syntastic_css_checkers = ['csslint']
+  let g:syntastic_less_checkers = ['lessc']
   let g:syntastic_markdown_checkers = ['mdl']
 endif " End Syntastic
+
+" CtrlP
+let g:ctrlp_working_path_mode = 'c'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'

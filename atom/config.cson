@@ -5,6 +5,7 @@
     fontFamily: "Fira Mono"
     autoIndentOnPaste: false
     fontSize: 17
+    softTabs: false
   core:
     disabledPackages: [
       "welcome"
@@ -47,7 +48,6 @@
     lintInlineJavaScript: true
   tabs:
     enableVcsColoring: true
-    alwaysShowTabBar: false
   "tree-view": {}
   pigments: {}
   linter:
@@ -65,5 +65,4 @@
   "save-session":
     dataSaveFolder: "/Users/jorin/.atom/packages/save-session/projects"
   "linter-less":
-    ignoreUndefinedVariables: true
     strictUnits: true
