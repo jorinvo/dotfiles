@@ -69,6 +69,31 @@ brew install rbenv ruby-build
 brew cleanup
 
 #
+# Homebrew Cask to install binaries
+#
+
+brew install caskroom/cask/brew-cask
+brew cask install \
+  mailpile \
+  toggldesktop \
+  tunnelbear \
+  firefox \
+  spotify \
+  skype \
+  vlc \
+  spectacle \
+  debookee \
+  atom \
+  seil \
+  owncloud \
+  libreoffice \
+  not-pacman \
+  not-tetris \
+  google-chrome \
+  the-unarchiver \
+  recordit
+
+#
 # Node Packages
 #
 
