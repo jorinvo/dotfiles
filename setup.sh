@@ -104,7 +104,9 @@ cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 nvm install node
 nvm alias default node
 
-npm install -g trash less
+npm install -g \
+  trash \
+  autoless
 
 #
 # Ruby Gems
