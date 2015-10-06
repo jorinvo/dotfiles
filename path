@@ -1,5 +1,7 @@
-# For homebrew
-PATH="/usr/local/bin:$PATH"
+#!/usr/bin/env bash
+
+# Binaries from dotfiles
+PATH="$PATH:$(pwd)/bin"
 
 # go tools
 PATH=$PATH:$HOME/go/bin

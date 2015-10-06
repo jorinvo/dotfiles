@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #Enter directory and list files
 function c() {
 		cd "$@" && l

@@ -3,7 +3,6 @@
 cd "$(dirname "${BASH_SOURCE}")";
 
 function doIt() {
-  ln -sf $(pwd)/bin ~;
   ln -sf $(pwd)/vimrc ~/.vimrc;
   ln -sf $(pwd)/aliases ~/.aliases;
   ln -sf $(pwd)/bash_profile ~/.bash_profile;
