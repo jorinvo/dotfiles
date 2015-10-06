@@ -116,8 +116,8 @@ alias safari='open -a /Applications/Safari.app'
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 
 # ssh server shortcuts
-alias uber='ssh uber'
-alias sope='ssh dev@dev.sope.io'
+alias uber='ssh -R 52698:localhost:52698 jorin@lepus.uberspace.de'
+alias sope='ssh -R 52698:localhost:52698 dev@dev.sope.io'
 alias zudu='ssh sope@zudu.cc'
 alias htw='ssh s0545431@uranus.f4.htw-berlin.de'
 

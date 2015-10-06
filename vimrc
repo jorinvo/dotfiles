@@ -23,16 +23,16 @@ if exists( '*vundle#rc' )
   Plugin 'bronson/vim-visual-star-search'
   Plugin 'jiangmiao/auto-pairs'
   " Plugin 'kien/ctrlp.vim'
-  " Plugin 'scrooloose/syntastic'
+  Plugin 'scrooloose/syntastic'
   " Plugin 'tpope/vim-speeddating'
   " Plugin 'tpope/vim-vinegar'
-  " Plugin 'airblade/vim-gitgutter'
-  " Plugin 'Valloric/YouCompleteMe'
+  Plugin 'airblade/vim-gitgutter'
+  Plugin 'Valloric/YouCompleteMe'
   " Plugin 'rking/ag.vim'
   " Plugin 'edsono/vim-matchit'
   " Plugin 'pangloss/vim-javascript'
   " Plugin 'hail2u/vim-css3-syntax'
-  " Plugin 'groenewege/vim-less'
+  Plugin 'groenewege/vim-less'
   " Plugin 'ap/vim-css-color'
 
   " Plugin 'terryma/vim-expand-region'
@@ -195,15 +195,14 @@ autocmd BufWrite * :call StripWhitespace()
 
 " Shortcut Mappings
 
-let mapleader = " "
+nmap <space> :w<CR>
+nnoremap g/ :noh<CR>
 
 " Switch between the last two files
-nnoremap <leader><leader> <c-^>
+nnoremap <tab> <c-^>
 
-nmap <leader>w :w<CR>
-" Save a file as root (,W)
+" Save a file as root (\W)
 " noremap <leader>W :w !sudo tee % > /dev/null<CR>
-nnoremap <leader>/ :noh<CR>
 nnoremap <leader>s :% s//
 
 " No surprises with long lines

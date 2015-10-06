@@ -17,8 +17,14 @@
       "linter-jsxhint"
       "scope-inspector"
       "linter-coffeelint"
-      "linter-eslint"
       "linter-js-standard"
+      "atom-beautify"
+      "atom-ternjs"
+      "markdown-scroll-sync"
+      "ex-mode"
+      "vim-mode"
+      "vim-mode-visual-block"
+      "vim-surround"
     ]
     audioBeep: false
     projectHome: "/Users/jorin/projects"
@@ -66,3 +72,6 @@
     dataSaveFolder: "/Users/jorin/.atom/packages/save-session/projects"
   "linter-less":
     strictUnits: true
+  "vim-mode":
+    useClipboardAsDefaultRegister: true
+    useSmartcaseForSearch: true

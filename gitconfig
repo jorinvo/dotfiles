@@ -81,7 +81,7 @@
 
 	# Detect copies as well as renames
 	renames = copies
-	tool = vimdiff
+	# tool = vimdiff
 
 [difftool]
 	prompt = false
