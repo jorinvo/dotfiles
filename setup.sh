@@ -55,7 +55,10 @@ brew install lua
 brew install rename
 brew install speedtest_cli
 brew install tree
+brew install pup
+brew install ccat
 brew install youtube-dl
+brew install watchman
 
 # Install node version manager.
 # See Node section below.
@@ -74,7 +77,6 @@ brew cleanup
 
 brew install caskroom/cask/brew-cask
 brew cask install \
-  mailpile \
   toggldesktop \
   tunnelbear \
   firefox \
@@ -87,11 +89,10 @@ brew cask install \
   seil \
   owncloud \
   libreoffice \
-  not-pacman \
-  not-tetris \
   google-chrome \
   the-unarchiver \
-  recordit
+  recordit \
+  elm-platform
 
 #
 # Node Packages
@@ -106,7 +107,10 @@ nvm alias default node
 
 npm install -g \
   trash \
-  autoless
+  autoless \
+  elm-oracle \
+  spot
+
 
 #
 # Ruby Gems
