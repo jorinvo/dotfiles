@@ -23,21 +23,21 @@ if exists( '*vundle#rc' )
   Plugin 'bronson/vim-visual-star-search'
   Plugin 'jiangmiao/auto-pairs'
   " Plugin 'kien/ctrlp.vim'
-  Plugin 'scrooloose/syntastic'
-  " Plugin 'tpope/vim-speeddating'
-  " Plugin 'tpope/vim-vinegar'
+  " Plugin 'scrooloose/syntastic'
+  Plugin 'tpope/vim-speeddating'
   Plugin 'airblade/vim-gitgutter'
-  Plugin 'Valloric/YouCompleteMe'
+  " Plugin 'Valloric/YouCompleteMe'
   " Plugin 'rking/ag.vim'
-  " Plugin 'edsono/vim-matchit'
+  Plugin 'edsono/vim-matchit'
+  Plugin 'tpope/vim-vinegar'
   " Plugin 'pangloss/vim-javascript'
-  " Plugin 'hail2u/vim-css3-syntax'
-  Plugin 'groenewege/vim-less'
+  " Plugin 'groenewege/vim-less'
+  Plugin 'bkad/CamelCaseMotion'
+  Plugin 'michaeljsmith/vim-indent-object'
   " Plugin 'ap/vim-css-color'
-
+  " Plugin 'hail2u/vim-css3-syntax'
   " Plugin 'terryma/vim-expand-region'
   " Plugin 'tpope/vim-abolish'
-  " Plugin 'terryma/vim-multiple-cursors'
   " Plugin 'marijnh/tern_for_vim'
 
   " All of your Plugins must be added before the following line
@@ -99,6 +99,7 @@ set shiftround
 set expandtab
 
 " Automatic commands
+
 " Enable file type detection
 filetype on
 " Treat .json files as .js
@@ -209,6 +210,9 @@ nnoremap <leader>s :% s//
 nmap <silent> j gj
 nmap <silent> k gk
 
+" Allow dot command in visual mode
+vnoremap . :norm.<CR>
+vnoremap @ :norm@
 
 " Move to the next buffer
 nmap <leader>l :bnext<CR>
@@ -221,7 +225,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-nnoremap ; :
+noremap ; :
 
 " Jump to first character or column
 nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
