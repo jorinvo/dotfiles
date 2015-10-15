@@ -9,17 +9,27 @@
  * http://lesscss.org
  */
 
+@highlight-color: rgba(255, 77, 253, 0.37);
+
 // Highlighted text
 atom-text-editor::shadow .highlights .selection .region {
-  // background-color: #A4FCB9;
-  background-color: #FFCDDC;
+  background-color: @highlight-color;
 }
 atom-text-editor::shadow .highlights .highlight-selected .region {
-  // border-color: #42E769;
-  border-color: #F979A0;
+  border-color: #AD30CF;
 }
 
 // Markdown
 atom-text-editor[data-grammar="source gfm"] {
   // font-size: 13px;
+}
+
+// Tree view default width
+.tree-view-resizer {
+    width: 270px;
+}
+
+// Mark selected item in Tree view more clear when focused
+.tree-view:focus .selected:before {
+    background: @highlight-color;
 }
