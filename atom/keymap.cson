@@ -26,9 +26,25 @@
 # Atom Flight Manual:
 # https://atom.io/docs/latest/using-atom-basic-customization#cson
 
-'atom-text-editor':
+# Need deep selector to overwrite Emmet
+
+'atom-workspace':
+  'ctrl-i': 'cursor-history:next'
+  'ctrl-o': 'cursor-history:prev'
+
+'atom-workspace atom-text-editor':
+  'alt-cmd-g': 'goto:declaration'
+
+'.platform-darwin atom-text-editor:not([mini])':
   "cmd-'": 'expand-region:expand'
   "ctrl-cmd-'": 'expand-region:shrink'
+  # Need this to overwrite Emmet in favor of block travel
+  'alt-up': 'block-travel:move-up'
+  'alt-down': 'block-travel:move-down'
+  'alt-shift-up': 'block-travel:select-up'
+  'alt-shift-down': 'block-travel:select-down'
+  'ctrl-alt-shift-up': 'emmet:increment-number-by-10'
+  'ctrl-alt-shift-down': 'emmet:decrement-number-by-10'
 
 '.pdf-view':
   'ctrl-g': 'pdf-view:go-to-page'
