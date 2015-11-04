@@ -34,6 +34,7 @@
 
 'atom-workspace atom-text-editor':
   'alt-cmd-g': 'goto:declaration'
+  'ctrl-cmd-j': 'jumpy:toggle'
 
 '.platform-darwin atom-text-editor:not([mini])':
   "cmd-'": 'expand-region:expand'

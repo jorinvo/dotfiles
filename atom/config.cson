@@ -16,19 +16,20 @@
       "SFTP-deployment"
       "linter-jsxhint"
       "scope-inspector"
-      "atom-beautify"
       "clipboard-history"
       "quick-editor"
-      "emmet"
-      "atom-ternjs"
       "linter-jshint"
-      "linter-eslint"
+      "linter-csslint"
+      "linter-js-standard"
     ]
     audioBeep: false
     projectHome: "/Users/jorin/projects"
     themes: [
       "one-light-ui"
       "one-light-syntax"
+    ]
+    packagesWithKeymapsDisabled: [
+      "jumpy"
     ]
   autosave:
     enabled: true
@@ -83,10 +84,12 @@
   "atom-pair": {}
   "language-elm": {}
   "linter-elm-make": {}
-  goto: {}
+  goto:
+    moreIgnoredNames: "node_modules"
   "linter-js-standard": {}
   "standard-formatter":
     honorPackageConfig: false
+  jumpy: {}
 ".css.less.source":
   editor:
     tabLength: 4
