@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Use trash instead of rm to keep deleting files safe.
-which trash &> /dev/null && alias rm=trash
+# Use trash to keep deleting files safely.
+alias t=trash
 
 alias ..="c .."
 alias ...="c ../.."

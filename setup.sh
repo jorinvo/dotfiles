@@ -59,6 +59,7 @@ brew install pup
 brew install ccat
 brew install youtube-dl
 brew install watchman
+brew install postgres
 
 # Install node version manager.
 # See Node section below.
@@ -106,7 +107,7 @@ nvm install node
 nvm alias default node
 
 npm install -g \
-  trash \
+  trash-cli \
   autoless \
   elm-oracle \
   spot
