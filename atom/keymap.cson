@@ -46,6 +46,4 @@
   'alt-shift-down': 'block-travel:select-down'
   'ctrl-alt-shift-up': 'emmet:increment-number-by-10'
   'ctrl-alt-shift-down': 'emmet:decrement-number-by-10'
-
-'.pdf-view':
-  'ctrl-g': 'pdf-view:go-to-page'
+  'cmd-shift-v': 'clipboard-plus:toggle'

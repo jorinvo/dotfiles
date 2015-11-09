@@ -14,12 +14,7 @@
       "go-oracle"
       "go-plus"
       "SFTP-deployment"
-      "linter-jsxhint"
       "scope-inspector"
-      "clipboard-history"
-      "quick-editor"
-      "linter-jshint"
-      "linter-csslint"
       "linter-js-standard"
     ]
     audioBeep: false
@@ -30,27 +25,19 @@
     ]
     packagesWithKeymapsDisabled: [
       "jumpy"
+      "gist-it"
     ]
   autosave:
     enabled: true
   "git-diff":
     showIconsInEditorGutter: true
-  "linter-rubocop":
-    rubocopExecutablePath: "/Users/jorin/.rbenv/shims/rubocop"
-    executablePath: "/Users/jorin/.rbenv/shims/rubocop"
   "exception-reporting":
     userId: "cc57abc6-2b4b-4b7c-6331-19d29f8636ae"
-  "atom-ternjs":
-    lint: false
   "advanced-open-file":
     helmDirSwitch: true
   react: {}
   "atom-beautify":
     _analyticsUserId: "ac0856d1-b476-46ba-b8f4-6b356d224269"
-  "linter-eslint":
-    disableWhenNoEslintrcFileInPath: true
-  "linter-jshint":
-    lintInlineJavaScript: true
   tabs:
     enableVcsColoring: true
   "tree-view": {}
@@ -71,25 +58,16 @@
     dataSaveFolder: "/Users/jorin/.atom/packages/save-session/projects"
   "linter-less":
     strictUnits: true
-  "vim-mode":
-    useClipboardAsDefaultRegister: true
-    useSmartcaseForSearch: true
-  "quick-editor":
-    stylesDirectory: "custom/less"
   "clipboard-plus": {}
-  emmet: {}
-  "cursor-history":
-    flashColor: "selected"
-  firepad: {}
   "atom-pair": {}
   "language-elm": {}
   "linter-elm-make": {}
   goto:
     moreIgnoredNames: "node_modules"
   "linter-js-standard": {}
-  "standard-formatter":
-    honorPackageConfig: false
   jumpy: {}
+  "gist-it":
+    newGistsDefaultToPrivate: true
 ".css.less.source":
   editor:
     tabLength: 4
