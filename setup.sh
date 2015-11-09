@@ -58,7 +58,6 @@ brew install tree
 brew install pup
 brew install ccat
 brew install youtube-dl
-brew install watchman
 brew install postgres
 
 # Install node version manager.
