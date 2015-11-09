@@ -59,6 +59,7 @@ brew install pup
 brew install ccat
 brew install youtube-dl
 brew install postgres
+brew install jq
 
 # Install node version manager.
 # See Node section below.
