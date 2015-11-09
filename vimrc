@@ -39,6 +39,7 @@ if exists( '*vundle#rc' )
   " Plugin 'terryma/vim-expand-region'
   " Plugin 'tpope/vim-abolish'
   " Plugin 'marijnh/tern_for_vim'
+  " Plugin 'elmcast/elm-vim'
 
   " All of your Plugins must be added before the following line
   call vundle#end()            " required by Vundle
