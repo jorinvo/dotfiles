@@ -4,8 +4,8 @@
     lineHeight: 1.4
     fontFamily: "Fira Mono"
     autoIndentOnPaste: false
-    fontSize: 16
     softWrap: true
+    fontSize: 16
   core:
     disabledPackages: [
       "welcome"
@@ -15,7 +15,25 @@
       "go-plus"
       "SFTP-deployment"
       "scope-inspector"
-      "linter-js-standard"
+      "script"
+      "remote-atom"
+      "pipe"
+      "pdf-view"
+      "merge-conflicts"
+      "atom-pair"
+      "autocomplete-flow"
+      "linter-flow"
+      "goto"
+      "file-icons"
+      "editorconfig"
+      "clipboard-plus"
+      "atom-beautify"
+      "language-docker"
+      "language-elm"
+      "linter-coffeelint"
+      "linter-elm-make"
+      "linter-less"
+      "save-session"
     ]
     audioBeep: false
     projectHome: "/Users/jorin/projects"
@@ -68,6 +86,13 @@
   jumpy: {}
   "gist-it":
     newGistsDefaultToPrivate: true
+  "language-babel": {}
+  "ide-flow":
+    flowPath: "/usr/local/bin/flow"
+  "linter-flow": {}
+  "nuclide-flow":
+    diagnosticsOnFly: true
+  "autocomplete-flow": {}
 ".css.less.source":
   editor:
     tabLength: 4
