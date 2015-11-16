@@ -44,7 +44,7 @@ brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
 brew install homebrew/dupes/screen
 brew install homebrew/php/php55 --with-gmp
-brwe install vim
+brwe install neovim/neovim/neovim
 
 # Install other useful binaries.
 brew install ack
@@ -60,6 +60,8 @@ brew install ccat
 brew install youtube-dl
 brew install postgres
 brew install jq
+brew install spoof-mac
+brew install flow
 
 # Install node version manager.
 # See Node section below.
@@ -120,3 +122,11 @@ npm install -g \
 rbenv install 2.2.2
 rbenv global 2.2.2
 gem install bundler
+
+
+#
+# NeoVim
+#
+ln -s ~/.vim ~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+sudo pip2 install neovim

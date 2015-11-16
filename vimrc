@@ -1,55 +1,54 @@
 set nocompatible
 
-set rtp+=~/.vim/bundle/Vundle.vim
-runtime autoload/vundle.vim
+call plug#begin('~/.vim/plugged')
 
-"Check if Vundle is installed
-if exists( '*vundle#rc' )
-  filetype off
-  " set the runtime path to include Vundle and initialize
-  call vundle#begin()
-  " let Vundle manage Vundle, required
-  Plugin 'gmarik/Vundle.vim'
+" Using full urls for gx command
+Plug 'https://github.com/altercation/vim-colors-solarized'
+Plug 'https://github.com/bling/vim-airline'
+Plug 'https://github.com/tpope/vim-rsi'
+Plug 'https://github.com/tpope/vim-sleuth'
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/tpope/vim-repeat'
+Plug 'https://github.com/tpope/vim-commentary'
+Plug 'https://github.com/tpope/vim-speeddating'
+Plug 'https://github.com/tpope/vim-vinegar'
+Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/bronson/vim-visual-star-search'
+Plug 'https://github.com/jiangmiao/auto-pairs'
+Plug 'https://github.com/kien/ctrlp.vim'
+Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'https://github.com/rking/ag.vim'
+Plug 'https://github.com/edsono/vim-matchit'
+Plug 'https://github.com/bkad/CamelCaseMotion'
+Plug 'https://github.com/michaeljsmith/vim-indent-object'
+Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'https://github.com/benekastah/neomake', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'https://github.com/pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'https://github.com/mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
+Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
+" Plug 'https://github.com/terryma/vim-expand-region'
+" Plug 'https://github.com/tpope/vim-abolish'
+" Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }
+" Plug 'https://github.com/marijnh/tern_for_vim', { 'for': 'css' }
 
-  " My plugins:
+" Add plugins to &runtimepath
+call plug#end()
 
-  Plugin 'Soares/solarized.vim'
-  Plugin 'bling/vim-airline'
-  Plugin 'tpope/vim-rsi'
-  Plugin 'tpope/vim-sleuth'
-  Plugin 'tpope/vim-surround'
-  Plugin 'tpope/vim-repeat'
-  Plugin 'tpope/vim-commentary'
-  Plugin 'bronson/vim-visual-star-search'
-  Plugin 'jiangmiao/auto-pairs'
-  " Plugin 'kien/ctrlp.vim'
-  " Plugin 'scrooloose/syntastic'
-  Plugin 'tpope/vim-speeddating'
-  Plugin 'airblade/vim-gitgutter'
-  " Plugin 'Valloric/YouCompleteMe'
-  " Plugin 'rking/ag.vim'
-  Plugin 'edsono/vim-matchit'
-  Plugin 'tpope/vim-vinegar'
-  " Plugin 'pangloss/vim-javascript'
-  " Plugin 'groenewege/vim-less'
-  Plugin 'bkad/CamelCaseMotion'
-  Plugin 'michaeljsmith/vim-indent-object'
-  " Plugin 'ap/vim-css-color'
-  " Plugin 'hail2u/vim-css3-syntax'
-  " Plugin 'terryma/vim-expand-region'
-  " Plugin 'tpope/vim-abolish'
-  " Plugin 'marijnh/tern_for_vim'
-  " Plugin 'elmcast/elm-vim'
 
-  " All of your Plugins must be added before the following line
-  call vundle#end()            " required by Vundle
-  filetype plugin indent on    " required by Vundle
-endif " End Vundle
+
+set encoding=utf-8
 
 
 " Theme
 silent! colorscheme solarized
-autocmd ColorScheme * highlight LineNr cterm=NONE ctermfg=256 ctermbg=NONE
+set background=light
+let g:solarized_termcolors=256
+augroup colors
+  autocmd!
+  autocmd ColorScheme * highlight LineNr cterm=NONE ctermfg=256 ctermbg=NONE
+augroup END
 
 " Enable syntax highlighting
 syntax on
@@ -103,11 +102,14 @@ set expandtab
 
 " Enable file type detection
 filetype on
-" Treat .json files as .js
-autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-" Treat .md files as Markdown
-autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-" autocmd BufRead,BufNewFile *.md set complete+=kspell
+augroup file_types
+  autocmd!
+  " Treat .json files as .js
+  autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+  " Treat .md files as Markdown
+  autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+  " autocmd BufRead,BufNewFile *.md set complete+=kspell
+augroup END
 
 
 set autoread "to reload files changed outside vim
@@ -137,6 +139,13 @@ set incsearch
 let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
+" Automatically populate the g:airline_symbols dictionary with the powerline symbols.
+let g:airline_powerline_fonts = 1
+" Overwrite ugly lien number symbol
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.linenr = '#'
 
 set noshowmode " Mode is already in Airline
 set laststatus=2 " Always show status line
@@ -193,15 +202,54 @@ function! StripWhitespace()
 	call setpos('.', save_cursor)
 	call setreg('/', old_query)
 endfunction
-autocmd BufWrite * :call StripWhitespace()
+augroup strip_whitespace
+  autocmd!
+  autocmd BufWrite * :call StripWhitespace()
+augroup END
+
+
+augroup reload_vimrc
+  autocmd!
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
+
 
 " Shortcut Mappings
 
+" SPACE to save
 nmap <space> :w<CR>
+" Clear search highlight
 nnoremap g/ :noh<CR>
 
+" Overwrite Y to behave like other uppercase commands
+nmap Y y$
+
+" Go Settings - Opens vimrc
+" (Overwrites built in sleep command. Sleep, seriously?)
+nnoremap gs :e $MYVIMRC<CR>
+
+" Command line history completion for ctrl-p and ctrl-n
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" ENTER to open CtrlP
+" http://stackoverflow.com/questions/16359878/vim-how-to-map-shift-enter
+nnoremap <CR> :CtrlP<CR>
+augroup map_enter
+  autocmd!
+  autocmd CmdwinEnter * nnoremap <CR> <CR>
+  autocmd BufReadPost quickfix nnoremap <CR> <CR>
+augroup END
+
+if has('nvim')
+  " ESC in terminal to exit insert mode
+  tnoremap <esc> <C-\><C-n>
+endif
+
+
 " Switch between the last two files
-nnoremap <tab> <c-^>
+" nnoremap <tab> <c-^>
 
 " Save a file as root (\W)
 " noremap <leader>W :w !sudo tee % > /dev/null<CR>
@@ -216,9 +264,9 @@ vnoremap . :norm.<CR>
 vnoremap @ :norm@
 
 " Move to the next buffer
-nmap <leader>l :bnext<CR>
+nmap <tab> :bnext<CR>
 " Move to the previous buffer
-nmap <leader>h :bprevious<CR>
+nmap <s-tab> :bprevious<CR>
 
 " Quicker window movement
 nnoremap <C-j> <C-w>j
@@ -239,11 +287,29 @@ function! FirstCharOrFirstCol()
   endif
 endfunction
 
-" vmap v <Plug>(expand_region_expand)
-" vmap <C-v> <Plug>(expand_region_shrink)
-
 nmap n nzz
 nmap N Nzz
+
+
+"
+" Javascript helpers
+"
+
+" Console log from insert mode; Puts focus inside parentheses
+imap gll console.log()<Esc>==F(a
+" Console log from visual mode on next line, puts visual selection inside parentheses
+vmap gl cgll<Esc>p
+
+
+
+" Neomake
+let g:neomake_javascript_enabled_makers = ['standard']
+let g:neomake_javascript_jsx_enabled_makers = ['standard']
+let g:neomake_jsx_enabled_makers = ['standard']
+augroup neo_make
+  autocmd!
+  autocmd! BufWritePost *.js Neomake
+augroup END
 
 " Syntastic
 if exists("*Syntastic")
@@ -255,13 +321,20 @@ if exists("*Syntastic")
   let g:syntastic_auto_loc_list = 1
   let g:syntastic_check_on_open = 1
   let g:syntastic_check_on_wq = 0
-  let g:syntastic_javascript_checkers = ['eslint']
-  " let g:syntastic_javascript_checkers = ['standard']
+  " let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_javascript_checkers = ['standard']
   let g:syntastic_css_checkers = ['csslint']
   let g:syntastic_less_checkers = ['lessc']
   let g:syntastic_markdown_checkers = ['mdl']
 endif " End Syntastic
 
 " CtrlP
-let g:ctrlp_working_path_mode = 'c'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$'
+  \ }
+
+
+" JSX
+let g:jsx_ext_required = 0

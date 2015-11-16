@@ -9,8 +9,8 @@ alias ....="c ../../.."
 alias .....="c ../../../.."
 alias p="c ~/projects"
 
-alias e='atom'
-alias e.='atom .'
+alias e='nvim'
+alias e.='nvim .'
 
 alias ka='killall'
 alias h=history
@@ -143,3 +143,6 @@ alias gba="git branch -a"
 alias gl="git log --pretty='format:%Cgreen%h%Creset %an - %s' --graph"
 alias gam="git add --all; git commit --amend"
 alias clone="git clone"
+
+# Postgres
+alias pg="postgres -D /usr/local/var/postgres"
