@@ -13,6 +13,7 @@ Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/tpope/vim-speeddating'
 Plug 'https://github.com/tpope/vim-vinegar'
 Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/tpope/vim-unimpaired'
 Plug 'https://github.com/bronson/vim-visual-star-search'
 Plug 'https://github.com/jiangmiao/auto-pairs'
 Plug 'https://github.com/kien/ctrlp.vim'
@@ -21,7 +22,7 @@ Plug 'https://github.com/rking/ag.vim'
 Plug 'https://github.com/edsono/vim-matchit'
 Plug 'https://github.com/bkad/CamelCaseMotion'
 Plug 'https://github.com/michaeljsmith/vim-indent-object'
-Plug 'https://github.com/Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'https://github.com/Valloric/YouCompleteMe'
 Plug 'https://github.com/benekastah/neomake', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'https://github.com/pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
@@ -233,27 +234,14 @@ nnoremap gs :e $MYVIMRC<CR>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-" ENTER to open CtrlP
-" http://stackoverflow.com/questions/16359878/vim-how-to-map-shift-enter
-nnoremap <CR> :CtrlP<CR>
-augroup map_enter
-  autocmd!
-  autocmd CmdwinEnter * nnoremap <CR> <CR>
-  autocmd BufReadPost quickfix nnoremap <CR> <CR>
-augroup END
-
 if has('nvim')
   " ESC in terminal to exit insert mode
   tnoremap <esc> <C-\><C-n>
 endif
 
 
-" Switch between the last two files
-" nnoremap <tab> <c-^>
-
-" Save a file as root (\W)
-" noremap <leader>W :w !sudo tee % > /dev/null<CR>
-nnoremap <leader>s :% s//
+" Switch between the last two files with TAB
+nnoremap <tab> <c-^>
 
 " No surprises with long lines
 nmap <silent> j gj
@@ -262,11 +250,6 @@ nmap <silent> k gk
 " Allow dot command in visual mode
 vnoremap . :norm.<CR>
 vnoremap @ :norm@
-
-" Move to the next buffer
-nmap <tab> :bnext<CR>
-" Move to the previous buffer
-nmap <s-tab> :bprevious<CR>
 
 " Quicker window movement
 nnoremap <C-j> <C-w>j
@@ -287,10 +270,6 @@ function! FirstCharOrFirstCol()
   endif
 endfunction
 
-nmap n nzz
-nmap N Nzz
-
-
 "
 " Javascript helpers
 "
@@ -306,6 +285,8 @@ vmap gl cgll<Esc>p
 let g:neomake_javascript_enabled_makers = ['standard']
 let g:neomake_javascript_jsx_enabled_makers = ['standard']
 let g:neomake_jsx_enabled_makers = ['standard']
+" Open location window and keep cursor position
+let g:neomake_open_list = 2
 augroup neo_make
   autocmd!
   autocmd! BufWritePost *.js Neomake
