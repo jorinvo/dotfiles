@@ -62,6 +62,7 @@ brew install postgres
 brew install jq
 brew install spoof-mac
 brew install flow
+brew install ghc cabal-install
 
 # Install node version manager.
 # See Node section below.

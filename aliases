@@ -9,8 +9,8 @@ alias ....="c ../../.."
 alias .....="c ../../../.."
 alias p="c ~/projects"
 
-alias e='nvim'
-alias e.='nvim .'
+alias e='atom'
+alias e.='atom .'
 
 alias ka='killall'
 alias h=history

@@ -3,7 +3,6 @@
     invisibles: {}
     lineHeight: 1.4
     fontFamily: "Fira Mono"
-    autoIndentOnPaste: false
     softWrap: true
     fontSize: 16
   core:
@@ -15,25 +14,14 @@
       "go-plus"
       "SFTP-deployment"
       "scope-inspector"
-      "script"
       "remote-atom"
       "pipe"
       "pdf-view"
       "merge-conflicts"
       "atom-pair"
-      "autocomplete-flow"
-      "linter-flow"
-      "goto"
-      "file-icons"
-      "editorconfig"
-      "clipboard-plus"
-      "atom-beautify"
       "language-docker"
-      "language-elm"
       "linter-coffeelint"
-      "linter-elm-make"
       "linter-less"
-      "save-session"
     ]
     audioBeep: false
     projectHome: "/Users/jorin/projects"
@@ -45,8 +33,6 @@
       "jumpy"
       "gist-it"
     ]
-  autosave:
-    enabled: true
   "git-diff":
     showIconsInEditorGutter: true
   "exception-reporting":

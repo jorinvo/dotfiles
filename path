@@ -7,4 +7,4 @@ PATH="$PATH:$(pwd)/bin"
 PATH=$PATH:$HOME/go/bin
 
 # haskell binaries from cabal
-PATH=$PATH:$HOME/Library/Haskell/bin
+PATH=$PATH:$HOME/.cabal-sandbox/bin
