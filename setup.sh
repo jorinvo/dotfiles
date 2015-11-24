@@ -96,7 +96,8 @@ brew cask install \
   google-chrome \
   the-unarchiver \
   recordit \
-  elm-platform
+  elm-platform \
+  flux
 
 #
 # Node Packages
