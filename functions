@@ -133,9 +133,9 @@ function codepoint() {
 # opens the given location
 function o() {
 	if [ "$1" = "" ] ; then
-		open .
+		xdg-open .
 	else
-		open "$1"
+		xdg-open "$1"
 	fi
 }
 
