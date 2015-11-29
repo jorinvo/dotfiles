@@ -4,7 +4,6 @@
     lineHeight: 1.4
     fontFamily: "Fira Mono"
     softWrap: true
-    fontSize: 16
   core:
     disabledPackages: [
       "welcome"
@@ -15,24 +14,20 @@
       "SFTP-deployment"
       "scope-inspector"
       "remote-atom"
-      "pipe"
       "pdf-view"
       "merge-conflicts"
       "atom-pair"
       "language-docker"
-      "linter-coffeelint"
       "linter-less"
+      "file-icons"
     ]
     audioBeep: false
     projectHome: "/Users/jorin/projects"
-    themes: [
-      "one-light-ui"
-      "one-light-syntax"
-    ]
     packagesWithKeymapsDisabled: [
       "jumpy"
       "gist-it"
     ]
+    autoHideMenuBar: true
   "git-diff":
     showIconsInEditorGutter: true
   "exception-reporting":
@@ -79,6 +74,7 @@
   "nuclide-flow":
     diagnosticsOnFly: true
   "autocomplete-flow": {}
+  "one-dark-ui": {}
 ".css.less.source":
   editor:
     tabLength: 4
