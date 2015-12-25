@@ -38,6 +38,8 @@ fi;
 # Enable rbenv if it exists
 which rbenv &> /dev/null && eval "$(rbenv init -)"
 
-# Use nvm (installed via Homebrew)
-export NVM_DIR=~/.nvm
-which brew &> /dev/null && source $(brew --prefix nvm)/nvm.sh
+export NVM_DIR="/home/jorin/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# added by travis gem
+[ -f /home/jorin/.travis/travis.sh ] && source /home/jorin/.travis/travis.sh

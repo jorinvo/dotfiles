@@ -19,7 +19,6 @@
       "atom-pair"
       "language-docker"
       "linter-less"
-      "file-icons"
     ]
     audioBeep: false
     projectHome: "/Users/jorin/projects"
