@@ -8,3 +8,6 @@ PATH=$PATH:$HOME/go/bin
 
 # haskell binaries from cabal
 PATH=$PATH:$HOME/.cabal-sandbox/bin
+
+# nodejs on uberpsace
+PATH=/package/host/localhost/nodejs-5.1.1/bin:$PATH
