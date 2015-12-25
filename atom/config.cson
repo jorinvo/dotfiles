@@ -74,6 +74,9 @@
     diagnosticsOnFly: true
   "autocomplete-flow": {}
   "one-dark-ui": {}
+  "vim-mode":
+    useClipboardAsDefaultRegister: true
+    useSmartcaseForSearch: true
 ".css.less.source":
   editor:
     tabLength: 4
