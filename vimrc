@@ -1,42 +1,43 @@
 set nocompatible
 
-call plug#begin('~/.vim/plugged')
+if !empty(glob('~/.vim/autoload/plug.vim'))
+  call plug#begin('~/.vim/plugged')
 
-" Using full urls for gx command
-Plug 'https://github.com/altercation/vim-colors-solarized'
-Plug 'https://github.com/bling/vim-airline'
-Plug 'https://github.com/tpope/vim-rsi'
-Plug 'https://github.com/tpope/vim-sleuth'
-Plug 'https://github.com/tpope/vim-surround'
-Plug 'https://github.com/tpope/vim-repeat'
-Plug 'https://github.com/tpope/vim-commentary'
-Plug 'https://github.com/tpope/vim-speeddating'
-Plug 'https://github.com/tpope/vim-vinegar'
-Plug 'https://github.com/tpope/vim-fugitive'
-Plug 'https://github.com/tpope/vim-unimpaired'
-Plug 'https://github.com/bronson/vim-visual-star-search'
-Plug 'https://github.com/jiangmiao/auto-pairs'
-Plug 'https://github.com/kien/ctrlp.vim'
-Plug 'https://github.com/airblade/vim-gitgutter'
-Plug 'https://github.com/rking/ag.vim'
-Plug 'https://github.com/edsono/vim-matchit'
-Plug 'https://github.com/bkad/CamelCaseMotion'
-Plug 'https://github.com/michaeljsmith/vim-indent-object'
-Plug 'https://github.com/Valloric/YouCompleteMe'
-Plug 'https://github.com/benekastah/neomake', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'https://github.com/pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'https://github.com/mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
-Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
-" Plug 'https://github.com/terryma/vim-expand-region'
-" Plug 'https://github.com/tpope/vim-abolish'
-" Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }
-" Plug 'https://github.com/marijnh/tern_for_vim', { 'for': 'css' }
+  " Using full urls for gx command
+  Plug 'https://github.com/altercation/vim-colors-solarized'
+  Plug 'https://github.com/bling/vim-airline'
+  Plug 'https://github.com/tpope/vim-rsi'
+  Plug 'https://github.com/tpope/vim-sleuth'
+  Plug 'https://github.com/tpope/vim-surround'
+  Plug 'https://github.com/tpope/vim-repeat'
+  Plug 'https://github.com/tpope/vim-commentary'
+  Plug 'https://github.com/tpope/vim-speeddating'
+  Plug 'https://github.com/tpope/vim-vinegar'
+  Plug 'https://github.com/tpope/vim-fugitive'
+  Plug 'https://github.com/tpope/vim-unimpaired'
+  Plug 'https://github.com/bronson/vim-visual-star-search'
+  Plug 'https://github.com/jiangmiao/auto-pairs'
+  Plug 'https://github.com/kien/ctrlp.vim'
+  Plug 'https://github.com/airblade/vim-gitgutter'
+  Plug 'https://github.com/rking/ag.vim'
+  Plug 'https://github.com/edsono/vim-matchit'
+  Plug 'https://github.com/bkad/CamelCaseMotion'
+  Plug 'https://github.com/michaeljsmith/vim-indent-object'
+  Plug 'https://github.com/Valloric/YouCompleteMe'
+  Plug 'https://github.com/benekastah/neomake', { 'for': ['javascript', 'javascript.jsx'] }
+  Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
+  Plug 'https://github.com/pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+  Plug 'https://github.com/mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
+  Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
+  Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
+  " Plug 'https://github.com/terryma/vim-expand-region'
+  " Plug 'https://github.com/tpope/vim-abolish'
+  " Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }
+  " Plug 'https://github.com/marijnh/tern_for_vim', { 'for': 'css' }
 
-" Add plugins to &runtimepath
-call plug#end()
-
+  " Add plugins to &runtimepath
+  call plug#end()
+endif
 
 
 set encoding=utf-8
