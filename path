@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-# Binaries from dotfiles
-PATH="$PATH:$(pwd)/bin"
 
-# go tools
-PATH=$PATH:$HOME/go/bin
-
-# haskell binaries from cabal
-PATH=$PATH:$HOME/.cabal-sandbox/bin
-
-# nodejs on uberpsace
-PATH=/package/host/localhost/nodejs-5.1.1/bin:$PATH
+# on uberpsace
+if [ -n "$(hostname | grep uberspace)" ]
+then
+  # nodejs
+  PATH=/package/host/localhost/nodejs-5.1.1/bin:$PATH
+  #  ruby
+  PATH=/package/host/localhost/ruby-2.2.3/bin:$PATH
+fi
