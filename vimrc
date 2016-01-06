@@ -34,6 +34,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Plug 'https://github.com/tpope/vim-abolish'
   " Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }
   " Plug 'https://github.com/marijnh/tern_for_vim', { 'for': 'css' }
+  " Plug 'https://github.com/godlygeek/tabular'
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -45,7 +46,7 @@ set encoding=utf-8
 
 " Theme
 silent! colorscheme solarized
-set background=light
+set background=dark
 let g:solarized_termcolors=256
 augroup colors
   autocmd!
