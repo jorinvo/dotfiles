@@ -76,9 +76,9 @@ set exrc
 set secure
 " Enable line numbers
 set number
-" Not sure if it really helps me.
+" Doens't really help me.
 " Also it makes hjkl moves way slower.
-set relativenumber
+set norelativenumber
 " Highlight current line
 set cursorline
 set list
