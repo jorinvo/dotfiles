@@ -28,7 +28,6 @@ sudo apt-get install \
   numix-gtk-theme \
   network-manager-openvpn  \
   owncloud-client \
-  rbenv ruby-build  \
   cloc \
   nmap \
   net-tools \
@@ -37,6 +36,7 @@ sudo apt-get install \
   cmake \
   mosh
 
+# Node
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
 nvm install node
 
@@ -66,3 +66,13 @@ then
   pip install --user neovim
   cd ~/.config/nvim/plugged/YouCompleteMe && ./install.py --tern-completer
 fi
+
+# Ruby with rbenv (apt version is outdated)
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+cd ~/.rbenv && src/configure && make -C src
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+# ruby version 2.3.0 as default
+./bin/rbenv install 2.3.0
+./bin/rbenv global 2.3.0
+# Bundler
+gem install bundler
