@@ -12,6 +12,8 @@ alias p="c ~/projects"
 alias e="$EDITOR"
 alias e.='$EDITOR .'
 
+alias h=history
+
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -76,7 +78,8 @@ alias reload="exec $SHELL -l"
 alias pubkey="more ~/.ssh/id_rsa.pub | copy && echo '=> Public key copied to pasteboard.'"
 
 # ssh server shortcuts
-alias uber='ssh -R 52698:localhost:52698 jorin@lepus.uberspace.de'
+# alias uber='ssh -R 52698:localhost:52698 jorin@lepus.uberspace.de'
+alias uber='mosh -p 62739 jorin@lepus.uberspace.de'
 alias sope='ssh -R 52698:localhost:52698 dev@dev.sope.io'
 alias zudu='ssh sope@zudu.cc'
 alias htw='ssh s0545431@uranus.f4.htw-berlin.de'
