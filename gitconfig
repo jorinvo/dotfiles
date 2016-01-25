@@ -133,10 +133,8 @@
 	name = Jorin Vogel
 	email = hi@jorin.me
 
-[credential]
-
-	helper = osxkeychain
-
 [github]
 
 	user = jorinvo
+[credential]
+	helper = osxkeychain
