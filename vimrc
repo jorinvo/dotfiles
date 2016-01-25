@@ -30,6 +30,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
   Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
+  Plug 'cespare/vim-toml', { 'for': ['toml', 'md'] }
   " Plug 'https://github.com/terryma/vim-expand-region'
   " Plug 'https://github.com/tpope/vim-abolish'
   " Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }
@@ -211,12 +212,6 @@ augroup strip_whitespace
 augroup END
 
 
-augroup reload_vimrc
-  autocmd!
-  autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END
-
-
 
 " Shortcut Mappings
 
@@ -231,6 +226,8 @@ nmap Y y$
 " Go Settings - Opens vimrc
 " (Overwrites built in sleep command. Sleep, seriously?)
 nnoremap gs :e $MYVIMRC<CR>
+
+vnoremap gt "ty:term t<CR>
 
 " Command line history completion for ctrl-p and ctrl-n
 cnoremap <C-p> <Up>
@@ -258,8 +255,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
-
-noremap ; :
 
 " Jump to first character or column
 nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
@@ -321,3 +316,7 @@ let g:ctrlp_custom_ignore = {
 
 " JSX
 let g:jsx_ext_required = 0
+
+
+" CamelCaseMotion
+call camelcasemotion#CreateMotionMappings('<leader>')
