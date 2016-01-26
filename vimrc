@@ -31,6 +31,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
   Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
   Plug 'cespare/vim-toml', { 'for': ['toml', 'md'] }
+  Plug 'plasticboy/vim-markdown', { 'for': 'md' }
   " Plug 'https://github.com/terryma/vim-expand-region'
   " Plug 'https://github.com/tpope/vim-abolish'
   " Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }

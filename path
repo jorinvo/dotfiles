@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Include custom scripts
+PATH="$HOME/bin:$PATH"
+
 
 # on uberpsace
 if [ -n "$(hostname | grep uberspace)" ]
