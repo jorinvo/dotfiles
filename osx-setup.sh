@@ -89,7 +89,6 @@ brew cask install \
   vlc \
   spectacle \
   debookee \
-  atom \
   seil \
   owncloud \
   libreoffice \

@@ -1,4 +1,3 @@
-sudo add-apt-repository ppa:webupd8team/atom
 sudo add-apt-repository ppa:kilian/f.lux
 sudo add-apt-repository ppa:webupd8team/tor-browser
 sudo add-apt-repository ppa:numix/ppa
@@ -12,7 +11,6 @@ sudo apt-get update
 
 sudo apt-get install \
   git \
-  atom \
   curl \
   postgresql-9.3 \
   chromium-browser \
@@ -34,7 +32,8 @@ sudo apt-get install \
   neovim \
   build-essential \
   cmake \
-  mosh
+  mosh \
+  jq
 
 # Node
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
