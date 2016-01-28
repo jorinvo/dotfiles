@@ -4,27 +4,31 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin('~/.vim/plugged')
 
   " Using full urls for gx command
-  Plug 'https://github.com/altercation/vim-colors-solarized'
+
+  Plug 'https://github.com/w0ng/vim-hybrid'
   Plug 'https://github.com/bling/vim-airline'
+  Plug 'https://github.com/tpope/vim-vinegar'
   Plug 'https://github.com/tpope/vim-rsi'
   Plug 'https://github.com/tpope/vim-sleuth'
-  Plug 'https://github.com/tpope/vim-surround'
+  Plug 'https://github.com/tpope/vim-fugitive'
+  Plug 'https://github.com/airblade/vim-gitgutter'
   Plug 'https://github.com/tpope/vim-repeat'
+  Plug 'https://github.com/tpope/vim-surround'
   Plug 'https://github.com/tpope/vim-commentary'
   Plug 'https://github.com/tpope/vim-speeddating'
-  Plug 'https://github.com/tpope/vim-vinegar'
-  Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/tpope/vim-unimpaired'
   Plug 'https://github.com/bronson/vim-visual-star-search'
   Plug 'https://github.com/jiangmiao/auto-pairs'
-  Plug 'https://github.com/kien/ctrlp.vim'
-  Plug 'https://github.com/airblade/vim-gitgutter'
+  Plug 'https://github.com/Shougo/unite.vim'
+  Plug 'https://github.com/Shougo/neomru.vim'
   Plug 'https://github.com/rking/ag.vim'
   Plug 'https://github.com/edsono/vim-matchit'
   Plug 'https://github.com/bkad/CamelCaseMotion'
   Plug 'https://github.com/michaeljsmith/vim-indent-object'
   Plug 'https://github.com/Valloric/YouCompleteMe'
   Plug 'https://github.com/benekastah/neomake', { 'for': ['javascript', 'javascript.jsx'] }
+
+  " Languages
   Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'https://github.com/mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
@@ -32,6 +36,10 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
   Plug 'cespare/vim-toml', { 'for': ['toml', 'md'] }
   Plug 'plasticboy/vim-markdown', { 'for': 'md' }
+
+
+  " Disabled
+
   " Plug 'https://github.com/terryma/vim-expand-region'
   " Plug 'https://github.com/tpope/vim-abolish'
   " Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }
@@ -47,18 +55,13 @@ set encoding=utf-8
 
 
 " Theme
-silent! colorscheme solarized
 set background=dark
-let g:solarized_termcolors=256
-augroup colors
-  autocmd!
-  autocmd ColorScheme * highlight LineNr cterm=NONE ctermfg=256 ctermbg=NONE
-augroup END
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+silent! colorscheme hybrid
 
 " Enable syntax highlighting
 syntax on
-" Enable spell checking. See :help mkspell
-set spell spelllang=en_us
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
 " Allow backspace in insert mode
@@ -79,7 +82,7 @@ set secure
 " Enable line numbers
 set number
 " Doens't really help me.
-" Also it makes hjkl moves way slower.
+" Also it makes hjkl move way slower.
 set norelativenumber
 " Highlight current line
 set cursorline
@@ -113,7 +116,8 @@ augroup file_types
   autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
   " Treat .md files as Markdown
   autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-  " autocmd BufRead,BufNewFile *.md set complete+=kspell
+" Enable spell checking for md files. See :help mkspell
+  autocmd BufRead,BufNewFile *.md set spell spelllang=en_us
 augroup END
 
 
@@ -187,18 +191,6 @@ set sessionoptions-=options
 set splitbelow
 set splitright
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
 " Strip trailing whitespace
 function! StripWhitespace()
 	let save_cursor = getpos(".")
@@ -230,7 +222,7 @@ nnoremap gs :e $MYVIMRC<CR>
 
 vnoremap gt "ty:term t<CR>
 
-" Command line history completion for ctrl-p and ctrl-n
+" Command line history completion with ctrl-p and ctrl-n
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
@@ -279,6 +271,19 @@ vmap gl cgll<Esc>p
 
 
 
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '-g', '']
+endif
+
+" Unite
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <C-p> :Unite -start-insert buffer file_mru file_rec/neovim:!<CR>
+
+
 " Neomake
 let g:neomake_javascript_enabled_makers = ['standard']
 let g:neomake_javascript_jsx_enabled_makers = ['standard']
@@ -306,14 +311,6 @@ if exists("*Syntastic")
   let g:syntastic_less_checkers = ['lessc']
   let g:syntastic_markdown_checkers = ['mdl']
 endif " End Syntastic
-
-" CtrlP
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$'
-  \ }
-
 
 " JSX
 let g:jsx_ext_required = 0
