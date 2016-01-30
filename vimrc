@@ -18,7 +18,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/tpope/vim-unimpaired'
   Plug 'https://github.com/bronson/vim-visual-star-search'
-  Plug 'https://github.com/jiangmiao/auto-pairs'
+  " Plug 'https://github.com/jiangmiao/auto-pairs'
   Plug 'https://github.com/Shougo/unite.vim'
   Plug 'https://github.com/Shougo/neomru.vim'
   Plug 'https://github.com/rking/ag.vim'
@@ -144,13 +144,9 @@ set ttimeoutlen=100
 set incsearch
 
 " Airline
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
 " Automatically populate the g:airline_symbols dictionary with the powerline symbols.
 let g:airline_powerline_fonts = 1
-" Overwrite ugly lien number symbol
+" Overwrite ugly line number symbol
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -267,7 +263,7 @@ endfunction
 " Console log from insert mode; Puts focus inside parentheses
 imap gll console.log()<Esc>==F(a
 " Console log from visual mode on next line, puts visual selection inside parentheses
-vmap gl cgll<Esc>p
+vnoremap gl cgll<Esc>p
 
 
 
@@ -318,3 +314,6 @@ let g:jsx_ext_required = 0
 
 " CamelCaseMotion
 call camelcasemotion#CreateMotionMappings('<leader>')
+
+" Fugitive
+set diffopt=filler,vertical
