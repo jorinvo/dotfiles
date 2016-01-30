@@ -276,9 +276,8 @@ if executable('ag')
 endif
 
 " Unite
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+silent! call unite#filters#matcher_default#use(['matcher_fuzzy'])
 nnoremap <C-p> :Unite -start-insert buffer file_mru file_rec/neovim:!<CR>
-
 
 " Neomake
 let g:neomake_javascript_enabled_makers = ['standard']
@@ -313,7 +312,7 @@ let g:jsx_ext_required = 0
 
 
 " CamelCaseMotion
-call camelcasemotion#CreateMotionMappings('<leader>')
+silent! call camelcasemotion#CreateMotionMappings('<leader>')
 
 " Fugitive
 set diffopt=filler,vertical
