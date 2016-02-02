@@ -116,8 +116,8 @@ augroup file_types
   autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
   " Treat .md files as Markdown
   autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-" Enable spell checking for md files. See :help mkspell
-  autocmd BufRead,BufNewFile *.md set spell spelllang=en_us
+" Enable spell checking only for md files. See :help mkspell
+  autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
 augroup END
 
 
