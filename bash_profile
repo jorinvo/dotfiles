@@ -2,7 +2,7 @@
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
-for file in ~/.{path,bash_prompt,exports,aliases,functions}; do
+for file in ~/.{bash_prompt,exports,path,aliases,functions}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -34,6 +34,11 @@ fi;
 if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
 	complete -o default -o nospace -F _git g;
 fi;
+
+# Completion for https://github.com/zquestz/s
+if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
+    . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
+fi
 
 # Enable rbenv if it exists
 which rbenv &> /dev/null && eval "$(rbenv init -)"

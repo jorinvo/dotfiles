@@ -3,10 +3,13 @@
 # Include custom scripts
 PATH="$HOME/bin:$PATH"
 
+# Include installed Go binaries
+if [ -n "$GOPATH" ]; then
+  PATH="$PATH:$GOPATH/bin"
+fi
 
 # on uberpsace
-if [ -n "$(hostname | grep uberspace)" ]
-then
+if [ -n "$(hostname | grep uberspace)" ]; then
   # nodejs
   PATH="/package/host/localhost/nodejs-5.1.1/bin:$PATH"
   #  ruby
@@ -14,7 +17,6 @@ then
 fi
 
 # rbenv if installed manually
-if ! which rbenv &> /dev/null && [ -d $HOME/.rbenv ]
-then
+if ! which rbenv &> /dev/null && [ -d $HOME/.rbenv ]; then
   PATH="$HOME/.rbenv/bin:$PATH"
 fi

@@ -7,9 +7,9 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB31
 echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
 
 
-sudo apt-get update
+apt update
 
-sudo apt-get install \
+apt install \
   git \
   curl \
   postgresql-9.3 \
@@ -33,7 +33,9 @@ sudo apt-get install \
   build-essential \
   cmake \
   mosh \
-  jq
+  jq \
+  golang
+
 
 # Node
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
@@ -45,7 +47,7 @@ npm install -g \
   tldr
 
 # Neovim
-sudo apt-get install python-dev python-pip python3-dev python3-pip
+apt install python-dev python-pip python3-dev python3-pip
 test -d ~/.vim || mkdir ~/.vim
 
 if [ ! -d ~/.config/nvim ]
@@ -75,3 +77,8 @@ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 ./bin/rbenv global 2.3.0
 # Bundler
 gem install bundler
+
+
+# Go tools
+ go get github.com/zquestz/s
+ go get github.com/jingweno/ccat
