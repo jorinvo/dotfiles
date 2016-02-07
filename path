@@ -4,7 +4,7 @@
 PATH="$HOME/bin:$PATH"
 
 # Include installed Go binaries
-if [ -n "$GOPATH" ]; then
+if [ -n "${GOPATH-}" ]; then
   PATH="$PATH:$GOPATH/bin"
 fi
 
