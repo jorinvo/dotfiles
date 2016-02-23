@@ -3,7 +3,7 @@
 # Check that terminfo exists before changing TERM var to xterm-256color
 # Prevents prompt flashing in Mac OS X 10.6 Terminal.app
 if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-    export TERM='xterm-256color'
+  export TERM='xterm-256color'
 fi
 
 # Turn off standout; turn off underline
@@ -31,77 +31,77 @@ style_branch="${CYAN}"
 style_jobs="\[${RESET}${YELLOW}\]"
 
 if [[ "$SSH_TTY" ]]; then
-    # connected via ssh
-    style_host="\[${BOLD}${RED}\]"
-    style_jobs="\[${BOLD}${RED}\]"
+  # connected via ssh
+  style_host="\[${BOLD}${RED}\]"
+  style_jobs="\[${BOLD}${RED}\]"
 elif [[ "$USER" == "root" ]]; then
-    # logged in as root
-    style_user="\[${BOLD}${RED}\]"
+  # logged in as root
+  style_user="\[${BOLD}${RED}\]"
 fi
 
 is_git_repo() {
-    $(git rev-parse --is-inside-work-tree &> /dev/null)
+  $(git rev-parse --is-inside-work-tree &> /dev/null)
 }
 
 is_git_dir() {
-    $(git rev-parse --is-inside-git-dir 2> /dev/null)
+  $(git rev-parse --is-inside-git-dir 2> /dev/null)
 }
 
 get_git_branch() {
-    local branch_name
+  local branch_name
 
-    # Get the short symbolic ref
-    branch_name=$(git symbolic-ref --quiet --short HEAD 2> /dev/null) ||
-    # If HEAD isn't a symbolic ref, get the short SHA
-    branch_name=$(git rev-parse --short HEAD 2> /dev/null) ||
-    # Otherwise, just give up
-    branch_name="(unknown)"
+  # Get the short symbolic ref
+  branch_name=$(git symbolic-ref --quiet --short HEAD 2> /dev/null) ||
+  # If HEAD isn't a symbolic ref, get the short SHA
+  branch_name=$(git rev-parse --short HEAD 2> /dev/null) ||
+  # Otherwise, just give up
+  branch_name="(unknown)"
 
-    printf $branch_name
+  printf $branch_name
 }
 
 # Git status information
 prompt_git() {
-    local git_info git_state uc us ut st
+  local git_info git_state uc us ut st
 
-    if ! is_git_repo || is_git_dir; then
-        return 1
-    fi
+  if ! is_git_repo || is_git_dir; then
+    return 1
+  fi
 
-    git_info=$(get_git_branch)
+  git_info=$(get_git_branch)
 
-    # Check for uncommitted changes in the index
-    if ! $(git diff --quiet --ignore-submodules --cached); then
-        uc="+"
-    fi
+  # Check for uncommitted changes in the index
+  if ! $(git diff --quiet --ignore-submodules --cached); then
+    uc="+"
+  fi
 
-    # Check for unstaged changes
-    if ! $(git diff-files --quiet --ignore-submodules --); then
-        us="!"
-    fi
+  # Check for unstaged changes
+  if ! $(git diff-files --quiet --ignore-submodules --); then
+    us="!"
+  fi
 
-    # Check for untracked files
-    if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-        ut="?"
-    fi
+  # Check for untracked files
+  if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+    ut="?"
+  fi
 
-    # Check for stashed files
-    if $(git rev-parse --verify refs/stash &>/dev/null); then
-        st="$"
-    fi
+  # Check for stashed files
+  if $(git rev-parse --verify refs/stash &>/dev/null); then
+    st="$"
+  fi
 
-    git_state=$uc$us$ut$st
+  git_state=$uc$us$ut$st
 
-    # Combine the branch name and state information
-    if [[ $git_state ]]; then
-        git_info="$git_info[$git_state]"
-    fi
+  # Combine the branch name and state information
+  if [[ $git_state ]]; then
+    git_info="$git_info[$git_state]"
+  fi
 
-    printf "${WHITE} on ${style_branch}${git_info}"
+  printf "${WHITE} on ${style_branch}${git_info}"
 }
 # Counting background jobs
 jobscount() {
-    jobs -p | wc -l | bc | awk '{if ($0>0) print " (" $0 ")" }';
+  jobs -p | wc -l | bc | awk '{if ($0>0) print " (" $0 ")" }';
 }
 
 

@@ -25,17 +25,5 @@ export MANPAGER='less -X'
 # Always enable colored `grep` output.
 export GREP_OPTIONS='--color=auto'
 
-
-# Git credentials
-GIT_AUTHOR_NAME="Jorin Vogel"
-GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-git config --global user.name "$GIT_AUTHOR_NAME"
-GIT_AUTHOR_EMAIL="hi@jorin.me"
-GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
-git config --global user.email "$GIT_AUTHOR_EMAIL"
-# stop github from prompting for username and passport
-git config --global credential.helper osxkeychain
-
-
 # Go development
 export GOPATH=$HOME/go

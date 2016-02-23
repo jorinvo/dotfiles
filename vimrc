@@ -34,8 +34,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
   Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
-  Plug 'cespare/vim-toml', { 'for': ['toml', 'md'] }
-  Plug 'plasticboy/vim-markdown', { 'for': 'md' }
+  Plug 'cespare/vim-toml', { 'for': ['toml', 'markdown'] }
+  Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 
   " Disabled

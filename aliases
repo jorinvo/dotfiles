@@ -49,7 +49,6 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 alias rmds="find . -type f -name '*.DS_Store' -ls -delete"
 
 # IP addresses
-alias localip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Enhanced WHOIS lookups
@@ -62,25 +61,15 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 # Canonical hex dump; some systems have this symlinked
 command -v hd > /dev/null || alias hd="hexdump -C"
 
-# OS X has no `md5sum`, so use `md5` as a fallback
-command -v md5sum > /dev/null || alias md5sum="md5"
-
-# OS X has no `sha1sum`, so use `shasum` as a fallback
-command -v sha1sum > /dev/null || alias sha1sum="shasum"
-
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
-
-# Reload the shell (i.e. invoke as a login shell)
-alias reload="exec $SHELL -l"
 
 # Pipe my public key to my clipboard.
 alias pubkey="more ~/.ssh/id_rsa.pub | copy && echo '=> Public key copied to pasteboard.'"
 
 # ssh server shortcuts
-# alias uber='ssh -R 52698:localhost:52698 jorin@lepus.uberspace.de'
 alias uber='mosh -p 62739 jorin@lepus.uberspace.de'
-alias sope='ssh -R 52698:localhost:52698 dev@dev.sope.io'
+alias sope='ssh dev@dev.sope.io'
 alias zudu='ssh sope@zudu.cc'
 alias htw='ssh s0545431@uranus.f4.htw-berlin.de'
 
@@ -90,7 +79,7 @@ alias yt-audio='youtube-dl --verbose --extract-audio --audio-format "mp3" -o "%(
 
 #git
 alias g="git"
-alias gd="git d"
+alias gd="git diff"
 alias ga="git add"
 alias gaa="git add --all"
 alias gst="git status -sb"
