@@ -9,8 +9,8 @@ alias ....="c ../../.."
 alias .....="c ../../../.."
 alias p="c ~/projects"
 
-alias e="$EDITOR"
-alias e.='$EDITOR .'
+alias e="${EDITOR}"
+alias e.='${EDITOR} .'
 
 alias h=history
 

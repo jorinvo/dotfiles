@@ -30,7 +30,7 @@ style_chars="\[${RESET}${WHITE}\]"
 style_branch="${CYAN}"
 style_jobs="\[${RESET}${YELLOW}\]"
 
-if [[ "$SSH_TTY" ]]; then
+if [[ "${SSH_TTY}" ]]; then
   # connected via ssh
   style_host="\[${BOLD}${RED}\]"
   style_jobs="\[${BOLD}${RED}\]"
@@ -57,7 +57,7 @@ get_git_branch() {
   # Otherwise, just give up
   branch_name="(unknown)"
 
-  printf $branch_name
+  printf ${branch_name}
 }
 
 # Git status information
@@ -90,11 +90,11 @@ prompt_git() {
     st="$"
   fi
 
-  git_state=$uc$us$ut$st
+  git_state=${uc}${us}${ut}${st}
 
   # Combine the branch name and state information
-  if [[ $git_state ]]; then
-    git_info="$git_info[$git_state]"
+  if [[ ${git_state} ]]; then
+    git_info="${git_info}[${git_state}]"
   fi
 
   printf "${WHITE} on ${style_branch}${git_info}"

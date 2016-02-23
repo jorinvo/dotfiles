@@ -26,4 +26,4 @@ export MANPAGER='less -X'
 export GREP_OPTIONS='--color=auto'
 
 # Go development
-export GOPATH=$HOME/go
+export GOPATH=${HOME}/go
