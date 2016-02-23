@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 # Thanks to https://gist.github.com/rf-/33fc88d3071f4254b80e
+
+
 import neovim, os, re, sys, time
 
 # Get a list of buffers that haven't been deleted. `nvim.buffers` includes

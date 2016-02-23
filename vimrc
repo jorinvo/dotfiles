@@ -1,5 +1,8 @@
 set nocompatible
 
+"
+" Plugins
+"
 if !empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin('~/.vim/plugged')
 
@@ -18,7 +21,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/tpope/vim-unimpaired'
   Plug 'https://github.com/bronson/vim-visual-star-search'
-  " Plug 'https://github.com/jiangmiao/auto-pairs'
   Plug 'https://github.com/Shougo/unite.vim'
   Plug 'https://github.com/Shougo/neomru.vim'
   Plug 'https://github.com/rking/ag.vim'
@@ -40,10 +42,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   " Disabled
 
-  " Plug 'https://github.com/terryma/vim-expand-region'
-  " Plug 'https://github.com/tpope/vim-abolish'
   " Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }
-  " Plug 'https://github.com/marijnh/tern_for_vim', { 'for': 'css' }
   " Plug 'https://github.com/godlygeek/tabular'
 
   " Add plugins to &runtimepath
