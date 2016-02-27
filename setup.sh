@@ -34,7 +34,8 @@ apt install \
   cmake \
   mosh \
   jq \
-  golang
+  golang \
+  mercurial
 
 
 # Node
@@ -44,7 +45,8 @@ nvm install node
 
 npm install -g \
   caniuse-cmd \
-  tldr
+  tldr \
+  how2
 
 # Neovim
 apt install python-dev python-pip python3-dev python3-pip

@@ -38,6 +38,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
   Plug 'cespare/vim-toml', { 'for': ['toml', 'markdown'] }
   Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+  Plug 'https://github.com/fatih/vim-go', { 'for': 'go' }
 
 
   " Disabled
