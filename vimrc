@@ -27,7 +27,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/edsono/vim-matchit'
   Plug 'https://github.com/bkad/CamelCaseMotion'
   Plug 'https://github.com/michaeljsmith/vim-indent-object'
-  Plug 'https://github.com/Valloric/YouCompleteMe'
+  Plug 'https://github.com/Shougo/deoplete.nvim'
   Plug 'https://github.com/benekastah/neomake', { 'for': ['javascript', 'javascript.jsx'] }
 
   " Languages
@@ -36,10 +36,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
   Plug 'https://github.com/elmcast/elm-vim', { 'for': 'elm' }
-  Plug 'cespare/vim-toml', { 'for': ['toml', 'markdown'] }
-  Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+  Plug 'https://github.com/cespare/vim-toml', { 'for': ['toml', 'markdown'] }
+  Plug 'https://github.com/plasticboy/vim-markdown', { 'for': 'markdown' }
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go' }
-
+  Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
+  Plug 'https://github.com/nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 
   " Disabled
 
@@ -212,7 +213,7 @@ nnoremap g/ :noh<CR>
 " Overwrite Y to behave like other uppercase commands
 nmap Y y$
 
-" Go Settings - Opens vimrc
+" Go to Settings - Opens vimrc
 " (Overwrites built in sleep command. Sleep, seriously?)
 nnoremap gs :e $MYVIMRC<CR>
 
@@ -290,22 +291,6 @@ augroup neo_make
   autocmd! BufWritePost *.js Neomake
 augroup END
 
-" Syntastic
-if exists("*Syntastic")
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
-
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-  " let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_javascript_checkers = ['standard']
-  let g:syntastic_css_checkers = ['csslint']
-  let g:syntastic_less_checkers = ['lessc']
-  let g:syntastic_markdown_checkers = ['mdl']
-endif " End Syntastic
 
 " JSX
 let g:jsx_ext_required = 0
@@ -316,3 +301,10 @@ silent! call camelcasemotion#CreateMotionMappings('<leader>')
 
 " Fugitive
 set diffopt=filler,vertical
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#go#align_class = 1
+
+" Go
+let g:go_fmt_command = "goimports"

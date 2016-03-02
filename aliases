@@ -8,7 +8,7 @@ alias ...="c ../.."
 alias ....="c ../../.."
 alias .....="c ../../../.."
 alias p="c ~/projects"
-
+alias cdgo='c ~/go/src/github.com/jorinvo'
 alias e="${EDITOR}"
 alias e.='${EDITOR} .'
 
