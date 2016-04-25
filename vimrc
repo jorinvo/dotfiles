@@ -41,6 +41,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go' }
   Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
   Plug 'https://github.com/nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+  Plug 'https://github.com/jvirtanen/vim-octave', { 'for': ['matlab', 'octave']}
+  " Plug 'https://github.com/klen/python-mode', { 'for': 'python' }
 
   " Disabled
 
@@ -100,6 +102,8 @@ set nostartofline
 set title
 " Allow to hide unsaved buffer
 set hidden
+" Disable closing of all folds
+set nofoldenable
 
 " Softtabs, 2 spaces
 set tabstop=2

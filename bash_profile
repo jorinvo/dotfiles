@@ -46,6 +46,3 @@ export NVM_DIR="/home/jorin/.nvm"
 
 # added by travis gem
 [ -f /home/jorin/.travis/travis.sh ] && source /home/jorin/.travis/travis.sh
-
-# Bind Ctrl-x to fg => to go quickly back to vim
-bind -x '"\C-x":"fg"'
