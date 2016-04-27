@@ -8,26 +8,35 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   " Using full urls for gx command
 
+  " Theme
   Plug 'https://github.com/w0ng/vim-hybrid'
   Plug 'https://github.com/bling/vim-airline'
+  Plug 'https://github.com/edsono/vim-matchit'
+  " Navigation
   Plug 'https://github.com/tpope/vim-vinegar'
   Plug 'https://github.com/tpope/vim-rsi'
+  " Intendation settings
   Plug 'https://github.com/tpope/vim-sleuth'
+  " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/airblade/vim-gitgutter'
+  " Shortcuts
   Plug 'https://github.com/tpope/vim-repeat'
   Plug 'https://github.com/tpope/vim-surround'
   Plug 'https://github.com/tpope/vim-commentary'
   Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/tpope/vim-unimpaired'
   Plug 'https://github.com/bronson/vim-visual-star-search'
+  " File search
   Plug 'https://github.com/Shougo/unite.vim'
   Plug 'https://github.com/Shougo/neomru.vim'
   Plug 'https://github.com/rking/ag.vim'
-  Plug 'https://github.com/edsono/vim-matchit'
+  " Motions
   Plug 'https://github.com/bkad/CamelCaseMotion'
   Plug 'https://github.com/michaeljsmith/vim-indent-object'
+  " Completion
   Plug 'https://github.com/Shougo/deoplete.nvim'
+  " Linting
   Plug 'https://github.com/benekastah/neomake', { 'for': ['javascript', 'javascript.jsx'] }
 
   " Languages
@@ -42,12 +51,12 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
   Plug 'https://github.com/nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
   Plug 'https://github.com/jvirtanen/vim-octave', { 'for': ['matlab', 'octave']}
-  " Plug 'https://github.com/klen/python-mode', { 'for': 'python' }
+  Plug 'https://github.com/klen/python-mode', { 'for': 'python' }
 
   " Disabled
 
-  " Plug 'https://github.com/ap/vim-css-color', { 'for': 'css' }
   " Plug 'https://github.com/godlygeek/tabular'
+
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -312,3 +321,6 @@ let g:deoplete#sources#go#align_class = 1
 
 " Go
 let g:go_fmt_command = "goimports"
+
+" Python
+let g:pymode_python = 'python3'
