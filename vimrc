@@ -15,8 +15,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar'
   Plug 'https://github.com/tpope/vim-rsi'
-  " Intendation settings
-  Plug 'https://github.com/tpope/vim-sleuth'
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/airblade/vim-gitgutter'
@@ -24,7 +22,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-repeat'
   Plug 'https://github.com/tpope/vim-surround'
   Plug 'https://github.com/tpope/vim-commentary'
-  Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/tpope/vim-unimpaired'
   Plug 'https://github.com/bronson/vim-visual-star-search'
   " File search
@@ -52,10 +49,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
   Plug 'https://github.com/jvirtanen/vim-octave', { 'for': ['matlab', 'octave']}
   Plug 'https://github.com/klen/python-mode', { 'for': 'python' }
-
-  " Disabled
-
-  " Plug 'https://github.com/godlygeek/tabular'
+  " Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' }
 
 
   " Add plugins to &runtimepath
@@ -230,6 +224,7 @@ nmap Y y$
 " (Overwrites built in sleep command. Sleep, seriously?)
 nnoremap gs :e $MYVIMRC<CR>
 
+nnoremap gt v:term<CR>
 vnoremap gt "ty:term t<CR>
 
 " Command line history completion with ctrl-p and ctrl-n
@@ -244,10 +239,6 @@ endif
 
 " Switch between the last two files with TAB
 nnoremap <tab> <c-^>
-
-" No surprises with long lines
-nmap <silent> j gj
-nmap <silent> k gk
 
 " Allow dot command in visual mode
 vnoremap . :norm.<CR>
