@@ -233,7 +233,7 @@ cnoremap <C-n> <Down>
 
 if has('nvim')
   " ESC in terminal to exit insert mode
-  tnoremap <esc> <C-\><C-n>
+  tnoremap <esc><esc> <C-\><C-n>
 endif
 
 
@@ -268,7 +268,7 @@ endfunction
 " Console log from insert mode; Puts focus inside parentheses
 imap gll console.log()<Esc>==F(a
 " Console log from visual mode on next line, puts visual selection inside parentheses
-vnoremap gl cgll<Esc>p
+vnoremap gl cconsole.log(")<Esc>
 
 
 
