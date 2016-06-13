@@ -96,3 +96,6 @@ alias gam="git add --all; git commit --amend"
 alias clone="git clone"
 
 alias shuttle='sshuttle --dns -v -r jorin@lepus.uberspace.de 0/0'
+
+# also accepts a port as optional argument
+alias server='python3 -m http.server'
