@@ -2,10 +2,12 @@ sudo add-apt-repository ppa:kilian/f.lux
 sudo add-apt-repository ppa:webupd8team/tor-browser
 sudo add-apt-repository ppa:numix/ppa
 sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo add-apt-repository ppa:webupd8team/java
 
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
 echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
 
+sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' >> /etc/apt/sources.list.d/owncloud-client.list"
 
 apt update
 
@@ -14,7 +16,6 @@ apt install \
   curl \
   postgresql-9.3 \
   chromium-browser \
-  owncloud-client \
   trash-cli \
   xclip \
   spotify-client \
@@ -32,24 +33,25 @@ apt install \
   neovim \
   build-essential \
   cmake \
-  mosh \
   jq \
   golang \
-  mercurial
+  mercurial \
+  filezilla \
+  slack-desktop \
+  thunderbird \
+  ffmpeg \
+  numix-icon-theme-shine
 
 
 # Node
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
 nvm install node
 
-
 npm install -g \
-  caniuse-cmd \
-  tldr \
-  how2
+  caniuse-cmd
+
 
 # Neovim
-apt install python-dev python-pip python3-dev python3-pip
 test -d ~/.vim || mkdir ~/.vim
 
 if [ ! -d ~/.config/nvim ]
@@ -70,6 +72,7 @@ then
   cd ~/.config/nvim/plugged/YouCompleteMe && ./install.py --tern-completer
 fi
 
+
 # Ruby with rbenv (apt version is outdated)
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 cd ~/.rbenv && src/configure && make -C src
@@ -81,6 +84,6 @@ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 gem install bundler
 
 
-# Go tools
- go get github.com/zquestz/s
- go get github.com/jingweno/ccat
+echo 'Manually need to install Python Conda, Telegram and Idea'
+
+
