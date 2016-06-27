@@ -25,7 +25,7 @@ fi
 alias l="ls"
 
 # List all files colorized in long format, including dot files
-alias la="ls -laF ${colorflag}"
+alias la="ls -l-haF ${colorflag}"
 
 # List only directories
 alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
@@ -68,7 +68,7 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 alias pubkey="more ~/.ssh/id_rsa.pub | copy && echo '=> Public key copied to pasteboard.'"
 
 # ssh server shortcuts
-alias uber='mosh -p 62739 jorin@lepus.uberspace.de'
+alias uber='ssh jorin@lepus.uberspace.de'
 alias sope='ssh dev@dev.sope.io'
 alias zudu='ssh sope@zudu.cc'
 alias htw='ssh s0545431@uranus.f4.htw-berlin.de'
@@ -99,3 +99,5 @@ alias shuttle='sshuttle --dns -v -r jorin@lepus.uberspace.de 0/0'
 
 # also accepts a port as optional argument
 alias server='python3 -m http.server'
+
+alias myday='e ~/ownCloud/notes/journal/$(date +%y-%m-%d)'
