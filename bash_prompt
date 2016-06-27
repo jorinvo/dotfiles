@@ -26,7 +26,7 @@ ORANGE=$(tput setaf 172)
 style_user="\[${RESET}${ORANGE}\]"
 style_host="\[${RESET}${YELLOW}\]"
 style_path="\[${RESET}${GREEN}\]"
-style_chars="\[${RESET}${WHITE}\]"
+style_chars="\[${RESET}${MAGENTA}\]"
 style_branch="${CYAN}"
 style_jobs="\[${RESET}${YELLOW}\]"
 
@@ -97,7 +97,7 @@ prompt_git() {
     git_info="${git_info}[${git_state}]"
   fi
 
-  printf "${WHITE} on ${style_branch}${git_info}"
+  printf "${MAGENTA} on ${style_branch}${git_info}"
 }
 # Counting background jobs
 jobscount() {

@@ -15,9 +15,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar'
   Plug 'https://github.com/tpope/vim-rsi'
+  Plug 'https://github.com/junegunn/vim-peekaboo'
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/airblade/vim-gitgutter'
+  Plug 'https://github.com/junegunn/gv.vim'
   " Shortcuts
   Plug 'https://github.com/tpope/vim-repeat'
   Plug 'https://github.com/tpope/vim-surround'
@@ -49,7 +51,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
   Plug 'https://github.com/jvirtanen/vim-octave', { 'for': ['matlab', 'octave']}
   Plug 'https://github.com/klen/python-mode', { 'for': 'python' }
-  " Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' }
+  Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' }
 
 
   " Add plugins to &runtimepath
@@ -61,7 +63,7 @@ set encoding=utf-8
 
 
 " Theme
-set background=dark
+set background=light
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 silent! colorscheme hybrid
@@ -74,6 +76,8 @@ set clipboard=unnamed
 set backspace=indent,eol,start
 " Optimize for fast terminal connections
 set ttyfast
+" Only redraw when necessary.
+set lazyredraw
 " Add the g flag to search/replace by default
 set gdefault
 " Don’t add empty newlines at the end of files
@@ -208,6 +212,12 @@ augroup strip_whitespace
   autocmd BufWrite * :call StripWhitespace()
 augroup END
 
+" Restore cursor position when opening file
+autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
 
 
 " Shortcut Mappings
@@ -225,7 +235,7 @@ nmap Y y$
 nnoremap gs :e $MYVIMRC<CR>
 
 nnoremap gt v:term<CR>
-vnoremap gt "ty:term t<CR>
+vnoremap gt "tyv:term t<CR>
 
 " Command line history completion with ctrl-p and ctrl-n
 cnoremap <C-p> <Up>
@@ -282,7 +292,7 @@ endif
 
 " Unite
 silent! call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <C-p> :Unite -start-insert buffer file_mru file_rec/neovim:!<CR>
+nnoremap <C-p> :Unite -start-insert buffer file_rec/neovim:!<CR>
 
 " Neomake
 let g:neomake_javascript_enabled_makers = ['standard']
@@ -315,3 +325,4 @@ let g:go_fmt_command = "goimports"
 
 " Python
 let g:pymode_python = 'python3'
+let g:pymode_rope = 0
