@@ -16,6 +16,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
   Plug 'https://github.com/junegunn/vim-peekaboo'
+  Plug 'https://github.com/ctrlpvim/ctrlp.vim'
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/airblade/vim-gitgutter'
@@ -27,7 +28,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-unimpaired' " Pairwise shortcuts
   Plug 'https://github.com/bronson/vim-visual-star-search'
   " File search
-  Plug 'https://github.com/Shougo/unite.vim'
   Plug 'https://github.com/rking/ag.vim'
   " Text objects
   Plug 'https://github.com/michaeljsmith/vim-indent-object'
@@ -232,7 +232,7 @@ augroup rc_cmds
   " Restore cursor position when opening file
   autocmd BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
+      \   exe "norm! g`\"" |
       \ endif
 augroup end
 
@@ -264,7 +264,7 @@ nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(st
 " Visual Mode */# from Scrooloose
 function! s:VSetSearch()
   let temp = @@
-  norm! gvy
+  norml! gvy
   let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
   let @@ = temp
 endfunction
@@ -276,10 +276,10 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
 function! FirstCharOrFirstCol()
   let current_col = virtcol('.')
-  normal ^
+  norm ^
   let first_char = virtcol('.')
   if current_col == first_char
-    normal! 0
+    norm! 0
   endif
 endfunction
 
@@ -303,15 +303,18 @@ nmap <space> :nohlsearch <bar> w<CR>
 " Switch between the last two files with TAB
 nnoremap <tab> <c-^>
 
-"
-" Javascript helpers
-"
-
-" Go log:
-" Console log from insert mode; Puts focus inside parentheses
-imap gll console.log()<Esc>==F(a
-" Console log from visual mode on next line, puts visual selection inside parentheses
-vnoremap gl cconsole.log(")<Esc>
+" gl: Go Log command
+" puts a line or a visual selection into a log/print statement
+function JsLog()
+  nmap gl ^iconsole.log(<esc>$a)<esc>
+  vmap gl cconsole.log(<esc>pa)<esc>
+endfunction
+autocmd BufNewFile,BufRead *.js :call JsLog()
+function PyLog()
+  nmap gl ^iprint(<esc>$a)<esc>
+  vmap gl cprint(<esc>pa)<esc>
+endfunction
+autocmd BufNewFile,BufRead *.py :call PyLog()
 
 
 
@@ -324,13 +327,12 @@ if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
 
-  let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '-g', '']
+  " Make CtrlP use ag for listing the files. Way faster and no useless files.
+  " Without --hidden, it never finds .travis.yml since it starts with a dot.
+  let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+  " Disable caching, ag is fast enough
+  let g:ctrlp_use_caching = 0
 endif
-
-
-" Unite
-silent! call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <C-p> :Unite -start-insert buffer file_rec/neovim:!<CR>
 
 
 " Neomake
