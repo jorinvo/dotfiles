@@ -1,18 +1,15 @@
-set nocompatible
-
 "
 " Plugins
 "
+
 if !empty(glob('~/.vim/autoload/plug.vim'))
   call plug#begin('~/.vim/plugged')
 
-  " Using full urls for gx command
+  " Using full urls for `gx` command
 
   " Theme
   Plug 'https://github.com/w0ng/vim-hybrid' " Theme
-  Plug 'https://github.com/bling/vim-airline'
-  Plug 'https://github.com/vim-airline/vim-airline-themes'
-  Plug 'https://github.com/edsono/vim-matchit'
+  Plug 'https://github.com/unblevable/quick-scope'
   Plug 'https://github.com/junegunn/goyo.vim' " Distraction-free mode
   Plug 'https://github.com/mhinz/vim-startify' " Fancy start screen
   " Navigation
@@ -32,11 +29,19 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " File search
   Plug 'https://github.com/Shougo/unite.vim'
   Plug 'https://github.com/rking/ag.vim'
-  " Motions
-  Plug 'https://github.com/bkad/CamelCaseMotion'
+  " Text objects
   Plug 'https://github.com/michaeljsmith/vim-indent-object'
+  Plug 'https://github.com/wellle/targets.vim'
+  Plug 'https://github.com/kana/vim-textobj-user'
+  Plug 'https://github.com/kana/vim-textobj-entire'
+  Plug 'https://github.com/kana/vim-textobj-line'
   " Completion
-  Plug 'https://github.com/Shougo/deoplete.nvim'
+  if has('nvim')
+    Plug 'https://github.com/Shougo/deoplete.nvim'
+    Plug 'https://github.com/carlitux/deoplete-ternjs', { 'for': 'javascript' }
+    Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
+    Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
+  endif
   " Linting
   Plug 'https://github.com/benekastah/neomake', { 'for': 'javascript' }
 
@@ -47,7 +52,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
   Plug 'https://github.com/ternjs/tern_for_vim', { 'do': 'npm i -g tern', 'for': 'javascript' } " For navigation and doc commands
-  Plug 'https://github.com/carlitux/deoplete-ternjs', { 'for': 'javascript' } " For completion
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
@@ -55,22 +59,45 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/plasticboy/vim-markdown', { 'for': 'markdown' }
 
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go' }
-  Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
   Plug 'https://github.com/nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 
   Plug 'https://github.com/jvirtanen/vim-octave', { 'for': ['matlab', 'octave']}
 
   Plug 'https://github.com/klen/python-mode', { 'for': 'python' } " For linting, syntax, motions
   Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' } " For navigation and doc commands
-  Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' } " For completion
-
 
   " Add plugins to &runtimepath
   call plug#end()
 endif
 
+" Enable built-in plugin to open man pages using :Man command (:Man vim)
+runtime! ftplugin/man.vim
 
-set encoding=utf-8
+
+
+"
+" Basics
+"
+
+" These are default on NeoVim
+if !has('nvim')
+  set nocompatible
+  filetype off
+  filetype plugin indent on
+
+  set ttyfast
+  set ttymouse=xterm2
+  set ttyscroll=3
+
+  set laststatus=2 " Always show status line
+  set encoding=utf-8              " Set default encoding to UTF-8
+  set autoread                    " Automatically reread changed files without asking me anything
+  set autoindent
+  set backspace=indent,eol,start  " Makes backspace key more powerful.
+  set incsearch                   " Shows the match while typing
+  set hlsearch                    " Highlight found searches
+  set mouse=a
+endif
 
 
 " Theme
@@ -79,14 +106,24 @@ let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 silent! colorscheme hybrid
 
+
+" Statusline
+"
+" %y      filetype
+" %w      [Preview] flag
+" %r      [RO] flag
+" %f      relative file name
+" %m      [+] or [-] flag
+" %l      current line
+" %L      total lines
+" %3.c    current column displayed in 3 characters
+" %(\ %)  empty space, but grouped to allow at end of line
+set statusline=\ %y%w%r\ %f\ %m%=%l/%L\ \|%3.c%(\ %)
+
 " Enable syntax highlighting
 syntax on
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
-" Allow backspace in insert mode
-set backspace=indent,eol,start
-" Optimize for fast terminal connections
-set ttyfast
 " Only redraw when necessary.
 set lazyredraw
 " Add the g flag to search/replace by default
@@ -100,16 +137,9 @@ set modelines=4
 " Enable per-directory .vimrc files and disable unsafe commands in them
 set exrc
 set secure
-" Enable line numbers
-set number
-" Doens't really help me.
-" Also it makes hjkl move way slower.
-set norelativenumber
 " Highlight current line
 set cursorline
 set list
-" Highlight searches
-set hlsearch
 " Ignore case of searches
 set ignorecase smartcase
 " Disable error bells
@@ -129,31 +159,6 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
-" Automatic commands
-
-" Enable file type detection
-filetype on
-augroup file_types
-  autocmd!
-  " Treat .md files as Markdown
-  autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
-" Enable spell checking only for md files. See :help mkspell
-  autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
-augroup END
-
-
-set autoread "to reload files changed outside vim
-
-" swap files are boring
-set noswapfile
-set nobackup
-set nowb
-" Centralize undo history
-if exists("&undodir")
-  set undofile
-  set undodir=~/.vim/undo
-endif
-
 set complete-=i
 set smarttab
 
@@ -162,22 +167,30 @@ set nrformats-=octal
 set ttimeout
 set ttimeoutlen=100
 
-set incsearch
-
-" Airline
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.branch = '⎇'
-let g:airline_theme='light'
-
-set noshowmode " Mode is already in Airline
-set laststatus=2 " Always show status line
 set ruler
 set showcmd
+set showmode
 set wildmenu
+
+" swap files are boring
+set noswapfile
+set nobackup
+set nowb
+
+set fileformats+=mac
+
+set history=1000
+set viminfo^=!
+set sessionoptions-=options
+
+set splitbelow
+set splitright
+
+" Centralize undo history
+if exists("&undodir")
+  set undofile
+  set undodir=~/.vim/undo
+endif
 
 if !&scrolloff
   set scrolloff=1
@@ -195,20 +208,15 @@ if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
-if has('path_extra')
-  setglobal tags-=./tags tags-=./tags; tags^=./tags;
-endif
+" Spell checking
+augroup spell_chekcing
+  autocmd!
+" Enable spell checking for text files. See :help mkspell
+  autocmd BufNewFile,BufRead *.md,*.txt setlocal spell spelllang=en_us
+  autocmd BufNewFile,BufRead *.md setlocal complete+=kspell
+augroup end
 
-set fileformats+=mac
-
-set history=1000
-set viminfo^=!
-set sessionoptions-=options
-
-set splitbelow
-set splitright
-
-" Strip trailing whitespace
+" Strip trailing whitespace on save
 function! StripWhitespace()
   let save_cursor = getpos(".")
   let old_query = getreg('/')
@@ -219,55 +227,16 @@ endfunction
 augroup strip_whitespace
   autocmd!
   autocmd BufWrite * :call StripWhitespace()
-augroup END
+augroup end
 
 " Restore cursor position when opening file
-autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-
-
-
-" Shortcut Mappings
-
-" SPACE to save
-nmap <space> :w<CR>
-" Clear search highlight
-nnoremap g/ :noh<CR>
-
-" Overwrite Y to behave like other uppercase commands
-nmap Y y$
-
-" Go to Settings - Opens vimrc
-" (Overwrites built in sleep command. Sleep, seriously?)
-nnoremap gs :e $MYVIMRC<CR>
-
-nnoremap gt v:term<CR>
-vnoremap gt "tyv:term t<CR>
-
-" Command line history completion with ctrl-p and ctrl-n
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-
-if has('nvim')
-  " ESC in terminal to exit insert mode
-  tnoremap <esc><esc> <C-\><C-n>
-endif
-
-
-" Switch between the last two files with TAB
-nnoremap <tab> <c-^>
-
-" Allow dot command in visual mode
-vnoremap . :norm.<CR>
-vnoremap @ :norm@
-
-" Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+augroup cursor_pos
+  autocmd!
+  autocmd BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
+augroup end
 
 " Jump to first character or column
 nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
@@ -280,16 +249,78 @@ function! FirstCharOrFirstCol()
   endif
 endfunction
 
+
+
+"
+" Shortcut Mappings
+"
+
+" `ESC ESC` in terminal to exit insert mode
+if has('nvim')
+  tnoremap <esc><esc> <C-\><C-n>
+endif
+
+" Command line history completion with ctrl-p and ctrl-n
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" Allow dot command in visual mode
+vnoremap . :norm.<CR>
+
+" Overwrite Y to behave like other uppercase commands
+nmap Y y$
+
+" Thx https://github.com/fatih/dotfiles/blob/master/init.vim
+" Don't move on * I'd use a function for this but Vim clobbers the last search
+" when you're in a function so fuck it, practicality beats purity.
+nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+
+" Visual Mode */# from Scrooloose
+function! s:VSetSearch()
+  let temp = @@
+  norm! gvy
+  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+  let @@ = temp
+endfunction
+
+vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
+vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Go settings - Opens vimrc
+" (Overwrites built in sleep command. Sleep, seriously?)
+nnoremap gs :e $MYVIMRC<CR>
+
+" Go terminal - Open a terminal v-split
+nnoremap gt v:term<CR>
+vnoremap gt "tyv:term t<CR>
+
+" SPACE to save
+nmap <space> :w<CR>
+
+" Switch between the last two files with TAB
+nnoremap <tab> <c-^>
+
 "
 " Javascript helpers
 "
 
+" Go log:
 " Console log from insert mode; Puts focus inside parentheses
 imap gll console.log()<Esc>==F(a
 " Console log from visual mode on next line, puts visual selection inside parentheses
 vnoremap gl cconsole.log(")<Esc>
 
 
+
+"
+" Plugin configuration
+"
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -299,9 +330,11 @@ if executable('ag')
   let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '-g', '']
 endif
 
+
 " Unite
 silent! call unite#filters#matcher_default#use(['matcher_fuzzy'])
 nnoremap <C-p> :Unite -start-insert buffer file_rec/neovim:!<CR>
+
 
 " Neomake
 let g:neomake_javascript_enabled_makers = ['standard']
@@ -310,11 +343,10 @@ let g:neomake_open_list = 2
 augroup neo_make
   autocmd!
   autocmd! BufWritePost *.js Neomake
-augroup END
+augroup end
 
 
 " JS
-" Use deoplete.
 let g:tern_request_timeout = 1
 let g:tern_show_signature_in_pum = 0  " This do disable full signature type on autocomplete
 " Use tern_for_vim.
@@ -326,35 +358,48 @@ augroup tern_docs
   autocmd Filetype javascript noremap gd :TernDef<CR>
   autocmd Filetype javascript noremap gr :TernRename<CR>
   autocmd Filetype javascript noremap <leader>u :TernRefs<CR>
-augroup END
+augroup end
+
 
 " JSON
 let g:vim_json_syntax_conceal = 0
 
-" CamelCaseMotion
-silent! call camelcasemotion#CreateMotionMappings('<leader>')
 
 " Fugitive
 set diffopt=filler,vertical
 
+
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#align_class = 1
+" Use fuzzy matches
+call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
+
 
 " Go
 let g:go_fmt_command = "goimports"
 
+
 " Python
 let g:pymode_python = 'python3'
 let g:pymode_rope = 0
-let g:jedi#completions_enabled = 0
+if !has('nvim')
+  let g:jedi#completions_enabled = 0
+endif
 let g:jedi#goto_command = "gD"
 let g:jedi#goto_assignments_command = "gd"
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#rename_command = "gr"
+
 
 " Startify
 let g:startify_list_order = ['sessions', 'files', 'dir']
 let g:startify_files_number = 5
 let g:startify_change_to_dir = 1
 let g:startify_session_persistence = 1
+
+
+" Quick scope
+"
+" Trigger a highlight in the appropriate direction when pressing these keys:
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
