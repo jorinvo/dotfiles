@@ -208,47 +208,33 @@ if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
-" Spell checking
-augroup spell_chekcing
-  autocmd!
-" Enable spell checking for text files. See :help mkspell
+
+
+"
+" Auto-commands
+"
+augroup rc_cmds
+  " Spell checking
+  " Enable spell checking for text files. See :help mkspell
   autocmd BufNewFile,BufRead *.md,*.txt setlocal spell spelllang=en_us
   autocmd BufNewFile,BufRead *.md setlocal complete+=kspell
-augroup end
 
-" Strip trailing whitespace on save
-function! StripWhitespace()
+  " Strip trailing whitespace on save
+  function! StripWhitespace()
   let save_cursor = getpos(".")
   let old_query = getreg('/')
   :%s/\s\+$//e
   call setpos('.', save_cursor)
   call setreg('/', old_query)
-endfunction
-augroup strip_whitespace
-  autocmd!
+  endfunction
   autocmd BufWrite * :call StripWhitespace()
-augroup end
 
-" Restore cursor position when opening file
-augroup cursor_pos
-  autocmd!
+  " Restore cursor position when opening file
   autocmd BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") |
       \   exe "normal! g`\"" |
       \ endif
 augroup end
-
-" Jump to first character or column
-nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
-function! FirstCharOrFirstCol()
-  let current_col = virtcol('.')
-  normal ^
-  let first_char = virtcol('.')
-  if current_col == first_char
-    normal! 0
-  endif
-endfunction
-
 
 
 "
@@ -286,6 +272,17 @@ endfunction
 vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
 vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 
+" Jump to first character or column
+nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
+function! FirstCharOrFirstCol()
+  let current_col = virtcol('.')
+  normal ^
+  let first_char = virtcol('.')
+  if current_col == first_char
+    normal! 0
+  endif
+endfunction
+
 " Quicker window movement
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -300,8 +297,8 @@ nnoremap gs :e $MYVIMRC<CR>
 nnoremap gt v:term<CR>
 vnoremap gt "tyv:term t<CR>
 
-" SPACE to save
-nmap <space> :w<CR>
+" SPACE to save and also disable highlighting of last search
+nmap <space> :nohlsearch <bar> w<CR>
 
 " Switch between the last two files with TAB
 nnoremap <tab> <c-^>
