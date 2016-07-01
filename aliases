@@ -100,4 +100,4 @@ alias shuttle='sshuttle --dns -v -r jorin@lepus.uberspace.de 0/0'
 # also accepts a port as optional argument
 alias server='python3 -m http.server'
 
-alias myday='e ~/ownCloud/notes/journal/$(date +%y-%m-%d)'
+alias myday='e ~/ownCloud/notes/journal/$(date +%y-%m-%d).md'
