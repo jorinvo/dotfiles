@@ -25,7 +25,7 @@ fi
 alias l="ls"
 
 # List all files colorized in long format, including dot files
-alias la="ls -l-haF ${colorflag}"
+alias la="ls -lhaF ${colorflag}"
 
 # List only directories
 alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
