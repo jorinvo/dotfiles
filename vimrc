@@ -372,7 +372,9 @@ set diffopt=filler,vertical
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#align_class = 1
 " Use fuzzy matches
-call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
+if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has("nvim")
+  call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
+end
 
 
 " Go
@@ -382,7 +384,7 @@ let g:go_fmt_command = "goimports"
 " Python
 let g:pymode_python = 'python3'
 let g:pymode_rope = 0
-if !has('nvim')
+if has('nvim')
   let g:jedi#completions_enabled = 0
 endif
 let g:jedi#goto_command = "gD"
