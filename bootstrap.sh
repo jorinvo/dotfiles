@@ -4,15 +4,10 @@ cd "$(dirname "${BASH_SOURCE}")";
 
 function doIt() {
   ln -sf $(pwd)/vimrc ~/.vimrc;
-  ln -sf $(pwd)/aliases ~/.aliases;
   ln -sf $(pwd)/bash_profile ~/.bash_profile;
-  ln -sf $(pwd)/bash_prompt ~/.bash_prompt;
   ln -sf $(pwd)/bashrc ~/.bashrc;
-  ln -sf $(pwd)/exports ~/.exports;
-  ln -sf $(pwd)/functions ~/.functions;
   ln -sf $(pwd)/gitconfig ~/.gitconfig;
   ln -sf $(pwd)/inputrc ~/.inputrc;
-  ln -sf $(pwd)/path ~/.path;
   ln -sf $(pwd)/psqlrc ~/.psqlrc;
 
   ln -s $(pwd)/bin ~/bin;
