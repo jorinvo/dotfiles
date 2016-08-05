@@ -312,7 +312,7 @@ alias myday='e ~/journal/$(date +%y-%m-%d).md'
 
 #Enter directory and list files
 function c() {
-  cd "$@" && l
+  cd "$@" && la
 }
 
 # Create a new directory and enter it
@@ -473,3 +473,14 @@ which rbenv &> /dev/null && eval "$(rbenv init -)"
 
 # added by travis gem
 [ -f /home/jorin/.travis/travis.sh ] && source /home/jorin/.travis/travis.sh
+
+
+# wakatime for bash
+#
+# And don't forget to create and configure your "~/.wakatime.cfg" file.
+#
+# hook function to send wakatime a tick
+pre_prompt_command() {
+    (wakatime --write --plugin "bash-wakatime/0.0.1" --entity-type app --project Terminal --entity "$(echo $(fc -ln -0) | cut -d ' ' -f1)" 2>&1 > /dev/null &)
+}
+PROMPT_COMMAND="pre_prompt_command; $PROMPT_COMMAND"

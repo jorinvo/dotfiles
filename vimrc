@@ -38,13 +38,13 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Completion
   if has('nvim')
     Plug 'https://github.com/Shougo/deoplete.nvim'
-    Plug 'https://github.com/carlitux/deoplete-ternjs', { 'for': 'javascript' }
     Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
     Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
   " Linting
   Plug 'https://github.com/benekastah/neomake', { 'for': 'javascript' }
-
+  " Misc
+  Plug 'https://github.com/wakatime/vim-wakatime'
   " Languages
   Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
@@ -52,6 +52,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
   Plug 'https://github.com/ternjs/tern_for_vim', { 'do': 'npm i -g tern', 'for': 'javascript' } " For navigation and doc commands
+
+  Plug 'https://github.com/posva/vim-vue', { 'for': 'vue' }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
@@ -171,6 +173,7 @@ set ruler
 set showcmd
 set showmode
 set wildmenu
+set number
 
 " swap files are boring
 set noswapfile
@@ -303,8 +306,12 @@ nmap <space> :nohlsearch <bar> w<CR>
 " Switch between the last two files with TAB
 nnoremap <tab> <c-^>
 
+" Go back - in jump list
+nnoremap gb <C-o>
+
 " gl: Go Log command
 " puts a line or a visual selection into a log/print statement
+" Support for: js, py, go
 function JsLog()
   nmap gl ^iconsole.log(<esc>$a)<esc>
   vmap gl cconsole.log(<esc>pa)<esc>
@@ -315,6 +322,11 @@ function PyLog()
   vmap gl cprint(<esc>pa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.py :call PyLog()
+function GoLog()
+  nmap gl ^ifmt.Println(<esc>$a)<esc>
+  vmap gl cfmt.Println(<esc>pa)<esc>
+endfunction
+autocmd BufNewFile,BufRead *.go :call GoLog()
 
 
 
@@ -345,8 +357,29 @@ augroup neo_make
 augroup end
 
 
+" Go
+let g:go_fmt_command = "goimports"
+augroup go_bindings
+  autocmd!
+  autocmd Filetype go noremap gm :GoRename<CR>
+  autocmd Filetype go noremap gr :GoReferrers<CR>
+augroup end
+
+
+" Python
+let g:pymode_python = 'python3'
+let g:pymode_rope = 0
+if has('nvim')
+  let g:jedi#completions_enabled = 0
+endif
+let g:jedi#goto_command = "gD"
+let g:jedi#goto_assignments_command = "gd"
+let g:jedi#usages_command = "gr"
+let g:jedi#rename_command = "gm"
+
+
 " JS
-let g:tern_request_timeout = 1
+let g:tern_request_timeout = 1 " Disable completion
 let g:tern_show_signature_in_pum = 0  " This do disable full signature type on autocomplete
 " Use tern_for_vim.
 let g:tern#command = ["tern"]
@@ -355,8 +388,8 @@ augroup tern_docs
   autocmd!
   autocmd Filetype javascript noremap K :TernDocBrowse<CR>
   autocmd Filetype javascript noremap gd :TernDef<CR>
-  autocmd Filetype javascript noremap gr :TernRename<CR>
-  autocmd Filetype javascript noremap <leader>u :TernRefs<CR>
+  autocmd Filetype javascript noremap gm :TernRename<CR>
+  autocmd Filetype javascript noremap gr :TernRefs<CR>
 augroup end
 
 
@@ -375,22 +408,6 @@ let g:deoplete#sources#go#align_class = 1
 if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has("nvim")
   call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
 end
-
-
-" Go
-let g:go_fmt_command = "goimports"
-
-
-" Python
-let g:pymode_python = 'python3'
-let g:pymode_rope = 0
-if has('nvim')
-  let g:jedi#completions_enabled = 0
-endif
-let g:jedi#goto_command = "gD"
-let g:jedi#goto_assignments_command = "gd"
-let g:jedi#usages_command = "<leader>u"
-let g:jedi#rename_command = "gr"
 
 
 " Startify
