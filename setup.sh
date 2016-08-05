@@ -4,51 +4,52 @@ sudo add-apt-repository ppa:numix/ppa
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo add-apt-repository ppa:webupd8team/java
 
+# Spotify
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
 echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
 
+# Owncloud client
 sudo sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' >> /etc/apt/sources.list.d/owncloud-client.list"
 
 apt update
 
-apt install \
-  git \
-  curl \
-  postgresql-9.3 \
-  chromium-browser \
-  trash-cli \
-  xclip \
-  spotify-client \
-  fluxgui \
-  tree \
-  youtube-dl \
-  silversearcher-ag \
-  tor-browser \
-  numix-gtk-theme \
-  network-manager-openvpn  \
-  owncloud-client \
-  cloc \
-  nmap \
-  net-tools \
-  neovim \
-  build-essential \
-  cmake \
-  jq \
-  golang \
-  mercurial \
-  filezilla \
-  slack-desktop \
-  thunderbird \
-  ffmpeg \
-  numix-icon-theme-shine
+apt install git
+apt install curl
+apt install postgresql-9.3
+apt install chromium-browser
+apt install spotify-client
+apt install fluxgui
+apt install tree
+apt install youtube-dl
+apt install silversearcher-ag
+apt install tor-browser
+apt install numix-gtk-theme
+apt install network-manager-openvpn
+apt install owncloud-client
+apt install cloc
+apt install nmap
+apt install net-tools
+apt install neovim
+apt install build-essential
+apt install cmake
+apt install jq
+apt install golang
+apt install mercurial
+apt install filezilla
+apt install slack-desktop
+apt install thunderbird
+apt install ffmpeg
+apt install xclip
+apt install numix-icon-theme-shine
+apt install trash-cli
 
 
 # Node
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
 nvm install node
 
-npm install -g \
-  caniuse-cmd
+npm i -g caniuse-cmd
+npm i -g standard
 
 
 # Neovim
@@ -83,7 +84,11 @@ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 # Bundler
 gem install bundler
 
+# Go tools
+go get github.com/spf13/hugo
+go get github.com/ericchiang/pup
 
-echo 'Manually need to install Python Conda, Telegram and Idea'
+
+echo 'Manually need to install Python Conda, Telegram'
 
 
