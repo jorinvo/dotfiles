@@ -10,6 +10,8 @@ function doIt() {
   ln -sf $(pwd)/inputrc ~/.inputrc;
   ln -sf $(pwd)/psqlrc ~/.psqlrc;
 
+  ln -s $(pwd)/../encedit/encedit $(pwd)/bin;
+
   ln -s $(pwd)/bin ~/bin;
 
   source ~/.bash_profile;
