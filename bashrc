@@ -154,9 +154,6 @@ export LESS_TERMCAP_md="${yellow}"
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X'
 
-# Always enable colored `grep` output.
-export GREP_OPTIONS='--color=auto'
-
 # Go development
 export GOPATH=${HOME}/go
 
@@ -193,7 +190,7 @@ if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]; then
 fi
 
 # For python setup
-export PATH="/home/jorin/anaconda3/bin:$PATH"
+export PATH="/home/jorin/miniconda3/bin:$PATH"
 
 
 
