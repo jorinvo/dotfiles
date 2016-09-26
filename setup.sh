@@ -42,7 +42,7 @@ sudo apt install neovim
 sudo apt install owncloud-client
 sudo apt install fluxgui
 sudo apt install numix-gtk-theme
-sudo apt install numix-icon-theme
+sudo apt install numix-icon-theme-circle
 sudo apt install spotify-client
 sudo apt install tor-browser
 
@@ -53,6 +53,7 @@ nvm install node
 
 npm i -g caniuse-cmd
 npm i -g standard
+npm i -g diff-so-fancy
 
 
 # Neovim
@@ -81,9 +82,9 @@ fi
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 cd ~/.rbenv && src/configure && make -C src
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-## ruby version 2.3.0 as default
-./bin/rbenv install 2.3.0
-./bin/rbenv global 2.3.0
+## ruby version 2.3.1 as default
+./bin/rbenv install 2.3.1
+./bin/rbenv global 2.3.1
 ## Bundler
 gem install bundler
 
