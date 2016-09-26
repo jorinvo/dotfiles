@@ -284,7 +284,6 @@ alias gst="git status -sb"
 alias gca="git commit -a"
 alias gc="git commit"
 alias grh="git reset --hard"
-alias gb="git branch -v"
 alias gbm="git branch --merged"
 alias gcob="git checkout -b"
 alias gco="git checkout"
@@ -470,14 +469,3 @@ which rbenv &> /dev/null && eval "$(rbenv init -)"
 
 # added by travis gem
 [ -f /home/jorin/.travis/travis.sh ] && source /home/jorin/.travis/travis.sh
-
-
-# wakatime for bash
-#
-# And don't forget to create and configure your "~/.wakatime.cfg" file.
-#
-# hook function to send wakatime a tick
-pre_prompt_command() {
-    (wakatime --write --plugin "bash-wakatime/0.0.1" --entity-type app --project Terminal --entity "$(echo $(fc -ln -0) | cut -d ' ' -f1)" 2>&1 > /dev/null &)
-}
-PROMPT_COMMAND="pre_prompt_command; $PROMPT_COMMAND"
