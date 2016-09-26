@@ -11,7 +11,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/w0ng/vim-hybrid' " Theme
   Plug 'https://github.com/unblevable/quick-scope'
   Plug 'https://github.com/junegunn/goyo.vim' " Distraction-free mode
-  Plug 'https://github.com/mhinz/vim-startify' " Fancy start screen
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
@@ -36,6 +35,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/kana/vim-textobj-entire'
   Plug 'https://github.com/kana/vim-textobj-line'
   " Completion
+  Plug 'https://github.com/vim-scripts/delimitMate.vim'
   if has('nvim')
     Plug 'https://github.com/Shougo/deoplete.nvim'
     Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
@@ -43,8 +43,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   endif
   " Linting
   Plug 'https://github.com/benekastah/neomake', { 'for': 'javascript' }
-  " Misc
-  Plug 'https://github.com/wakatime/vim-wakatime'
   " Languages
   Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
@@ -73,7 +71,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " Enable built-in plugin to open man pages using :Man command (:Man vim)
-runtime! ftplugin/man.vim
+" runtime! ftplugin/man.vim
 
 
 
@@ -306,29 +304,28 @@ nmap <space> :nohlsearch <bar> w<CR>
 " Switch between the last two files with TAB
 nnoremap <tab> <c-^>
 
-" Go back - in jump list
-nnoremap gb <C-o>
-
 " gl: Go Log command
 " puts a line or a visual selection into a log/print statement
 " Support for: js, py, go
-function JsLog()
+function! JsLog()
   nmap gl ^iconsole.log(<esc>$a)<esc>
   vmap gl cconsole.log(<esc>pa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.js :call JsLog()
-function PyLog()
+function! PyLog()
   nmap gl ^iprint(<esc>$a)<esc>
   vmap gl cprint(<esc>pa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.py :call PyLog()
-function GoLog()
+function! GoLog()
   nmap gl ^ifmt.Println(<esc>$a)<esc>
   vmap gl cfmt.Println(<esc>pa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.go :call GoLog()
 
 
+noremap gb :ls<CR>:b<Space>
+set nomore
 
 "
 " Plugin configuration
@@ -348,7 +345,8 @@ endif
 
 
 " Neomake
-let g:neomake_javascript_enabled_makers = ['standard']
+" let g:neomake_javascript_enabled_makers = ['standard']
+let g:neomake_javascript_enabled_makers = ['jshint']
 " Open location window and keep cursor position
 let g:neomake_open_list = 2
 augroup neo_make
@@ -359,6 +357,10 @@ augroup end
 
 " Go
 let g:go_fmt_command = "goimports"
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
 augroup go_bindings
   autocmd!
   autocmd Filetype go noremap gm :GoRename<CR>
