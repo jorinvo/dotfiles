@@ -29,7 +29,6 @@ sudo apt install youtube-dl
 sudo apt install nmap
 sudo apt install net-tools
 sudo apt install jq
-sudo apt install golang
 sudo apt install mercurial
 
 # GUIs
@@ -87,6 +86,11 @@ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 ./bin/rbenv global 2.3.1
 ## Bundler
 gem install bundler
+
+
+# Go 1.7.1 binaries
+GOURL="https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz"
+wget -q -O - $GOURL | tar -C /usr/local -xzf -
 
 
 # Go tools

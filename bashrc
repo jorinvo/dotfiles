@@ -171,8 +171,9 @@ export NVM_DIR="/home/jorin/.nvm"
 # Include custom scripts
 PATH="${HOME}/bin:${PATH}"
 
-# Include installed Go binaries
+# Include Go installation and local binaries
 if [ -n "${GOPATH-}" ]; then
+  PATH="${PATH}:/usr/local/go/bin"
   PATH="${PATH}:${GOPATH}/bin"
 fi
 
