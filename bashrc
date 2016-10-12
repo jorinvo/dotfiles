@@ -168,9 +168,6 @@ export NVM_DIR="/home/jorin/.nvm"
 ########
 
 
-# Include custom scripts
-PATH="${HOME}/bin:${PATH}"
-
 # Include Go installation and local binaries
 if [ -n "${GOPATH-}" ]; then
   PATH="${PATH}:/usr/local/go/bin"
@@ -209,6 +206,10 @@ alias ..="c .."
 alias ...="c ../.."
 alias ....="c ../../.."
 alias .....="c ../../../.."
+alias ......="c ../../../../.."
+alias .......="c ../../../../../.."
+alias ........="c ../../../../../../.."
+alias .........="c ../../../../../../../.."
 alias p="c ~/projects"
 alias cdgo='c ~/go/src/github.com/jorinvo'
 alias e="${EDITOR}"
