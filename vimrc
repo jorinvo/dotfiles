@@ -290,9 +290,9 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" Go settings - Opens vimrc
+" Global search
 " (Overwrites built in sleep command. Sleep, seriously?)
-nnoremap gs :e $MYVIMRC<CR>
+nnoremap gs :Ag
 
 " Go terminal - Open a terminal v-split
 nnoremap gt v:term<CR>
