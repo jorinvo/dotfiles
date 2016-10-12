@@ -19,79 +19,72 @@ GO_VERSION="1.7.1"
 # Become super user before starting work
 sudo -v
 
-echo "Setting up system with latest toys ..."
+printf "\nSetting up system with latest toys ..."
 
 
 link_dotfile() {
   if [ ! -e ~/.$1 ]
   then
     ln -s $(pwd)/$1 ~/.$1
-    echo "Linked ~./$1"
+    printf "\nLinked ~./$1"
   fi
 }
 
-link_dotfile vimrc
-link_dotfile bash_profile
 link_dotfile bashrc
+link_dotfile bash_profile
 link_dotfile gitconfig
 link_dotfile inputrc
 link_dotfile psqlrc
+link_dotfile vimrc
 
 NVIM_CLIENT="/usr/bin/nvim-client"
 if [ ! -e $NVIM_CLIENT ]
 then
   sudo ln -s $(pwd)/nvim-client $NVIM_CLIENT
-  echo "Linked $NVIM_CLIENT"
+  printf "\nLinked $NVIM_CLIENT"
 fi
 
 
 add_ppa() {
   grep -q "^deb.*$1" /etc/apt/sources.list.d/* \
     || (sudo add-apt-repository -y ppa:$1 \
-    && echo "Added repository: $1")
+    && printf "\nAdded repository: $1")
 }
 
 # Add external repositories
-add_ppa neovim-ppa/unstable
 add_ppa nathan-renniewaldock/flux
+add_ppa neovim-ppa/unstable
 add_ppa numix/ppa
-add_ppa webupd8team/tor-browser
 
+printf "\nUpdate packages\n"
 
 sudo apt-get update
 sudo apt-get upgrade --assume-yes
 
-# Basics
 sudo apt-get --assume-yes install \
-  git \
-  curl \
   build-essential \
-  cmake \
-  tree \
-  ffmpeg \
-  xsel \
-  trash-cli \
-  silversearcher-ag \
+  chromium-browser \
   cloc \
-  postgresql \
-  youtube-dl \
-  nmap \
-  net-tools \
-  jq \
-  mercurial
-
-# GUIs
-sudo apt-get --assume-yes install \
+  cmake \
+  curl \
+  ffmpeg \
   filezilla \
-  thunderbird \
-  chromium-browser
-
-# From custom repositories
-sudo apt-get --assume-yes install \
-  neovim \
   fluxgui \
+  git \
+  jq \
+  mercurial \
+  neovim \
+  net-tools \
+  nmap \
   numix-gtk-theme \
-  numix-icon-theme-circle
+  numix-icon-theme-circle \
+  postgresql \
+  silversearcher-ag \
+  thunderbird \
+  trash-cli \
+  tree \
+  xsel \
+  youtube-dl
 
 # Some cleaning
 sudo apt-get autoremove
@@ -100,29 +93,30 @@ sudo apt-get autoremove
 # nvm
 if [ ! -d $NVM_DIR ] || nvm --version | grep -vq $NVM_VERSION
 then
-  echo "Install nvm $NVM_VERSION"
+  printf "\nInstall nvm $NVM_VERSION"
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash
 fi
 
 # Node
 if ! hash node 2>/dev/null || node -v | grep -vq $NODE_VERSION
 then
-  echo "Install Node $NODE_VERSION"
+  printf "\nInstall Node $NODE_VERSION"
   nvm install $NODE_VERSION
 fi
 
-# Node deps
+# npm packages
+printf "\nUpdate npm packages\n"
 npm update -g
-npm i -g standard
 npm i -g diff-so-fancy
 npm i -g jshint
+npm i -g standard
 npm i -g tern
 
 
 # rbenv
 if [ ! -d ~/.rbenv ]
 then
-  echo "Install rbenv"
+  printf "\nInstall rbenv"
   # Use rbenv - apt version is outdated
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
   cd ~/.rbenv && src/configure && make -C src
@@ -132,7 +126,7 @@ fi
 # Ruby
 if ! hash ruby 2>/dev/null || ruby -v | grep -vq $RUBY_VERSION
 then
-  echo "Install Ruby $RUBY_VERSION"
+  printf "\nInstall Ruby $RUBY_VERSION"
   rbenv install $RUBY_VERSION
   rbenv global $RUBY_VERSION
   ## Bundler
@@ -143,17 +137,17 @@ fi
 # Go binaries
 if ! hash go 2>/dev/null || go version | grep -vq $GO_VERSION
 then
-  echo "Install Go $GO_VERSION"
+  printf "\nInstall Go $GO_VERSION"
   GOURL="https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz"
   wget -q -O - $GOURL | tar -C /usr/local -xzf -
 fi
 
 # Go tools
-echo "Install Go tools"
+printf "\nInstall Go tools"
+go get -u github.com/kisielk/errcheck
+go get -u github.com/FiloSottile/gvt
 go get -u github.com/spf13/hugo
 go get -u github.com/ericchiang/pup
-go get -u github.com/FiloSottile/gvt
-go get -u github.com/kisielk/errcheck
 
 
 # Neovim
@@ -176,4 +170,4 @@ then
   cd ~/.config/nvim/plugged/YouCompleteMe && ./install.py --tern-completer
 fi
 
-echo "All good! Enjoy your day human!"
+printf "\nAll good! Enjoy your day human!"
