@@ -1,5 +1,13 @@
 #/usr/bin/env bash
 
+# My personal development setup
+#
+# Run this script to install and setup basic tools on a machine.
+# Or run it to update current setup to latest changes.
+# Used on a local Ubuntu machine.
+# Steal the bits you like and adjust it to your needs.
+
+
 # Run in dotfiles folder
 cd "$(dirname "${BASH_SOURCE}")"
 # Needed for nvm
