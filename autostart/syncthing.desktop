@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/jorin/bin/syncthing -no-browser -home="/home/jorin/.config/syncthing"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Syncthing
+Name=Syncthing
+Comment[en_US]=http://localhost:8384/
+Comment=http://localhost:8384/

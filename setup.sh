@@ -22,12 +22,19 @@ sudo -v
 printf "\nSetting up system with latest toys ..."
 
 
-link_dotfile() {
-  if [ ! -e ~/.$1 ]
+# Create folders
+mkdir -p ~/bin ~/projects
+
+# Create Symlinks
+link_to() {
+  if [ ! -e $2 ]
   then
-    ln -s $(pwd)/$1 ~/.$1
-    printf "\nLinked ~./$1"
+    ln -s $1 $2
+    printf "\nLinked $2"
   fi
+}
+link_dotfile() {
+  link_to $(pwd)/$1 ~/.$1
 }
 
 link_dotfile bashrc
@@ -36,15 +43,12 @@ link_dotfile gitconfig
 link_dotfile inputrc
 link_dotfile psqlrc
 link_dotfile vimrc
-
-NVIM_CLIENT="/usr/bin/nvim-client"
-if [ ! -e $NVIM_CLIENT ]
-then
-  sudo ln -s $(pwd)/nvim-client $NVIM_CLIENT
-  printf "\nLinked $NVIM_CLIENT"
-fi
+link_to $(pwd)/nvim-client ~/bin/nvim-client
+link_to $(pwd)/autostart ~/.config/autostart
+link_to ~/syncfiles/ssh_config ~/.ssh/config
 
 
+# Add repositories
 add_ppa() {
   grep -q "^deb.*$1" /etc/apt/sources.list.d/* \
     || (sudo add-apt-repository -y ppa:$1 \
@@ -56,7 +60,7 @@ add_ppa nathan-renniewaldock/flux
 add_ppa neovim-ppa/unstable
 add_ppa numix/ppa
 
-printf "\nUpdate packages\n"
+printf "\nUpdating packages\n"
 
 sudo apt-get update
 sudo apt-get upgrade --assume-yes
@@ -74,6 +78,7 @@ sudo apt-get --assume-yes install \
   jq \
   mercurial \
   neovim \
+  network-manager-openvpn-gnome \
   net-tools \
   nmap \
   numix-gtk-theme \
@@ -93,19 +98,19 @@ sudo apt-get autoremove
 # nvm
 if [ ! -d $NVM_DIR ] || nvm --version | grep -vq $NVM_VERSION
 then
-  printf "\nInstall nvm $NVM_VERSION"
+  printf "\nInstalling nvm $NVM_VERSION"
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh | bash
 fi
 
 # Node
 if ! hash node 2>/dev/null || node -v | grep -vq $NODE_VERSION
 then
-  printf "\nInstall Node $NODE_VERSION"
+  printf "\nInstalling Node $NODE_VERSION"
   nvm install $NODE_VERSION
 fi
 
 # npm packages
-printf "\nUpdate npm packages\n"
+printf "\nUpdating npm packages\n"
 npm update -g
 npm i -g diff-so-fancy
 npm i -g jshint
@@ -116,7 +121,7 @@ npm i -g tern
 # rbenv
 if [ ! -d ~/.rbenv ]
 then
-  printf "\nInstall rbenv"
+  printf "\nInstalling rbenv"
   # Use rbenv - apt version is outdated
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
   cd ~/.rbenv && src/configure && make -C src
@@ -126,7 +131,7 @@ fi
 # Ruby
 if ! hash ruby 2>/dev/null || ruby -v | grep -vq $RUBY_VERSION
 then
-  printf "\nInstall Ruby $RUBY_VERSION"
+  printf "\nInstalling Ruby $RUBY_VERSION"
   rbenv install $RUBY_VERSION
   rbenv global $RUBY_VERSION
   ## Bundler
@@ -137,13 +142,13 @@ fi
 # Go binaries
 if ! hash go 2>/dev/null || go version | grep -vq $GO_VERSION
 then
-  printf "\nInstall Go $GO_VERSION"
+  printf "\nInstalling Go $GO_VERSION"
   GOURL="https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz"
   wget -q -O - $GOURL | tar -C /usr/local -xzf -
 fi
 
 # Go tools
-printf "\nInstall Go tools"
+printf "\nInstalling Go tools"
 go get -u github.com/kisielk/errcheck
 go get -u github.com/FiloSottile/gvt
 go get -u github.com/spf13/hugo
@@ -157,11 +162,13 @@ then
   ln -s ~/.vim ~/.config/nvim
   ln -s ~/.vimrc ~/.config/nvim/init.vim
   ln -s /usr/share/vim/vim74/spell/ ~/.config/nvim/
+  printf "\nLinked Neovim files"
 fi
 
 ## vim-plug
 if [ ! -e ~/.config/nvim/autoload/plug.vim ]
 then
+  printf "\nInstalling vim-plug"
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   nvim -c "PlugInstall"
@@ -170,4 +177,18 @@ then
   cd ~/.config/nvim/plugged/YouCompleteMe && ./install.py --tern-completer
 fi
 
-printf "\nAll good! Enjoy your day human!"
+
+# Tunnelbear
+if [ ! -d ~/openvpn ]
+then
+  printf "\nFetching Tunnelbear config"
+  curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+  VPN_URL="https://s3.amazonaws.com/tunnelbear/linux/openvpn.zip"
+  TMP_ZIP="/tmp/tb_vpn.zip"
+  wget -q -O $TMP_ZIP $VPN_URL
+  unzip -d ~ $TMP_ZIP
+fi
+
+
+printf "\nAll good. Enjoy your day human."
+
