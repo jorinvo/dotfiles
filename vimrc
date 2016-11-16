@@ -14,7 +14,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
-  Plug 'https://github.com/junegunn/vim-peekaboo'
+  " Plug 'https://github.com/junegunn/vim-peekaboo'
   Plug 'https://github.com/ctrlpvim/ctrlp.vim'
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
@@ -79,7 +79,7 @@ endif
 " Basics
 "
 
-" These are default on NeoVim
+" These are default in NeoVim
 if !has('nvim')
   set nocompatible
   filetype off
@@ -98,6 +98,9 @@ if !has('nvim')
   set hlsearch                    " Highlight found searches
   set mouse=a
 endif
+
+" Show replacement incrementally in NeoVim
+set inccommand=nosplit
 
 
 " Theme
@@ -242,9 +245,9 @@ augroup end
 " Shortcut Mappings
 "
 
-" `ESC ESC` in terminal to exit insert mode
+" `ESC` in terminal to exit insert mode
 if has('nvim')
-  tnoremap <esc><esc> <C-\><C-n>
+  tnoremap <esc> <C-\><C-n>
 endif
 
 " Command line history completion with ctrl-p and ctrl-n
@@ -291,8 +294,12 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " Global search
-" (Overwrites built in sleep command. Sleep, seriously?)
-nnoremap gs :Ag
+" (Overwrites built-in sleep command. Sleep, seriously?)
+nnoremap gs :Ag<Space>
+
+" Quit window
+" (Overwrites built-in ex mode command)
+nnoremap Q :q<CR>
 
 " Go terminal - Open a terminal v-split
 nnoremap gt v:term<CR>
@@ -345,8 +352,8 @@ endif
 
 
 " Neomake
-" let g:neomake_javascript_enabled_makers = ['standard']
-let g:neomake_javascript_enabled_makers = ['jshint']
+let g:neomake_javascript_enabled_makers = ['standard']
+" let g:neomake_javascript_enabled_makers = ['jshint']
 " Open location window and keep cursor position
 let g:neomake_open_list = 2
 augroup neo_make
@@ -361,6 +368,8 @@ let g:go_auto_type_info = 1
 let g:go_auto_sameids = 1
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'gocyclo', 'vetshadow', 'aligncheck', 'gotype', 'ineffassign', 'staticcheck', 'unused', 'varcheck', 'gosimple', 'misspell', 'goconst', 'dupl', 'gas', 'interfacer', 'lll', 'deadcode', 'unconvert', 'structcheck']
+
 augroup go_bindings
   autocmd!
   autocmd Filetype go noremap gm :GoRename<CR>

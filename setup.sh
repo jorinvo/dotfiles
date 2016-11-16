@@ -158,6 +158,7 @@ fi
 # Go tools
 printf "\nInstalling Go tools"
 go get -u github.com/kisielk/errcheck
+go get github.com/fzipp/gocyclo
 go get -u github.com/FiloSottile/gvt
 go get -u github.com/spf13/hugo
 go get -u github.com/ericchiang/pup

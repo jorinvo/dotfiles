@@ -156,6 +156,7 @@ export MANPAGER='less -X'
 
 # Go development
 export GOPATH=${HOME}/go
+export GOROOT=/usr/local/go
 
 export NVM_DIR="/home/jorin/.nvm"
 [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"  # This loads nvm
@@ -292,6 +293,8 @@ alias gba="git branch -a"
 alias gl="git log --pretty='format:%Cgreen%h%Creset %an - %s' --graph"
 alias gam="git add --all; git commit --amend"
 alias clone="git clone"
+alias gpush="git push"
+alias gpull="git pull --rebase"
 
 # also accepts a port as optional argument
 alias server='python3 -m http.server'
