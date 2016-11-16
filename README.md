@@ -5,8 +5,8 @@
 This a highly customized setup and no one should just copy it and use it as is.
 Please take your time to pick what you need and change everything to your liking.
 
-- Run `./bootstrap.sh` to link all the dotfiles in your home directory.
-- Use `./setup.sh` to install all my packages on Ubuntu.
+Run `./setup.sh` to link dotfiles and install packages.
+Can also be run to update dependencies.
 
 ## Notes
 
