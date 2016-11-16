@@ -53,7 +53,10 @@ link_dotfile psqlrc
 link_dotfile vimrc
 link_to $(pwd)/nvim-client ~/bin/nvim-client
 link_to $(pwd)/autostart ~/.config/autostart
-link_to ~/syncfiles/ssh_config ~/.ssh/config
+link_to ~/syncfiles/ssh/config ~/.ssh/config
+link_to ~/syncfiles/ssh/id_rsa ~/.ssh/id_rsa
+link_to ~/syncfiles/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
+exit
 
 
 # Add repositories
