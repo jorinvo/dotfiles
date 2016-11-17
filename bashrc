@@ -158,7 +158,7 @@ export MANPAGER='less -X'
 export GOPATH=${HOME}/go
 export GOROOT=/usr/local/go
 
-export NVM_DIR="/home/jorin/.nvm"
+export NVM_DIR="${HOME}/.nvm"
 [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"  # This loads nvm
 
 
@@ -192,7 +192,7 @@ if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]; then
 fi
 
 # For python setup
-export PATH="/home/jorin/miniconda3/bin:$PATH"
+export PATH="${HOME}/miniconda3/bin:$PATH"
 
 
 
@@ -472,4 +472,4 @@ fi
 which rbenv &> /dev/null && eval "$(rbenv init -)"
 
 # added by travis gem
-[ -f /home/jorin/.travis/travis.sh ] && source /home/jorin/.travis/travis.sh
+[ -f ${HOME}/.travis/travis.sh ] && source ${HOME}/.travis/travis.sh
