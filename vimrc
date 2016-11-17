@@ -35,7 +35,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/kana/vim-textobj-entire'
   Plug 'https://github.com/kana/vim-textobj-line'
   " Completion
-  Plug 'https://github.com/vim-scripts/delimitMate.vim'
+  " Plug 'https://github.com/vim-scripts/delimitMate.vim'
   if has('nvim')
     Plug 'https://github.com/Shougo/deoplete.nvim'
     Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
@@ -100,7 +100,9 @@ if !has('nvim')
 endif
 
 " Show replacement incrementally in NeoVim
-set inccommand=nosplit
+if exists("&inccommand")
+  set inccommand=nosplit
+endif
 
 
 " Theme
