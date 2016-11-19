@@ -133,10 +133,7 @@ PS1+="${style_chars}\$ \[${RESET}\]" # $ (and reset color)
 
 
 # Neovim as editor (fall back to Vim)
-export EDITOR="$(\
-  (which nvim-client &> /dev/null && echo nvim-client) || \
-  (which nvim &> /dev/null && echo nvim) || \
-  echo vim)"
+export EDITOR="$((which nvim-client &> /dev/null && echo nvim-client) || (which nvim &> /dev/null && echo nvim) || echo vim)"
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768'
@@ -156,7 +153,6 @@ export MANPAGER='less -X'
 
 # Go development
 export GOPATH=${HOME}/go
-export GOROOT=/usr/local/go
 
 export NVM_DIR="${HOME}/.nvm"
 [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"  # This loads nvm
@@ -192,7 +188,7 @@ if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]; then
 fi
 
 # For python setup
-export PATH="${HOME}/miniconda3/bin:$PATH"
+export PATH="${HOME}/anaconda3/bin:$PATH"
 
 
 
@@ -215,9 +211,9 @@ alias .......="c ../../../../../.."
 alias ........="c ../../../../../../.."
 alias .........="c ../../../../../../../.."
 alias p="c ~/projects"
-alias cdgo='c ~/go/src/github.com/jorinvo'
+alias cdgo="c ${GOPATH}/src/github.com/jorinvo"
 alias e="${EDITOR}"
-alias e.='${EDITOR} .'
+alias e.="${EDITOR} ."
 
 alias h=history
 
@@ -414,9 +410,9 @@ function codepoint() {
 # opens the given location
 function o() {
   if [ "$1" = "" ] ; then
-    xdg-open .
+    open .
   else
-    xdg-open "$1"
+    open "$1"
   fi
 }
 
@@ -457,16 +453,6 @@ done;
 if [ -f /etc/bash_completion ]; then
   source /etc/bash_completion;
 fi;
-
-# Enable tab completion for `g` by marking it as an alias for `git`
-if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
-  complete -o default -o nospace -F _git g;
-fi;
-
-# Completion for https://github.com/zquestz/s
-if [ -f ${GOPATH}/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
-  . ${GOPATH}/src/github.com/zquestz/s/autocomplete/s-completion.bash
-fi
 
 # Enable rbenv if it exists
 which rbenv &> /dev/null && eval "$(rbenv init -)"
