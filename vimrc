@@ -9,13 +9,12 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   " Theme
   Plug 'https://github.com/w0ng/vim-hybrid' " Theme
-  Plug 'https://github.com/unblevable/quick-scope'
-  Plug 'https://github.com/junegunn/goyo.vim' " Distraction-free mode
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
-  " Plug 'https://github.com/junegunn/vim-peekaboo'
+  Plug 'https://github.com/junegunn/vim-peekaboo'
   Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+  Plug 'https://github.com/terryma/vim-multiple-cursors'
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/airblade/vim-gitgutter'
@@ -35,14 +34,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/kana/vim-textobj-entire'
   Plug 'https://github.com/kana/vim-textobj-line'
   " Completion
-  " Plug 'https://github.com/vim-scripts/delimitMate.vim'
   if has('nvim')
     Plug 'https://github.com/Shougo/deoplete.nvim'
     Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
     Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
-  " Linting
-  Plug 'https://github.com/benekastah/neomake', { 'for': 'javascript' }
   " Languages
   Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
@@ -50,6 +46,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
   Plug 'https://github.com/ternjs/tern_for_vim', { 'do': 'npm i -g tern', 'for': 'javascript' } " For navigation and doc commands
+  Plug 'https://github.com/benekastah/neomake', { 'do': 'npm i -g standard jshint', 'for': 'javascript' } " linting
 
   Plug 'https://github.com/posva/vim-vue', { 'for': 'vue' }
 
@@ -69,10 +66,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Add plugins to &runtimepath
   call plug#end()
 endif
-
-" Enable built-in plugin to open man pages using :Man command (:Man vim)
-" runtime! ftplugin/man.vim
-
 
 
 "
@@ -108,7 +101,6 @@ endif
 " Theme
 set background=light
 let g:hybrid_custom_term_colors = 1
-let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 silent! colorscheme hybrid
 
 
@@ -353,17 +345,6 @@ if executable('ag')
 endif
 
 
-" Neomake
-let g:neomake_javascript_enabled_makers = ['standard']
-" let g:neomake_javascript_enabled_makers = ['jshint']
-" Open location window and keep cursor position
-let g:neomake_open_list = 2
-augroup neo_make
-  autocmd!
-  autocmd! BufWritePost *.js Neomake
-augroup end
-
-
 " Go
 let g:go_fmt_command = "goimports"
 let g:go_auto_type_info = 1
@@ -404,6 +385,19 @@ augroup tern_docs
   autocmd Filetype javascript noremap gm :TernRename<CR>
   autocmd Filetype javascript noremap gr :TernRefs<CR>
 augroup end
+" Neomake
+if filereadable(".jshintrc")
+  let g:neomake_javascript_enabled_makers = ['jshint']
+else
+  let g:neomake_javascript_enabled_makers = ['standard']
+endif
+" Open location window and keep cursor position
+let g:neomake_open_list = 2
+" Run on save
+augroup neo_make
+  autocmd!
+  autocmd! BufWritePost *.js Neomake
+augroup end
 
 
 " JSON
@@ -421,16 +415,3 @@ let g:deoplete#sources#go#align_class = 1
 if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has("nvim")
   call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
 end
-
-
-" Startify
-let g:startify_list_order = ['sessions', 'files', 'dir']
-let g:startify_files_number = 5
-let g:startify_change_to_dir = 1
-let g:startify_session_persistence = 1
-
-
-" Quick scope
-"
-" Trigger a highlight in the appropriate direction when pressing these keys:
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
