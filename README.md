@@ -10,6 +10,6 @@ Can also be run to update dependencies.
 
 ## Notes
 
-Thanks to Mathias for inspiration [dotfiles](https://github.com/mathiasbynens/dotfiles)!
+Thanks to [Mathias](https://github.com/mathiasbynens/dotfiles) for inspiration!
 
 __Licence *MIT*__

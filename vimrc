@@ -12,7 +12,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
-  Plug 'https://github.com/junegunn/vim-peekaboo'
   Plug 'https://github.com/ctrlpvim/ctrlp.vim'
   Plug 'https://github.com/terryma/vim-multiple-cursors'
   " Git
@@ -296,8 +295,9 @@ nnoremap gs :Ag<Space>
 nnoremap Q :q<CR>
 
 " Go terminal - Open a terminal v-split
-nnoremap gt v:term<CR>
-vnoremap gt "tyv:term t<CR>
+nnoremap gt :term<CR>
+" Opens terminal and runs selction as cmd
+vnoremap gt "ty<C-W>v:term <C-R>t<CR>
 
 " SPACE to save and also disable highlighting of last search
 nmap <space> :nohlsearch <bar> w<CR>
@@ -325,8 +325,14 @@ endfunction
 autocmd BufNewFile,BufRead *.go :call GoLog()
 
 
+" Go buffer - list buffers and open prompt
 noremap gb :ls<CR>:b<Space>
 set nomore
+
+
+" Zplit vertical
+noremap zv <C-W>v
+
 
 "
 " Plugin configuration
