@@ -102,6 +102,12 @@ brew cask install \
   spotify  \
   vlc
 
+# Bash Completion
+brew tap homebrew/completions
+## Golang
+curl -s https://raw.githubusercontent.com/skelterjohn/go-pkg-complete/master/go-pkg-complete.bash.inc > $(brew --prefix)/etc/bash_completion.d/go-pkg-complete
+chmod +x $(brew --prefix)/etc/bash_completion.d/go-pkg-complete
+
 
 # Node
 if ! hash node 2>/dev/null || node -v | grep -vq $NODE_VERSION

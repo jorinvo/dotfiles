@@ -450,9 +450,16 @@ for option in autocd globstar; do
 done;
 
 # Add tab completion for many Bash commands
+# Linux
 if [ -f /etc/bash_completion ]; then
   source /etc/bash_completion;
 fi;
+# macOS
+if which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
+fi
+# NPM
+source <(npm completion)
 
 # Enable rbenv if it exists
 which rbenv &> /dev/null && eval "$(rbenv init -)"
