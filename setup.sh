@@ -89,6 +89,7 @@ brew install \
 
 brew cask install \
   anaconda \
+  docker \
   spectacle \
   flux \
   tunnelbear  \
@@ -135,11 +136,12 @@ then
   printf "\nInstalling vim-plug"
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  nvim -c "PlugInstall"
+  nvim +PlugInstall +qall
   #### YouCompleteMe
   pip install neovim
   cd ~/.config/nvim/plugged/YouCompleteMe && ./install.py --tern-completer
 fi
+nvim +PlugUpgrade +PlugUpdate +qall
 
 
 printf "\nAll good. Enjoy your day human."
