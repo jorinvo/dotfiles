@@ -40,12 +40,13 @@ link_dotfile() {
   link_to $(pwd)/$1 ~/.$1
 }
 
+link_dotfile inputrc
 link_dotfile bashrc
 link_dotfile bash_profile
 link_dotfile gitconfig
-link_dotfile inputrc
-link_dotfile psqlrc
 link_dotfile vimrc
+link_dotfile psqlrc
+link_dotfile sqliterc
 link_to $(pwd)/nvim-client ~/bin/nvim-client
 link_to ~/syncfiles/ssh/config ~/.ssh/config
 link_to ~/syncfiles/ssh/id_rsa ~/.ssh/id_rsa
