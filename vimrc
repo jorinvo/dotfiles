@@ -7,6 +7,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   " Using full urls for `gx` command
 
+  " Misc
+  Plug 'https://github.com/editorconfig/editorconfig-vim'
   " Theme
   Plug 'https://github.com/w0ng/vim-hybrid' " Theme
   " Navigation
@@ -55,9 +57,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/plasticboy/vim-markdown', { 'for': 'markdown' }
 
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go' }
-  Plug 'https://github.com/nsf/gocode', { 'for': 'go', 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
-
-  Plug 'https://github.com/jvirtanen/vim-octave', { 'for': ['matlab', 'octave']}
 
   Plug 'https://github.com/klen/python-mode', { 'for': 'python' } " For linting, syntax, motions
   Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' } " For navigation and doc commands
@@ -99,8 +98,8 @@ endif
 
 " Theme
 set background=light
-let g:hybrid_custom_term_colors = 1
 silent! colorscheme hybrid
+let g:hybrid_custom_term_colors = 1
 
 
 " Statusline
@@ -330,10 +329,6 @@ noremap gb :ls<CR>:b<Space>
 set nomore
 
 
-" Zplit vertical
-noremap zv <C-W>v
-
-
 "
 " Plugin configuration
 "
@@ -353,8 +348,8 @@ endif
 
 " Go
 let g:go_fmt_command = "goimports"
-let g:go_auto_type_info = 1
-let g:go_auto_sameids = 1
+" let g:go_auto_type_info = 1
+" let g:go_auto_sameids = 1
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'gocyclo', 'vetshadow', 'aligncheck', 'gotype', 'ineffassign', 'staticcheck', 'unused', 'varcheck', 'gosimple', 'misspell', 'goconst', 'dupl', 'gas', 'interfacer', 'lll', 'deadcode', 'unconvert', 'structcheck']
@@ -394,8 +389,10 @@ augroup end
 " Neomake
 if filereadable(".jshintrc")
   let g:neomake_javascript_enabled_makers = ['jshint']
-else
+elseif filereadable("package.json") && match(readfile("package.json"), "\"standard\":")
   let g:neomake_javascript_enabled_makers = ['standard']
+else
+  let g:neomake_javascript_enabled_makers = []
 endif
 " Open location window and keep cursor position
 let g:neomake_open_list = 2
