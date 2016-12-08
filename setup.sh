@@ -62,46 +62,8 @@ printf "\nInstalling Brew formulas\n"
 brew update
 brew upgrade
 brew cleanup
-brew install gnu-sed --with-default-names
-brew install wget --with-iri
-brew install \
-  coreutils \
-  moreutils \
-  findutils \
-  bash \
-  bash-completion \
-  homebrew/dupes/grep \
-  homebrew/dupes/openssh \
-  the_silver_searcher \
-  git \
-  tree \
-  trash \
-  cloc \
-  jq \
-  pup \
-  neovim/neovim/neovim \
-  diff-so-fancy \
-  nvm \
-  postgresql \
-  go \
-  hugo \
-  go-delve/delve/delve \
-  youtube-dl
-
-brew cask install \
-  anaconda \
-  docker \
-  spectacle \
-  flux \
-  tunnelbear  \
-  google-chrome \
-  toggldesktop  \
-  skype  \
-  slack \
-  telegram \
-  goofy \
-  spotify  \
-  vlc
+# Install all not installed packages from ./brew
+comm -23 <(sort brew.txt) <({ brew ls --full-name; brew cask ls | sed -e 's#^#Caskroom/cask/#'; } | sort) | xargs brew install
 
 # Bash Completion
 brew tap homebrew/completions
@@ -143,12 +105,11 @@ then
   printf "\nInstalling vim-plug"
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  nvim +PlugInstall +qall
   #### YouCompleteMe
   pip install neovim
   cd ~/.config/nvim/plugged/YouCompleteMe && ./install.py --tern-completer
 fi
-nvim +PlugUpgrade +PlugUpdate +qall
+nvim +PlugInstall +PlugUpgrade +PlugUpdate +qall
 
 
 printf "\nAll good. Enjoy your day human."
