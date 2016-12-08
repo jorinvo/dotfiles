@@ -48,9 +48,9 @@ link_dotfile vimrc
 link_dotfile psqlrc
 link_dotfile sqliterc
 link_to $(pwd)/nvim-client ~/bin/nvim-client
-link_to ~/syncfiles/ssh/config ~/.ssh/config
-link_to ~/syncfiles/ssh/id_rsa ~/.ssh/id_rsa
-link_to ~/syncfiles/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
+link_to ~/files/ssh/config ~/.ssh/config
+link_to ~/files/ssh/id_rsa ~/.ssh/id_rsa
+link_to ~/files/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
 
 
 printf "\nUpdating macOS\n"
