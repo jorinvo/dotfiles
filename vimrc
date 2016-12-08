@@ -68,7 +68,7 @@ endif
 
 " Theme
 set background=dark
-silent! colorscheme joy
+silent! colorscheme jay
 
 
 "

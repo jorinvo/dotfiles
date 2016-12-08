@@ -62,7 +62,7 @@ printf "\nInstalling Brew formulas\n"
 brew update
 brew upgrade
 brew cleanup
-# Install all not installed packages from ./brew
+# Install all not installed packages from ./brew.txt
 comm -23 <(sort brew.txt) <({ brew ls --full-name; brew cask ls | sed -e 's#^#Caskroom/cask/#'; } | sort) | xargs brew install
 
 # Bash Completion
