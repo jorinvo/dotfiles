@@ -15,7 +15,6 @@ fi
 tput sgr 0 0
 
 # Base styles and color palette
-# If you want to check color code, run `./testcolor.sh'
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 BLACK=$(tput setaf 0)

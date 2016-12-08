@@ -10,7 +10,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Misc
   Plug 'https://github.com/editorconfig/editorconfig-vim'
   " Theme
-  Plug 'https://github.com/w0ng/vim-hybrid' " Theme
+  Plug 'https://github.com/josuegaleas/jay'
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
@@ -66,6 +66,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 
+" Theme
+set background=dark
+silent! colorscheme joy
+
+
 "
 " Basics
 "
@@ -94,12 +99,6 @@ endif
 if exists("&inccommand")
   set inccommand=nosplit
 endif
-
-
-" Theme
-set background=light
-silent! colorscheme hybrid
-let g:hybrid_custom_term_colors = 1
 
 
 " Statusline
