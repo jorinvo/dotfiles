@@ -66,9 +66,19 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 
+"
 " Theme
+"
+
 set background=dark
 silent! colorscheme jay
+" Enable syntax highlighting
+" (Needs to be before highlighting)
+syntax on
+" Enable italic
+hi htmlArg cterm=italic
+hi Comment cterm=italic
+hi Type    cterm=italic
 
 
 "
@@ -114,8 +124,6 @@ endif
 " %(\ %)  empty space, but grouped to allow at end of line
 set statusline=\ %y%w%r\ %f\ %m%=%l/%L\ \|%3.c%(\ %)
 
-" Enable syntax highlighting
-syntax on
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
 " Only redraw when necessary.

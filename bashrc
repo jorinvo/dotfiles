@@ -5,14 +5,11 @@
 ##########
 
 
-# Check that terminfo exists before changing TERM var to xterm-256color
-# Prevents prompt flashing in Mac OS X 10.6 Terminal.app
-if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-  export TERM='xterm-256color'
+# Enable italic if available
+if [ -f $HOME/.terminfo/*/xterm-256color-italic ]
+then
+  export TERM=xterm-256color-italic
 fi
-
-# Turn off standout; turn off underline
-tput sgr 0 0
 
 # Base styles and color palette
 BOLD=$(tput bold)
@@ -492,7 +489,7 @@ done;
 # Linux
 if [ -f /etc/bash_completion ]
 then
-  source /etc/bash_completion
+  . /etc/bash_completion
 # macOS
 elif which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]
 then
@@ -503,4 +500,6 @@ fi
 # which rbenv &> /dev/null && eval "$(rbenv init -)"
 
 # added by travis gem
-# [ -f ${HOME}/.travis/travis.sh ] && source ${HOME}/.travis/travis.sh
+# [ -f ${HOME}/.travis/travis.sh ] && . ${HOME}/.travis/travis.sh
+
+. `brew --prefix`/etc/profile.d/z.sh
