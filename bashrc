@@ -11,6 +11,7 @@ then
   export TERM=xterm-256color-italic
 fi
 
+
 # Base styles and color palette
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
@@ -31,11 +32,13 @@ style_chars="\[${RESET}${MAGENTA}\]"
 style_branch="${CYAN}"
 style_jobs="\[${RESET}${YELLOW}\]"
 
-if [[ "${SSH_TTY}" ]]; then
+if [[ "${SSH_TTY}" ]]
+then
   # connected via ssh
   style_host="\[${BOLD}${RED}\]"
   style_jobs="\[${BOLD}${RED}\]"
-elif [[ "$USER" == "root" ]]; then
+elif [[ "$USER" == "root" ]]
+then
   # logged in as root
   style_user="\[${BOLD}${RED}\]"
 fi
@@ -65,44 +68,46 @@ get_git_branch() {
 prompt_git() {
   local git_info git_state uc us ut st
 
-  if ! is_git_repo || is_git_dir; then
+  if ! is_git_repo || is_git_dir
+  then
     return 1
   fi
 
   git_info=$(get_git_branch)
 
   # Check for uncommitted changes in the index
-  if ! $(git diff --quiet --ignore-submodules --cached); then
+  if ! $(git diff --quiet --ignore-submodules --cached)
+  then
     uc="+"
   fi
 
   # Check for unstaged changes
-  if ! $(git diff-files --quiet --ignore-submodules --); then
+  if ! $(git diff-files --quiet --ignore-submodules --)
+  then
     us="!"
   fi
 
   # Check for untracked files
-  if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+  if [ -n "$(git ls-files --others --exclude-standard)" ]
+  then
     ut="?"
   fi
 
   # Check for stashed files
-  if $(git rev-parse --verify refs/stash &>/dev/null); then
+  if $(git rev-parse --verify refs/stash &>/dev/null)
+  then
     st="$"
   fi
 
   git_state=${uc}${us}${ut}${st}
 
   # Combine the branch name and state information
-  if [[ ${git_state} ]]; then
+  if [[ ${git_state} ]]
+  then
     git_info="${git_info}[${git_state}]"
   fi
 
   printf "${MAGENTA} on ${style_branch}${git_info}"
-}
-# Counting background jobs
-jobscount() {
-  jobs -p | wc -l | bc | awk '{if ($0>0) print " (" $0 ")" }';
 }
 
 
@@ -116,7 +121,6 @@ PS1+="${style_host}\h" # Host
 PS1+="${style_chars}: " # :
 PS1+="${style_path}\w" # Working directory
 PS1+="\$(prompt_git)" # Git details
-PS1+="${style_jobs}\$(jobscount)" # Jobs
 PS1+="\n" # Newline
 PS1+="${style_chars}\$ \[${RESET}\]" # $ (and reset color)
 
@@ -165,13 +169,15 @@ export NVM_DIR="${HOME}/.nvm"
 PATH="${HOME}/bin:${PATH}"
 
 # Include Go installation and local binaries
-if [ -n "${GOPATH-}" ]; then
+if [ -n "${GOPATH-}" ]
+then
   PATH="${PATH}:/usr/local/go/bin"
   PATH="${PATH}:${GOPATH}/bin"
 fi
 
 # on uberpsace
-if [ -n "$(hostname | grep uberspace)" ]; then
+if [ -n "$(hostname | grep uberspace)" ]
+then
   # nodejs
   PATH="/package/host/localhost/nodejs-5.1.1/bin:${PATH}"
   #  ruby
@@ -179,7 +185,8 @@ if [ -n "$(hostname | grep uberspace)" ]; then
 fi
 
 # rbenv if installed manually
-if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]; then
+if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]
+then
   PATH="${HOME}/.rbenv/bin:${PATH}"
 fi
 
@@ -214,7 +221,8 @@ alias e.="${EDITOR} ."
 alias h=history
 
 # Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
+if ls --color > /dev/null 2>&1
+then # GNU `ls`
 	colorflag="--color"
 else # OS X `ls`
 	colorflag="-G"
@@ -243,21 +251,8 @@ alias week='date +%V'
 # Recursively delete `.DS_Store` files
 alias rmds="find . -type f -name '*.DS_Store' -ls -delete"
 
-# IP addresses
-alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
-
-# Enhanced WHOIS lookups
-alias whois="whois -h whois-servers.net"
-
-# View HTTP traffic
-alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
-
 # Canonical hex dump; some systems have this symlinked
 command -v hd > /dev/null || alias hd="hexdump -C"
-
-# URL-encode strings
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # Pipe my public key to my clipboard.
 alias pubkey="more ~/.ssh/id_rsa.pub | copy && echo '=> Public key copied to pasteboard.'"
@@ -280,7 +275,7 @@ alias gcob="git checkout -b"
 alias gco="git checkout"
 alias gba="git branch -a"
 alias gl="git log --pretty='format:%Cgreen%h%Creset %an - %s' --graph"
-alias gam="git add --all; git commit --amend"
+alias gam="git add --all && git commit --amend"
 alias clone="git clone"
 alias gpush="git push"
 alias gpull="git pull --rebase"
@@ -300,101 +295,109 @@ alias myday='e ~/journal/$(date +%y-%m-%d).md'
 
 
 #Enter directory and list files
-function c() {
+c() {
   cd "$@" && la
 }
 
 # Create a new directory and enter it
-function mkd() {
-  mkdir -p "$@" && cd "$_";
+mkd() {
+  mkdir -p "$@" && cd "$_"
 }
 
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
-function targz() {
-  local tmpFile="${@%/}.tar";
-  tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1;
+targz() {
+  local tmpFile="${@%/}.tar"
+  tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1
 
   size=$(
-    stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
+    stat -f"%z" "${tmpFile}" 2> /dev/null # OS X `stat`
     stat -c"%s" "${tmpFile}" 2> /dev/null # GNU `stat`
-  );
+  )
 
-  local cmd="";
-  if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
+  local cmd=""
+  if (( size < 52428800 )) && hash zopfli 2> /dev/null
+  then
     # the .tar file is smaller than 50 MB and Zopfli is available; use it
-    cmd="zopfli";
+    cmd="zopfli"
   else
-    if hash pigz 2> /dev/null; then
-      cmd="pigz";
+    if hash pigz 2> /dev/null
+    then
+      cmd="pigz"
     else
-      cmd="gzip";
-    fi;
-  fi;
+      cmd="gzip"
+    fi
+  fi
 
-  echo "Compressing .tar using \`${cmd}\`…";
-  "${cmd}" -v "${tmpFile}" || return 1;
-  [ -f "${tmpFile}" ] && rm "${tmpFile}";
-  echo "${tmpFile}.gz created successfully.";
+  echo "Compressing .tar using \`${cmd}\`…"
+  "${cmd}" -v "${tmpFile}" || return 1
+  [ -f "${tmpFile}" ] && rm "${tmpFile}"
+  echo "${tmpFile}.gz created successfully."
 }
 
 # Determine size of a file or total size of a directory
-function fs() {
-  if du -b /dev/null > /dev/null 2>&1; then
-    local arg=-sbh;
+fs() {
+  if du -b /dev/null > /dev/null 2>&1
+  then
+    local arg=-sbh
   else
-    local arg=-sh;
+    local arg=-sh
   fi
-  if [[ -n "$@" ]]; then
-    du $arg -- "$@";
+  if [[ -n "$@" ]]
+  then
+    du $arg -- "$@"
   else
-    du $arg .[^.]* *;
-  fi;
+    du $arg .[^.]* *
+  fi
 }
 
 # Create a data URL from a file
-function dataurl() {
-  local mimeType=$(file -b --mime-type "$1");
-  if [[ ${mimeType} == text/* ]]; then
-    mimeType="${mimeType};charset=utf-8";
+dataurl() {
+  local mimeType=$(file -b --mime-type "$1")
+  if [[ ${mimeType} == text/* ]]
+  then
+    mimeType="${mimeType};charset=utf-8"
   fi
-  echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
+  echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
 }
 
 # Compare original and gzipped file size
-function gz() {
-  local origsize=$(wc -c < "$1");
-  local gzipsize=$(gzip -c "$1" | wc -c);
-  local ratio=$(echo "${gzipsize} * 100 / ${origsize}" | bc -l);
-  printf "orig: %d bytes\n" "${origsize}";
-  printf "gzip: %d bytes (%2.2f%%)\n" "${gzipsize}" "${ratio}";
+gz() {
+  local origsize=$(wc -c < "$1")
+  local gzipsize=$(gzip -c "$1" | wc -c)
+  local ratio=$(echo "${gzipsize} * 100 / ${origsize}" | bc -l)
+  printf "orig: %d bytes\n" "${origsize}"
+  printf "gzip: %d bytes (%2.2f%%)\n" "${gzipsize}" "${ratio}"
 }
 
 # Run `dig` and display the most useful info
-function digga() {
-  dig +nocmd "$1" any +multiline +noall +answer;
+digga() {
+  dig +nocmd "$1" any +multiline +noall +answer
 }
 
 # Decode \x{ABCD}-style Unicode escape sequences
-function unidecode() {
-  perl -e "binmode(STDOUT, ':utf8'); print \"$@\"";
+unidecode() {
+  perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
   # print a newline unless we’re piping the output to another program
-  if [ -t 1 ]; then
-    echo ""; # newline
-  fi;
+  if [ -t 1 ]
+  then
+    echo "" # newline
+  fi
 }
 
 # Get a character’s Unicode code point
-function codepoint() {
-  perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))";
+codepoint() {
+  perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
   # print a newline unless we’re piping the output to another program
-  if [ -t 1 ]; then
-    echo ""; # newline
-  fi;
+  if [ -t 1 ]
+  then
+    echo "" # newline
+  fi
 }
 
 # opens the given location
-function o() {
-  if [ "$1" = "" ] ; then
+o() {
+  if [ "$1" = "" ]
+  then
     open .
   else
     open "$1"
@@ -405,61 +408,8 @@ function o() {
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
-function tre() {
-  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
-}
-
-#
-# Defines transfer alias and provides easy command line file and folder sharing.
-#
-# Authors:
-#   Remco Verhoef <remco@dutchcoders.io>
-#
-transfer() {
-    # check arguments
-    if [ $# -eq 0 ];
-    then
-        echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
-        return 1
-    fi
-
-    # get temporarily filename, output is written to this file show progress can be showed
-    tmpfile=$( mktemp -t transferXXX )
-
-    # upload stdin or file
-    file=$1
-
-    if tty -s;
-    then
-        basefile=$(basename "$file" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-
-        if [ ! -e $file ];
-        then
-            echo "File $file doesn't exists."
-            return 1
-        fi
-
-        if [ -d $file ];
-        then
-            # zip directory and transfer
-            zipfile=$( mktemp -t transferXXX.zip )
-            cd $(dirname $file) && zip -r -q - $(basename $file) >> $zipfile
-            curl --progress-bar --upload-file "$zipfile" "https://transfer.sh/$basefile.zip" >> $tmpfile
-            rm -f $zipfile
-        else
-            # transfer file
-            curl --progress-bar --upload-file "$file" "https://transfer.sh/$basefile" >> $tmpfile
-        fi
-    else
-        # transfer pipe
-        curl --progress-bar --upload-file "-" "https://transfer.sh/$file" >> $tmpfile
-    fi
-
-    # cat output link
-    cat $tmpfile
-
-    # cleanup
-    rm -f $tmpfile
+tre() {
+  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX
 }
 
 
@@ -470,20 +420,21 @@ transfer() {
 
 
 # Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob;
+shopt -s nocaseglob
 
 # Append to the Bash history file, rather than overwriting it
-shopt -s histappend;
+shopt -s histappend
 
 # Autocorrect typos in path names when using `cd`
-shopt -s cdspell;
+shopt -s cdspell
 
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
-for option in autocd globstar; do
-  shopt -s "${option}" 2> /dev/null;
-done;
+for option in autocd globstar
+do
+  shopt -s "${option}" 2> /dev/null
+done
 
 # Add tab completion for many Bash commands
 # Linux
