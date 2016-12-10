@@ -295,6 +295,7 @@ nnoremap <C-l> <C-w>l
 " Global search
 " (Overwrites built-in sleep command. Sleep, seriously?)
 nnoremap gs :Ag<Space>
+vnoremap gs "sy:Ag<Space><C-R>s<CR>
 
 " Quit window
 " (Overwrites built-in ex mode command)
