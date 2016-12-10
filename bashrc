@@ -284,7 +284,10 @@ alias gpull="git pull --rebase"
 alias server='python3 -m http.server'
 
 alias myday='e ~/journal/$(date +%y-%m-%d).md'
-
+# network IP for development (works on my system, probably not portable)
+alias ip='ifconfig | grep broadcast | cut -d" " -f2'
+# copy IP to clipboard
+alias ipc='ip | copy'
 
 
 
