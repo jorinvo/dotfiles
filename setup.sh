@@ -25,6 +25,10 @@ sudo -v
 printf "\nSetting up system with latest toys ..."
 
 
+# Enable italic support
+tic xterm-256color-italic.terminfo
+
+
 # Create folders
 mkdir -p ~/bin ~/projects
 
