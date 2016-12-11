@@ -15,17 +15,14 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
   Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-  Plug 'https://github.com/terryma/vim-multiple-cursors'
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/airblade/vim-gitgutter'
-  Plug 'https://github.com/junegunn/gv.vim' " Commit log
   " Shortcuts
   Plug 'https://github.com/tpope/vim-repeat'
   Plug 'https://github.com/tpope/vim-surround'
   Plug 'https://github.com/tpope/vim-commentary'
   Plug 'https://github.com/tpope/vim-unimpaired' " Pairwise shortcuts
-  Plug 'https://github.com/bronson/vim-visual-star-search'
   " File search
   Plug 'https://github.com/rking/ag.vim'
   " Text objects
@@ -224,19 +221,16 @@ augroup rc_cmds
 
   " Strip trailing whitespace on save
   function! StripWhitespace()
-  let save_cursor = getpos(".")
-  let old_query = getreg('/')
-  :%s/\s\+$//e
-  call setpos('.', save_cursor)
-  call setreg('/', old_query)
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    :%s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
   endfunction
   autocmd BufWrite * :call StripWhitespace()
 
   " Restore cursor position when opening file
-  autocmd BufReadPost *
-      \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \   exe "norm! g`\"" |
-      \ endif
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm! g`\"" | endif
 augroup end
 
 
@@ -267,11 +261,10 @@ nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(st
 " Visual Mode */# from Scrooloose
 function! s:VSetSearch()
   let temp = @@
-  norml! gvy
+  norm! gvy
   let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
   let @@ = temp
 endfunction
-
 vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
 vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 
