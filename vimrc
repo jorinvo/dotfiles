@@ -287,8 +287,8 @@ nnoremap <C-l> <C-w>l
 
 " Global search
 " (Overwrites built-in sleep command. Sleep, seriously?)
-nnoremap gs :Ag<Space>
-vnoremap gs "sy:Ag<Space><C-R>s<CR>
+nnoremap ag :Ag<Space>
+vnoremap ag "sy:Ag<Space><C-R>s<CR>
 
 " Quit window
 " (Overwrites built-in ex mode command)
@@ -353,7 +353,7 @@ let g:go_fmt_command = "goimports"
 " let g:go_auto_sameids = 1
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'gocyclo', 'vetshadow', 'aligncheck', 'gotype', 'ineffassign', 'staticcheck', 'unused', 'varcheck', 'gosimple', 'misspell', 'goconst', 'dupl', 'gas', 'interfacer', 'lll', 'deadcode', 'unconvert', 'structcheck']
+" let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'gocyclo', 'vetshadow', 'aligncheck', 'gotype', 'ineffassign', 'staticcheck', 'unused', 'varcheck', 'gosimple', 'misspell', 'goconst', 'dupl', 'gas', 'interfacer', 'lll', 'deadcode', 'unconvert', 'structcheck']
 
 augroup go_bindings
   autocmd!
