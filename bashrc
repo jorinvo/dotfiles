@@ -213,8 +213,6 @@ alias ......="c ../../../../.."
 alias .......="c ../../../../../.."
 alias ........="c ../../../../../../.."
 alias .........="c ../../../../../../../.."
-alias p="c ~/projects"
-alias cdgo="c ${GOPATH}/src/github.com/jorinvo"
 alias e="${EDITOR}"
 alias e.="${EDITOR} ."
 
@@ -440,14 +438,20 @@ do
 done
 
 # Add tab completion for many Bash commands
-# Linux
-if [ -f /etc/bash_completion ]
-then
-  . /etc/bash_completion
 # macOS
-elif which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]
+if which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]
 then
   . $(brew --prefix)/etc/bash_completion
+# Linux
+elif [ -f /etc/bash_completion ]
+then
+  . /etc/bash_completion
+fi
+
+# z command
+if which brew &> /dev/null && [ -f $(brew --prefix)/etc/profile.d/z.sh ]
+then
+. $(brew --prefix)/etc/profile.d/z.sh
 fi
 
 # Enable rbenv if it exists
@@ -456,4 +460,3 @@ fi
 # added by travis gem
 # [ -f ${HOME}/.travis/travis.sh ] && . ${HOME}/.travis/travis.sh
 
-. `brew --prefix`/etc/profile.d/z.sh
