@@ -11,6 +11,7 @@ the_silver_searcher
 git
 tree
 trash
+z
 cloc
 jq
 pup
@@ -22,6 +23,7 @@ go
 hugo
 go-delve/delve/delve
 youtube-dl
+gs
 Caskroom/cask/anaconda
 Caskroom/cask/docker
 Caskroom/cask/spectacle
@@ -36,3 +38,4 @@ Caskroom/cask/spotify
 Caskroom/cask/vlc
 Caskroom/cask/imageoptim
 Caskroom/cask/1password
+Caskroom/cask/filezilla
