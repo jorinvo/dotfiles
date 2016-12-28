@@ -23,7 +23,7 @@ go
 hugo
 go-delve/delve/delve
 youtube-dl
-gs
+ghostscript
 Caskroom/cask/anaconda
 Caskroom/cask/docker
 Caskroom/cask/spectacle
