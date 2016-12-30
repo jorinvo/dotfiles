@@ -67,11 +67,11 @@ endif
 " Theme
 "
 
+" Enable syntax highlighting
+" Needs to be first.
+syntax on
 set background=dark
 silent! colorscheme jay
-" Enable syntax highlighting
-" (Needs to be before highlighting)
-syntax on
 " Enable italic
 hi htmlArg cterm=italic
 hi Comment cterm=italic
