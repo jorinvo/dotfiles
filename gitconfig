@@ -136,3 +136,5 @@
 [github]
 
   user = jorinvo
+[credential]
+	helper = osxkeychain
