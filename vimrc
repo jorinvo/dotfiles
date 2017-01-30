@@ -10,7 +10,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Misc
   Plug 'https://github.com/editorconfig/editorconfig-vim'
   " Theme
-  Plug 'https://github.com/josuegaleas/jay'
+  Plug 'https://github.com/NLKNguyen/papercolor-theme'
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
@@ -66,8 +66,8 @@ endif
 " Enable syntax highlighting
 " Needs to be first.
 syntax on
-set background=dark
-silent! colorscheme jay
+set background=light
+silent! colorscheme PaperColor
 " Enable italic
 hi htmlArg cterm=italic
 hi Comment cterm=italic
