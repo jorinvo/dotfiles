@@ -9,6 +9,7 @@ homebrew/dupes/grep
 homebrew/dupes/openssh
 the_silver_searcher
 git
+hg
 tree
 trash
 z
