@@ -314,6 +314,11 @@ function! GoLog()
   vmap gl cfmt.Println(<esc>pa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.go :call GoLog()
+function! MdGoLink()
+  nmap gl Ea)<esc>Bi[](<esc>hi
+  vmap gl Sbi[]<esc>i
+endfunction
+autocmd BufNewFile,BufRead *.md :call MdGoLink()
 
 
 " Go buffer - list buffers and open prompt
