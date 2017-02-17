@@ -40,3 +40,4 @@ Caskroom/cask/vlc
 Caskroom/cask/imageoptim
 Caskroom/cask/1password
 Caskroom/cask/filezilla
+Caskroom/cask/calibre
