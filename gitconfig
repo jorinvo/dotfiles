@@ -20,13 +20,11 @@
 
   undo = reset --soft HEAD^
 
-  # Use this shortcuts with git to have auto-completion
+  # Auto-completion also works for aliases
   p = push
   pr = pull --rebase
   co = checkout
   bd = branch -d
-  out = pull
-  up = push
 
 [apply]
 
@@ -98,13 +96,25 @@
   # Include summaries of merged commits in newly created merge commit messages
   log = true
   tool = vimdiff
+  ff = only
+  # Standard diff is two sets of final changes. This introduces the original text before each side's changes.
+  # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
+  conflictstyle = diff3
 
 [push]
 
   # Use the Git 1.x.x default to avoid errors on machines with old Git
   # installations. To use `simple` instead, add this to your `~/.extra` file:
   # `git config --global push.default simple`. See http://git.io/mMah-w.
-  default = matching
+  default = simple
+  # https://git-scm.com/docs/git-config#git-config-pushfollowTags
+  followTags = true
+
+
+[commit]
+
+  gpgSign = true
+
 
 # URL shorthands
 
@@ -136,5 +146,6 @@
 [github]
 
   user = jorinvo
+
 [credential]
 	helper = osxkeychain

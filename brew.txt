@@ -9,6 +9,7 @@ homebrew/dupes/grep
 homebrew/dupes/openssh
 the_silver_searcher
 git
+gpg
 hg
 tree
 trash
@@ -25,6 +26,7 @@ hugo
 go-delve/delve/delve
 youtube-dl
 ghostscript
+ffmpeg
 Caskroom/cask/anaconda
 Caskroom/cask/docker
 Caskroom/cask/spectacle
@@ -41,3 +43,5 @@ Caskroom/cask/imageoptim
 Caskroom/cask/1password
 Caskroom/cask/filezilla
 Caskroom/cask/calibre
+Caskroom/cask/anki
+Caskroom/cask/android-file-transfer
