@@ -157,9 +157,6 @@ export MANPAGER='less -X'
 # Go development
 export GOPATH=${HOME}/go
 
-export NVM_DIR="${HOME}/.nvm"
-[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"  # This loads nvm
-
 # Fix Git commit signing on OSX
 export GPG_TTY=$(tty)
 
@@ -266,19 +263,6 @@ alias yt-audio='youtube-dl --verbose --extract-audio --audio-format "mp3" -o "%(
 
 #git
 alias g="git"
-alias ga="git add"
-alias gaa="git add --all"
-alias gst="git status -sb"
-alias gca="git commit -a"
-alias gc="git commit"
-alias grh="git reset --hard"
-alias gcob="git checkout -b"
-alias gco="git checkout"
-alias gl="git log --pretty='format:%Cgreen%h%Creset %an - %s' --graph"
-alias gam="git add --all && git commit --amend"
-alias clone="git clone"
-alias gpush="git push"
-alias gpull="git pull --rebase"
 
 # also accepts a port as optional argument
 alias server='python3 -m http.server'
@@ -436,22 +420,26 @@ do
   shopt -s "${option}" 2> /dev/null
 done
 
+
+# NOTE: loading completions is rather slow...
+
 # Add tab completion for many Bash commands
+
 # macOS
-if which brew &> /dev/null && [ -f $(brew --prefix)/etc/bash_completion ]
+if [ -f /usr/local/etc/bash_completion ]
 then
-  . $(brew --prefix)/etc/bash_completion
+  . /usr/local/etc/bash_completion
 # Linux
 elif [ -f /etc/bash_completion ]
 then
   . /etc/bash_completion
 fi
 
-# z command
-if which brew &> /dev/null && [ -f $(brew --prefix)/etc/profile.d/z.sh ]
-then
-. $(brew --prefix)/etc/profile.d/z.sh
-fi
+# Enable tab completion for `g` by marking it as an alias for `git`
+if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
+	complete -o default -o nospace -F _git g;
+fi;
+
 
 # Enable rbenv if it exists
 # which rbenv &> /dev/null && eval "$(rbenv init -)"

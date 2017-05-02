@@ -13,13 +13,11 @@ gpg
 hg
 tree
 trash
-z
 cloc
 jq
 pup
 neovim/neovim/neovim
 diff-so-fancy
-nvm
 postgresql
 go
 hugo
