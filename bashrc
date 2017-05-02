@@ -266,17 +266,14 @@ alias yt-audio='youtube-dl --verbose --extract-audio --audio-format "mp3" -o "%(
 
 #git
 alias g="git"
-alias gd="git diff"
 alias ga="git add"
 alias gaa="git add --all"
 alias gst="git status -sb"
 alias gca="git commit -a"
 alias gc="git commit"
 alias grh="git reset --hard"
-alias gbm="git branch --merged"
 alias gcob="git checkout -b"
 alias gco="git checkout"
-alias gba="git branch -a"
 alias gl="git log --pretty='format:%Cgreen%h%Creset %an - %s' --graph"
 alias gam="git add --all && git commit --amend"
 alias clone="git clone"
@@ -286,11 +283,8 @@ alias gpull="git pull --rebase"
 # also accepts a port as optional argument
 alias server='python3 -m http.server'
 
-alias myday='e ~/journal/$(date +%y-%m-%d).md'
 # network IP for development (works on my system, probably not portable)
 alias ip='ifconfig | grep broadcast | cut -d" " -f2'
-# copy IP to clipboard
-alias ipc='ip | copy'
 
 
 
@@ -415,7 +409,7 @@ o() {
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
 tre() {
-  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX
+  tree -aC -I '.git|node_modules|bower_components|vendor' --dirsfirst "$@" | less -FRNX
 }
 
 
