@@ -54,6 +54,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go' }
 
+  Plug 'https://github.com/lervag/vimtex', { 'for': ['tex', 'plaintex', 'bib'] }
+
   " Add plugins to &runtimepath
   call plug#end()
 endif
@@ -212,8 +214,8 @@ endif
 augroup rc_cmds
   " Spell checking
   " Enable spell checking for text files. See :help mkspell
-  autocmd BufNewFile,BufRead *.md,*.txt setlocal spell spelllang=en_us
-  autocmd BufNewFile,BufRead *.md setlocal complete+=kspell
+  autocmd BufNewFile,BufRead *.md,*.txt,*.tex,*.plaintex setlocal spell spelllang=en_us
+  autocmd BufNewFile,BufRead *.md,*.tex,*.plaintex setlocal complete+=kspell
 
   " Strip trailing whitespace on save
   function! StripWhitespace()

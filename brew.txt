@@ -25,6 +25,7 @@ go-delve/delve/delve
 youtube-dl
 ghostscript
 ffmpeg
+pandoc
 Caskroom/cask/anaconda
 Caskroom/cask/docker
 Caskroom/cask/spectacle
@@ -43,3 +44,4 @@ Caskroom/cask/filezilla
 Caskroom/cask/calibre
 Caskroom/cask/anki
 Caskroom/cask/android-file-transfer
+Caskroom/cask/mactex

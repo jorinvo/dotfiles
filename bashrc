@@ -229,7 +229,7 @@ else # OS X `ls`
 fi
 
 # List all files colorized
-alias l="command ls ${colorflag}"
+alias l="command ls -1 ${colorflag}"
 # List all files colorized in long format, including dot files
 alias la="ls -lhaF ${colorflag}"
 # List only directories
@@ -280,7 +280,7 @@ alias ip='ifconfig | grep broadcast | cut -d" " -f2'
 
 #Enter directory and list files
 c() {
-  cd "$@" && la
+  cd "$@" && l
 }
 
 # Create a new directory and enter it
