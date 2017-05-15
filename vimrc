@@ -35,6 +35,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   if has('nvim')
     Plug 'https://github.com/Shougo/deoplete.nvim'
     Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
+    Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
   " Languages
   Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
@@ -52,9 +53,12 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/cespare/vim-toml', { 'for': ['toml', 'markdown'] }
   Plug 'https://github.com/plasticboy/vim-markdown', { 'for': 'markdown' }
 
-  Plug 'https://github.com/fatih/vim-go', { 'for': 'go' }
+  Plug 'https://github.com/fatih/vim-go', { 'for': 'go', 'do': 'nvim +GoInstallBinaries +qall' }
 
   Plug 'https://github.com/lervag/vimtex', { 'for': ['tex', 'plaintex', 'bib'] }
+
+  Plug 'https://github.com/klen/python-mode', { 'for': 'python' } " For linting, syntax, motions
+  Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' } " For navigation and doc commands
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -305,7 +309,7 @@ nnoremap <tab> <c-^>
 
 " gl: Go Log command
 " puts a line or a visual selection into a log/print statement
-" Support for: js, go
+" Support for: js, go, py
 function! JsLog()
   nmap gl ^iconsole.log(<esc>$a)<esc>
   vmap gl cconsole.log(<esc>pa)<esc>
@@ -320,6 +324,13 @@ function! MdGoLink()
   nmap gl Ea)<esc>Bi[](<esc>hi
   vmap gl Sbi[]<esc>i
 endfunction
+function! PyLog()
+  nmap gl ^iprint(<esc>$a)<esc>
+  vmap gl cprint(<esc>pa)<esc>
+endfunction
+autocmd BufNewFile,BufRead *.py :call PyLog()
+
+
 autocmd BufNewFile,BufRead *.md :call MdGoLink()
 
 
@@ -355,6 +366,7 @@ augroup go_bindings
   autocmd!
   autocmd Filetype go noremap gm :GoRename<CR>
   autocmd Filetype go noremap gr :GoReferrers<CR>
+  autocmd Filetype go :GoPath ~/go
 augroup end
 
 
@@ -386,6 +398,19 @@ augroup neo_make
   autocmd!
   autocmd! BufWritePost *.js Neomake
 augroup end
+
+
+
+" Python
+let g:pymode_python = 'python3'
+let g:pymode_rope = 0
+if has('nvim')
+  let g:jedi#completions_enabled = 0
+endif
+let g:jedi#goto_command = "gD"
+let g:jedi#goto_assignments_command = "gd"
+let g:jedi#usages_command = "gr"
+let g:jedi#rename_command = "gm"
 
 
 " JSON
