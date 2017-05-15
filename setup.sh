@@ -22,7 +22,7 @@ NODE_VERSION="6.3.1"
 # Become super user before starting work
 sudo -v
 
-printf "\nSetting up system with latest toys ..."
+printf "\nSetting up system with latest toys ...\n\n"
 
 
 # Enable italic support
@@ -75,11 +75,11 @@ chmod +x $(brew --prefix)/etc/bash_completion.d/go-pkg-complete
 
 
 # Node
-if ! hash node 2>/dev/null || node -v | grep -vq $NODE_VERSION
-then
-  printf "\nInstalling Node $NODE_VERSION"
-  nvm install $NODE_VERSION
-fi
+# if ! hash node 2>/dev/null || node -v | grep -vq $NODE_VERSION
+# then
+#   printf "\nInstalling Node $NODE_VERSION"
+#   nvm install $NODE_VERSION
+# fi
 # NPM packages
 printf "\nUpdating npm packages\n"
 npm install npm -g
@@ -114,5 +114,5 @@ fi
 nvim +PlugInstall +PlugUpgrade +PlugUpdate +qall
 
 
-printf "\nAll good. Enjoy your day human."
+printf "\n\n\nAll good. Enjoy your day human."
 
