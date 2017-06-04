@@ -5,8 +5,8 @@ moreutils
 findutils
 bash
 bash-completion
-homebrew/dupes/grep
-homebrew/dupes/openssh
+grep
+openssh
 the_silver_searcher
 git
 gpg
@@ -16,6 +16,7 @@ trash
 cloc
 jq
 pup
+ripgrep
 neovim/neovim/neovim
 diff-so-fancy
 postgresql
@@ -26,6 +27,7 @@ youtube-dl
 ghostscript
 ffmpeg
 pandoc
+node
 Caskroom/cask/anaconda
 Caskroom/cask/docker
 Caskroom/cask/spectacle

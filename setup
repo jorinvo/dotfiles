@@ -1,4 +1,6 @@
-#/usr/bin/env bash
+#!/bin/bash
+set -e
+
 
 # macOS development setup
 #
@@ -9,18 +11,11 @@
 
 # Run in dotfiles folder
 cd "$(dirname "${BASH_SOURCE}")"
-# Needed for nvm
-source bashrc
-# Cancel on error
-set -e
-
-
-NODE_VERSION="6.3.1"
-
 
 
 # Become super user before starting work
 sudo -v
+
 
 printf "\nSetting up system with latest toys ...\n\n"
 
@@ -30,7 +25,10 @@ tic xterm-256color-italic.terminfo
 
 
 # Create folders
-mkdir -p ~/bin ~/projects
+mkdir -p \
+  ~/bin \
+  ~/projects
+
 
 # Create Symlinks
 link_to() {
@@ -67,28 +65,16 @@ brew cleanup
 # Install all not installed packages from ./brew.txt
 comm -23 <(sort brew.txt) <({ brew ls --full-name; brew cask ls | sed -e 's#^#Caskroom/cask/#'; } | sort) | xargs brew install
 
-# Bash Completion
-brew tap homebrew/completions
-## Golang
-curl -s https://raw.githubusercontent.com/skelterjohn/go-pkg-complete/master/go-pkg-complete.bash.inc > $(brew --prefix)/etc/bash_completion.d/go-pkg-complete
-chmod +x $(brew --prefix)/etc/bash_completion.d/go-pkg-complete
 
-
-# Node
-# if ! hash node 2>/dev/null || node -v | grep -vq $NODE_VERSION
-# then
-#   printf "\nInstalling Node $NODE_VERSION"
-#   nvm install $NODE_VERSION
-# fi
 # NPM packages
 printf "\nUpdating npm packages\n"
-npm install npm -g
+npm i -g npm
 npm update -g
 
 
 # Go tools
 printf "\nInstalling Go tools"
-go get -u github.com/FiloSottile/gvt
+go get github.com/golang/dep
 
 
 # Neovim

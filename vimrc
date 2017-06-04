@@ -14,7 +14,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
-  Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/airblade/vim-gitgutter'
@@ -23,8 +24,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-surround'
   Plug 'https://github.com/tpope/vim-commentary'
   Plug 'https://github.com/tpope/vim-unimpaired' " Pairwise shortcuts
-  " File search
-  Plug 'https://github.com/rking/ag.vim'
   " Text objects
   Plug 'https://github.com/michaeljsmith/vim-indent-object'
   Plug 'https://github.com/wellle/targets.vim'
@@ -287,17 +286,12 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" Global search
-" (Overwrites built-in sleep command. Sleep, seriously?)
-nnoremap ag :Ag<Space>
-vnoremap ag "sy:Ag<Space><C-R>s<CR>
-
 " Quit window
 " (Overwrites built-in ex mode command)
 nnoremap Q :q<CR>
 
 " Go terminal - Open a terminal v-split
-nnoremap gt :term<CR>
+nnoremap gt :term<Space>
 " Opens terminal and runs selction as cmd
 vnoremap gt "ty<C-W>v:term <C-R>t<CR>
 
@@ -314,7 +308,7 @@ function! JsLog()
   nmap gl ^iconsole.log(<esc>$a)<esc>
   vmap gl cconsole.log(<esc>pa)<esc>
 endfunction
-autocmd BufNewFile,BufRead *.js :call JsLog()
+autocmd BufNewFile,BufRead *.js,*.jsx :call JsLog()
 function! GoLog()
   nmap gl ^ifmt.Println(<esc>$a)<esc>
   vmap gl cfmt.Println(<esc>pa)<esc>
@@ -335,26 +329,18 @@ autocmd BufNewFile,BufRead *.md :call MdGoLink()
 
 
 " Go buffer - list buffers and open prompt
-noremap gb :ls<CR>:b<Space>
-set nomore
+noremap gb :Buffers<CR>
 
+" Go search - search in files
+" (Overwrites built-in sleep command. Sleep, seriously?)
+noremap gs :Find<CR>
+
+" Zearch File - search for file
+noremap zf :Files<CR>
 
 "
 " Plugin configuration
 "
-
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Make CtrlP use ag for listing the files. Way faster and no useless files.
-  " Without --hidden, it never finds .travis.yml since it starts with a dot.
-  let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
-  " Disable caching, ag is fast enough
-  let g:ctrlp_use_caching = 0
-endif
-
 
 " Go
 let g:go_fmt_command = "goimports"
@@ -428,3 +414,18 @@ let g:deoplete#sources#go#align_class = 1
 if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has("nvim")
   call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
 end
+
+
+" FZF + ripgrep
+"
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/  and vendor/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --glob "!vendor/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
