@@ -14,10 +14,10 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
+  Plug 'https://github.com/google/vim-searchindex' " Show match count for search
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
+  Plug 'https://github.com/tpope/vim-rhubarb' " Support for :Gbrowse Github command
   Plug 'https://github.com/airblade/vim-gitgutter'
   " Shortcuts
   Plug 'https://github.com/tpope/vim-repeat'
@@ -72,6 +72,7 @@ endif
 " Needs to be first.
 syntax on
 set background=light
+let g:PaperColor_Theme_Options = { 'theme': { 'default': { 'transparent_background': 1 } } }
 silent! colorscheme PaperColor
 " Enable italic
 hi htmlArg cterm=italic
@@ -301,9 +302,45 @@ nmap <space> :nohlsearch <bar> w<CR>
 " Switch between the last two files with TAB
 nnoremap <tab> <c-^>
 
+" Go buffer - list buffers and open prompt
+noremap gb :ls<CR>:b<space>
+
+" Go path
+nnoremap gp :e **/*
+" Ignore dirs for path expansion
+set wildignore+=*.gif,*.jpg,*.png,*.ico,*.pdf
+set wildignore+=node_modules/*,bower_components/*,vendor/*,.git/*
+
+" Use something faster than grep
+if executable('rg')
+    set grepprg=rg\ --vimgrep
+    set grepformat=%f:%l:%c:%m
+elseif executable('ag')
+    set grepprg=ag\ --vimgrep\
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+elseif executable('ack')
+    set grepprg=ack\ --nogroup\ --nocolor\ --ignore-case\ --column
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
+
+" Grep search
+nnoremap gs :silent grep<space>
+vnoremap gs "vy:silent grep "<C-R>v"<CR>:cw<CR>
+
+" Make quickfix list editable;
+" useful to delete matches before using :cdo
+:autocmd BufReadPost quickfix set modifiable
+" Automatically open quickfix /location list after quickfix ran
+augroup quickfix
+  autocmd!
+  autocmd QuickFixCmdPost [^l]* cwindow
+  autocmd QuickFixCmdPost l*    lwindow
+augroup end
+
+
 " gl: Go Log command
 " puts a line or a visual selection into a log/print statement
-" Support for: js, go, py
+" Support for: js, go, py, md
 function! JsLog()
   nmap gl ^iconsole.log(<esc>$a)<esc>
   vmap gl cconsole.log(<esc>pa)<esc>
@@ -318,6 +355,7 @@ function! MdGoLink()
   nmap gl Ea)<esc>Bi[](<esc>hi
   vmap gl Sbi[]<esc>i
 endfunction
+autocmd BufNewFile,BufRead *.md :call MdGoLink()
 function! PyLog()
   nmap gl ^iprint(<esc>$a)<esc>
   vmap gl cprint(<esc>pa)<esc>
@@ -325,18 +363,6 @@ endfunction
 autocmd BufNewFile,BufRead *.py :call PyLog()
 
 
-autocmd BufNewFile,BufRead *.md :call MdGoLink()
-
-
-" Go buffer - list buffers and open prompt
-noremap gb :Buffers<CR>
-
-" Go search - search in files
-" (Overwrites built-in sleep command. Sleep, seriously?)
-noremap gs :Find<CR>
-
-" Zearch File - search for file
-noremap zf :Files<CR>
 
 "
 " Plugin configuration
@@ -344,10 +370,7 @@ noremap zf :Files<CR>
 
 " Go
 let g:go_fmt_command = "goimports"
-" let g:go_auto_type_info = 1
-" let g:go_auto_sameids = 1
 let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
 augroup go_bindings
   autocmd!
   autocmd Filetype go noremap gm :GoRename<CR>
@@ -414,18 +437,3 @@ let g:deoplete#sources#go#align_class = 1
 if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has("nvim")
   call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
 end
-
-
-" FZF + ripgrep
-"
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/  and vendor/ folder)
-" --color: Search color options
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --glob "!vendor/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)

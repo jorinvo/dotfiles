@@ -28,6 +28,7 @@ ghostscript
 ffmpeg
 pandoc
 node
+xsv
 Caskroom/cask/anaconda
 Caskroom/cask/docker
 Caskroom/cask/spectacle

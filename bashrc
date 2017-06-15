@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+
+alias thesis='cd ~/projects/chatbots && e chatbots.tex +VimtexCompile'
+
 ##########
 # Prompt #
 ##########
@@ -160,8 +163,6 @@ export GOPATH=${HOME}/go
 # Fix Git commit signing on OSX
 export GPG_TTY=$(tty)
 
-
-
 ########
 # Path #
 ########
@@ -270,6 +271,8 @@ alias server='python3 -m http.server'
 # network IP for development (works on my system, probably not portable)
 alias ip='ifconfig | grep broadcast | cut -d" " -f2'
 
+# change mac address
+alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'`"
 
 
 
@@ -396,6 +399,10 @@ tre() {
   tree -aC -I '.git|node_modules|bower_components|vendor' --dirsfirst "$@" | less -FRNX
 }
 
+ql() {
+  qlmanage -p "$1" &>/dev/null
+}
+
 
 
 ###########
@@ -446,4 +453,3 @@ fi;
 
 # added by travis gem
 # [ -f ${HOME}/.travis/travis.sh ] && . ${HOME}/.travis/travis.sh
-

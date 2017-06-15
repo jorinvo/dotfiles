@@ -75,6 +75,7 @@ npm update -g
 # Go tools
 printf "\nInstalling Go tools"
 go get github.com/golang/dep
+go get -u github.com/davecheney/httpstat
 
 
 # Neovim
