@@ -157,3 +157,7 @@
 
 [credential]
 	helper = osxkeychain
+
+[status]
+  short = true
+  branch = true

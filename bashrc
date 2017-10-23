@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-
-alias thesis='cd ~/projects/chatbots && e chatbots.tex +VimtexCompile'
-
 ##########
 # Prompt #
 ##########
@@ -273,6 +270,8 @@ alias ip='ifconfig | grep broadcast | cut -d" " -f2'
 
 # change mac address
 alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'`"
+
+alias make=mmake
 
 
 

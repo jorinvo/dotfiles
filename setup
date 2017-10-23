@@ -50,7 +50,7 @@ link_dotfile vimrc
 link_dotfile psqlrc
 link_dotfile sqliterc
 link_to $(pwd)/nvim-client ~/bin/nvim-client
-link_to ~/files/ssh/config ~/.ssh/config
+link_to ~/Sync/ssh/config ~/.ssh/config
 
 
 printf "\nUpdating macOS\n"
@@ -74,8 +74,12 @@ npm update -g
 
 # Go tools
 printf "\nInstalling Go tools"
-go get github.com/golang/dep
+go get -u github.com/golang/dep
 go get -u github.com/davecheney/httpstat
+go get -u github.com/christophberger/goman
+go get -u github.com/nsf/gocode
+go get -u github.com/kisielk/errcheck
+go get -u github.com/tj/mmake/cmd/mmake
 
 
 # Neovim
