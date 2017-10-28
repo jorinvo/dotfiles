@@ -61,25 +61,36 @@ sudo softwareupdate -i -a
 printf "\nInstalling Brew formulas\n"
 brew update
 brew upgrade
+
+# Install new taps from ./brew.txt
+comm -23 \
+  <(sort brew.txt) \
+  <( \
+    { \
+      brew ls --full-name; \
+      brew cask ls | sed -e 's#^#Caskroom/cask/#'; \
+    } \
+    | sort \
+  ) \
+  | xargs brew install
+
+# Remove old taps
+comm -13 <(sort brew.txt) <(brew leaves | sort) \
+  | xargs brew rm
+
+# Remove old cask taps
+comm -13 \
+  <(sort brew.txt) \
+  <(brew cask ls | sed -e 's#^#Caskroom/cask/#') \
+  | xargs brew cask rm
+
 brew cleanup
-# Install all not installed packages from ./brew.txt
-comm -23 <(sort brew.txt) <({ brew ls --full-name; brew cask ls | sed -e 's#^#Caskroom/cask/#'; } | sort) | xargs brew install
 
 
 # NPM packages
 printf "\nUpdating npm packages\n"
-npm i -g npm
 npm update -g
-
-
-# Go tools
-printf "\nInstalling Go tools"
-go get -u github.com/golang/dep
-go get -u github.com/davecheney/httpstat
-go get -u github.com/christophberger/goman
-go get -u github.com/nsf/gocode
-go get -u github.com/kisielk/errcheck
-go get -u github.com/tj/mmake/cmd/mmake
+npm i -g npm
 
 
 # Neovim
@@ -98,11 +109,8 @@ then
   printf "\nInstalling vim-plug"
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  #### YouCompleteMe
-  pip install neovim
-  cd ~/.config/nvim/plugged/YouCompleteMe && ./install.py --tern-completer
 fi
-nvim +PlugInstall +PlugUpgrade +PlugUpdate +qall
+nvim +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +qall
 
 
 printf "\n\n\nAll good. Enjoy your day human."
