@@ -175,15 +175,6 @@ then
   PATH="${PATH}:${GOPATH}/bin"
 fi
 
-# on uberpsace
-if [ -n "$(hostname | grep uberspace)" ]
-then
-  # nodejs
-  PATH="/package/host/localhost/nodejs-5.1.1/bin:${PATH}"
-  #  ruby
-  PATH="/package/host/localhost/ruby-2.2.3/bin:${PATH}"
-fi
-
 # rbenv if installed manually
 if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]
 then
@@ -259,18 +250,19 @@ alias pubkey="more ~/.ssh/id_rsa.pub | copy && echo '=> Public key copied to pas
 alias yt='youtube-dl'
 alias yt-audio='youtube-dl --verbose --extract-audio --audio-format "mp3" -o "%(title)s.%(ext)s"'
 
-#git
+# Git
 alias g="git"
 
-# also accepts a port as optional argument
+# Also accepts a port as optional argument
 alias server='python3 -m http.server'
 
-# network IP for development (works on my system, probably not portable)
+# Network IP for development (works on my system, probably not portable)
 alias ip='ifconfig | grep broadcast | cut -d" " -f2'
 
-# change mac address
+# Change mac address
 alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'`"
 
+# Gives me a nice `make help` command
 alias make=mmake
 
 
@@ -360,26 +352,6 @@ digga() {
   dig +nocmd "$1" any +multiline +noall +answer
 }
 
-# Decode \x{ABCD}-style Unicode escape sequences
-unidecode() {
-  perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
-  # print a newline unless we’re piping the output to another program
-  if [ -t 1 ]
-  then
-    echo "" # newline
-  fi
-}
-
-# Get a character’s Unicode code point
-codepoint() {
-  perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
-  # print a newline unless we’re piping the output to another program
-  if [ -t 1 ]
-  then
-    echo "" # newline
-  fi
-}
-
 # opens the given location
 o() {
   if [ "$1" = "" ]
@@ -398,6 +370,7 @@ tre() {
   tree -aC -I '.git|node_modules|bower_components|vendor' --dirsfirst "$@" | less -FRNX
 }
 
+# View file with Quick Look
 ql() {
   qlmanage -p "$1" &>/dev/null
 }

@@ -43,7 +43,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
   Plug 'https://github.com/ternjs/tern_for_vim', { 'do': 'npm i -g tern', 'for': 'javascript' } " For navigation and doc commands
-  Plug 'https://github.com/benekastah/neomake', { 'do': 'npm i -g standard jshint', 'for': 'javascript' } " linting
+  " Plug 'https://github.com/benekastah/neomake', { 'do': 'npm i -g standard jshint', 'for': 'javascript' } " linting
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 
   Plug 'https://github.com/posva/vim-vue', { 'for': 'vue' }
 
@@ -53,8 +54,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/plasticboy/vim-markdown', { 'for': 'markdown' }
 
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go', 'do': 'nvim +GoInstallBinaries +qall' }
-
-  Plug 'https://github.com/lervag/vimtex', { 'for': ['tex', 'plaintex', 'bib'] }
 
   Plug 'https://github.com/klen/python-mode', { 'for': 'python' } " For linting, syntax, motions
   Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' } " For navigation and doc commands
@@ -94,7 +93,7 @@ if !has('nvim')
   set ttymouse=xterm2
   set ttyscroll=3
 
-  set laststatus=2 " Always show status line
+  set laststatus=2                " Always show status line
   set encoding=utf-8              " Set default encoding to UTF-8
   set autoread                    " Automatically reread changed files without asking me anything
   set autoindent
@@ -105,7 +104,7 @@ if !has('nvim')
 endif
 
 " Show replacement incrementally in NeoVim
-if exists("&inccommand")
+if exists('&inccommand')
   set inccommand=nosplit
 endif
 
@@ -189,7 +188,7 @@ set splitbelow
 set splitright
 
 " Centralize undo history
-if exists("&undodir")
+if exists('&undodir')
   set undofile
   set undodir=~/.vim/undo
 endif
@@ -206,8 +205,9 @@ if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
 
-if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j " Delete comment character when joining commented lines
+" Delete comment character when joining commented lines
+if v:version > 703 || v:version == 703 && has('patch541')
+  set formatoptions+=j
 endif
 
 
@@ -220,10 +220,11 @@ augroup rc_cmds
   " Enable spell checking for text files. See :help mkspell
   autocmd BufNewFile,BufRead *.md,*.txt,*.tex,*.plaintex setlocal spell spelllang=en_us
   autocmd BufNewFile,BufRead *.md,*.tex,*.plaintex setlocal complete+=kspell
+  set spellfile=~/.vimspell.add
 
   " Strip trailing whitespace on save
   function! StripWhitespace()
-    let save_cursor = getpos(".")
+    let save_cursor = getpos('.')
     let old_query = getreg('/')
     :%s/\s\+$//e
     call setpos('.', save_cursor)
@@ -232,7 +233,7 @@ augroup rc_cmds
   autocmd BufWrite * :call StripWhitespace()
 
   " Restore cursor position when opening file
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm! g`\"" | endif
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe "norm! g`\"" | endif
 augroup end
 
 
@@ -241,6 +242,7 @@ augroup end
 "
 
 " `ESC` in terminal to exit insert mode
+" Can still escape in nested vim using ctrl-c
 if has('nvim')
   tnoremap <esc> <C-\><C-n>
 endif
@@ -255,20 +257,9 @@ vnoremap . :norm.<CR>
 " Overwrite Y to behave like other uppercase commands
 nmap Y y$
 
-" Thx https://github.com/fatih/dotfiles/blob/master/init.vim
-" Don't move on * I'd use a function for this but Vim clobbers the last search
-" when you're in a function so fuck it, practicality beats purity.
-nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+" Search for selection in visual mode
+vmap / y/<C-R>"<CR>
 
-" Visual Mode */# from Scrooloose
-function! s:VSetSearch()
-  let temp = @@
-  norm! gvy
-  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-  let @@ = temp
-endfunction
-vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
-vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 
 " Jump to first character or column
 nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
@@ -337,7 +328,6 @@ augroup quickfix
   autocmd QuickFixCmdPost l*    lwindow
 augroup end
 
-
 " gl: Go Log command
 " puts a line or a visual selection into a log/print statement
 " Support for: js, go, py, md
@@ -351,11 +341,6 @@ function! GoLog()
   vmap gl cfmt.Println(<esc>pa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.go :call GoLog()
-function! MdGoLink()
-  nmap gl Ea)<esc>Bi[](<esc>hi
-  vmap gl Sbi[]<esc>i
-endfunction
-autocmd BufNewFile,BufRead *.md :call MdGoLink()
 function! PyLog()
   nmap gl ^iprint(<esc>$a)<esc>
   vmap gl cprint(<esc>pa)<esc>
@@ -369,8 +354,10 @@ autocmd BufNewFile,BufRead *.py :call PyLog()
 "
 
 " Go
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
 let g:go_metalinter_autosave = 1
+let g:go_metalinter_deadline = '10s'
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'staticcheck', 'unused']
 augroup go_bindings
   autocmd!
   autocmd Filetype go noremap gm :GoRename<CR>
@@ -383,8 +370,8 @@ augroup end
 let g:tern_request_timeout = 1 " Disable completion
 let g:tern_show_signature_in_pum = 0  " This do disable full signature type on autocomplete
 " Use tern_for_vim.
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
+let g:tern#command = ['tern']
+let g:tern#arguments = ['--persistent']
 augroup tern_docs
   autocmd!
   autocmd Filetype javascript noremap K :TernDocBrowse<CR>
@@ -392,23 +379,23 @@ augroup tern_docs
   autocmd Filetype javascript noremap gm :TernRename<CR>
   autocmd Filetype javascript noremap gr :TernRefs<CR>
 augroup end
+
 " Neomake
-if filereadable(".jshintrc")
-  let g:neomake_javascript_enabled_makers = ['jshint']
-elseif filereadable("package.json") && match(readfile("package.json"), "\"standard\":")
-  let g:neomake_javascript_enabled_makers = ['standard']
-else
-  let g:neomake_javascript_enabled_makers = []
-endif
-" Open location window and keep cursor position
-let g:neomake_open_list = 2
-" Run on save
-augroup neo_make
-  autocmd!
-  autocmd! BufWritePost *.js Neomake
-augroup end
-
-
+" if filereadable('.jshintrc')
+"   let g:neomake_javascript_enabled_makers = ['jshint']
+" elseif filereadable('package.json') && match(readfile('package.json'), '"standard":')
+"   let g:neomake_javascript_enabled_makers = ['standard']
+"   autocmd bufwritepost *.js silent !standard --fix %
+" else
+"   let g:neomake_javascript_enabled_makers = []
+" endif
+" " Open location window and keep cursor position
+" let g:neomake_open_list = 2
+" " Run on save
+" augroup neo_make
+"   autocmd!
+"   autocmd! BufWritePost *.js Neomake
+" augroup end
 
 " Python
 let g:pymode_python = 'python3'
@@ -416,10 +403,10 @@ let g:pymode_rope = 0
 if has('nvim')
   let g:jedi#completions_enabled = 0
 endif
-let g:jedi#goto_command = "gD"
-let g:jedi#goto_assignments_command = "gd"
-let g:jedi#usages_command = "gr"
-let g:jedi#rename_command = "gm"
+let g:jedi#goto_command = 'gD'
+let g:jedi#goto_assignments_command = 'gd'
+let g:jedi#usages_command = 'gr'
+let g:jedi#rename_command = 'gm'
 
 
 " JSON
@@ -434,6 +421,9 @@ set diffopt=filler,vertical
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#align_class = 1
 " Use fuzzy matches
-if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has("nvim")
+if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has('nvim')
   call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
 end
+
+" Markdown
+let g:vim_markdown_frontmatter = 1
