@@ -58,6 +58,11 @@ sudo softwareupdate -i -a
 
 
 # Brew
+if ! command -v brew > /dev/null 2>&1; then
+  printf "\nInstalling Brew\n"
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
 printf "\nInstalling Brew formulas\n"
 brew update
 brew upgrade
@@ -95,8 +100,7 @@ npm i -g npm
 
 # Neovim
 test -d ~/.vim || mkdir ~/.vim
-if [ ! -d ~/.config/nvim ]
-then
+if [ ! -d ~/.config/nvim ]; then
   ln -s ~/.vim ~/.config/nvim
   ln -s ~/.vimrc ~/.config/nvim/init.vim
   ln -s /usr/share/vim/vim74/spell/ ~/.config/nvim/
@@ -104,8 +108,7 @@ then
 fi
 
 ## vim-plug
-if [ ! -e ~/.config/nvim/autoload/plug.vim ]
-then
+if [ ! -e ~/.config/nvim/autoload/plug.vim ]; then
   printf "\nInstalling vim-plug"
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
