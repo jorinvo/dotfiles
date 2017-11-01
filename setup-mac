@@ -32,9 +32,9 @@ mkdir -p \
 
 # Create Symlinks
 link_to() {
-  if [ ! -e $2 ]
+  if [ ! -e "$2" ]
   then
-    ln -s $1 $2
+    ln -s "$1" "$2"
     printf "\nLinked $2"
   fi
 }
@@ -51,11 +51,16 @@ link_dotfile psqlrc
 link_dotfile sqliterc
 link_to $(pwd)/nvim-client ~/bin/nvim-client
 link_to ~/Sync/ssh/config ~/.ssh/config
+link_to "$(pwd)/Terminal Edit.app" "/Applications/Terminal Edit.app"
 
 
 printf "\nUpdating macOS\n"
 sudo softwareupdate -i -a
 
+if [[ "$(xcode-select -p)" == "" ]]; then
+  printf "\nInstalling Xcode\n"
+  xcode-select --install
+fi
 
 # Brew
 if ! command -v brew > /dev/null 2>&1; then
