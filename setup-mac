@@ -97,6 +97,10 @@ comm -13 \
 brew cleanup
 
 
+# FZF - Install key bindings and fuzzy completion
+$(brew --prefix)/opt/fzf/install
+
+
 # NPM packages
 printf "\nUpdating npm packages\n"
 npm update -g

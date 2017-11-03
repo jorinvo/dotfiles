@@ -15,6 +15,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
   Plug 'https://github.com/google/vim-searchindex' " Show match count for search
+  Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'https://github.com/junegunn/fzf.vim'
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/tpope/vim-rhubarb' " Support for :Gbrowse Github command
@@ -32,7 +34,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/kana/vim-textobj-line'
   " Completion
   if has('nvim')
-    Plug 'https://github.com/Shougo/deoplete.nvim'
+    Plug 'https://github.com/Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
     Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
@@ -42,9 +44,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
-  Plug 'https://github.com/ternjs/tern_for_vim', { 'do': 'npm i -g tern', 'for': 'javascript' } " For navigation and doc commands
-  " Plug 'https://github.com/benekastah/neomake', { 'do': 'npm i -g standard jshint', 'for': 'javascript' } " linting
-  Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+  Plug 'https://github.com/w0rp/ale', { 'for': 'javascript' } " Lint and fix
+  Plug 'https://github.com/ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm i' } " Jump to def, rename, docs
 
   Plug 'https://github.com/posva/vim-vue', { 'for': 'vue' }
 
@@ -210,6 +211,10 @@ if v:version > 703 || v:version == 703 && has('patch541')
   set formatoptions+=j
 endif
 
+" Ignore dirs for path expansion
+set wildignore+=*.gif,*.jpg,*.png,*.ico,*.pdf
+set wildignore+=node_modules/*,bower_components/*,vendor/*,.git/*
+
 
 
 "
@@ -294,13 +299,10 @@ nmap <space> :nohlsearch <bar> w<CR>
 nnoremap <tab> <c-^>
 
 " Go buffer - list buffers and open prompt
-noremap gb :ls<CR>:b<space>
+noremap gb :Buffers<CR>
 
-" Go path
-nnoremap gp :e **/*
-" Ignore dirs for path expansion
-set wildignore+=*.gif,*.jpg,*.png,*.ico,*.pdf
-set wildignore+=node_modules/*,bower_components/*,vendor/*,.git/*
+" Fuzzy open file. Same shortcut also works in my bash.
+map <C-T> :Files<CR>
 
 " Use something faster than grep
 if executable('rg')
@@ -367,35 +369,20 @@ augroup end
 
 
 " JS
-let g:tern_request_timeout = 1 " Disable completion
-let g:tern_show_signature_in_pum = 0  " This do disable full signature type on autocomplete
-" Use tern_for_vim.
-let g:tern#command = ['tern']
-let g:tern#arguments = ['--persistent']
-augroup tern_docs
+augroup tern_key_map
   autocmd!
-  autocmd Filetype javascript noremap K :TernDocBrowse<CR>
+  autocmd Filetype javascript noremap K :TernDoc<CR>
   autocmd Filetype javascript noremap gd :TernDef<CR>
   autocmd Filetype javascript noremap gm :TernRename<CR>
   autocmd Filetype javascript noremap gr :TernRefs<CR>
 augroup end
+" Ale fix
+if filereadable('package.json') && match(readfile('package.json'), '"standard":')
+  let g:ale_linters = {'javascript': ['standard']}
+  let g:ale_fixers = { 'javascript': ['standard'] }
+  let g:ale_fix_on_save = 1
+endif
 
-" Neomake
-" if filereadable('.jshintrc')
-"   let g:neomake_javascript_enabled_makers = ['jshint']
-" elseif filereadable('package.json') && match(readfile('package.json'), '"standard":')
-"   let g:neomake_javascript_enabled_makers = ['standard']
-"   autocmd bufwritepost *.js silent !standard --fix %
-" else
-"   let g:neomake_javascript_enabled_makers = []
-" endif
-" " Open location window and keep cursor position
-" let g:neomake_open_list = 2
-" " Run on save
-" augroup neo_make
-"   autocmd!
-"   autocmd! BufWritePost *.js Neomake
-" augroup end
 
 " Python
 let g:pymode_python = 'python3'

@@ -425,3 +425,8 @@ fi;
 
 # added by travis gem
 # [ -f ${HOME}/.travis/travis.sh ] && . ${HOME}/.travis/travis.sh
+
+
+# Setup fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'

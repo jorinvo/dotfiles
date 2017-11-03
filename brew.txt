@@ -6,6 +6,7 @@ dep
 diff-so-fancy
 ffmpeg
 findutils
+fzf
 ghostscript
 git
 gnu-sed
@@ -49,6 +50,7 @@ Caskroom/cask/java
 Caskroom/cask/skype
 Caskroom/cask/spectacle
 Caskroom/cask/spotify
+Caskroom/cask/standard-notes
 Caskroom/cask/sync
 Caskroom/cask/telegram
 Caskroom/cask/tunnelbear
