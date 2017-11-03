@@ -103,8 +103,7 @@ $(brew --prefix)/opt/fzf/install
 
 # NPM packages
 printf "\nUpdating npm packages\n"
-npm update -g
-npm i -g npm
+cat npm.txt | xargs npm i -g
 
 
 # Neovim
