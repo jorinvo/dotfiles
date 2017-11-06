@@ -6,11 +6,9 @@
 
 
 # Enable italic if available
-if [ -f $HOME/.terminfo/*/xterm-256color-italic ]
-then
+if [ -f $HOME/.terminfo/*/xterm-256color-italic ]; then
   export TERM='xterm-256color-italic'
-elif [ -e /usr/share/terminfo/x/xterm-256color ] || [ -e /usr/share/terminfo/x/xterm+256color ]
-then
+elif [ -e /usr/share/terminfo/x/xterm-256color ] || [ -e /usr/share/terminfo/x/xterm+256color ]; then
   export TERM='xterm-256color'
 fi
 
@@ -33,15 +31,12 @@ style_host="\[${RESET}${YELLOW}\]"
 style_path="\[${RESET}${GREEN}\]"
 style_chars="\[${RESET}${MAGENTA}\]"
 style_branch="${CYAN}"
-style_jobs="\[${RESET}${YELLOW}\]"
+style_exit="${RED}"
 
-if [[ "${SSH_TTY}" ]]
-then
+if [[ "${SSH_TTY}" ]]; then
   # connected via ssh
   style_host="\[${BOLD}${RED}\]"
-  style_jobs="\[${BOLD}${RED}\]"
-elif [[ "$USER" == "root" ]]
-then
+elif [[ "$USER" == "root" ]]; then
   # logged in as root
   style_user="\[${BOLD}${RED}\]"
 fi
@@ -71,53 +66,55 @@ get_git_branch() {
 prompt_git() {
   local git_info git_state uc us ut st
 
-  if ! is_git_repo || is_git_dir
-  then
+  if ! is_git_repo || is_git_dir; then
     return 1
   fi
 
   git_info=$(get_git_branch)
 
   # Check for uncommitted changes in the index
-  if ! $(git diff --quiet --ignore-submodules --cached)
-  then
+  if ! $(git diff --quiet --ignore-submodules --cached); then
     uc="+"
   fi
 
   # Check for unstaged changes
-  if ! $(git diff-files --quiet --ignore-submodules --)
-  then
+  if ! $(git diff-files --quiet --ignore-submodules --); then
     us="!"
   fi
 
   # Check for untracked files
-  if [ -n "$(git ls-files --others --exclude-standard)" ]
-  then
+  if [ -n "$(git ls-files --others --exclude-standard)" ]; then
     ut="?"
   fi
 
   # Check for stashed files
-  if $(git rev-parse --verify refs/stash &>/dev/null)
-  then
+  if $(git rev-parse --verify refs/stash &>/dev/null); then
     st="$"
   fi
 
   git_state=${uc}${us}${ut}${st}
 
   # Combine the branch name and state information
-  if [[ ${git_state} ]]
-  then
+  if [[ ${git_state} ]]; then
     git_info="${git_info}[${git_state}]"
   fi
 
   printf "${MAGENTA} on ${style_branch}${git_info}"
 }
 
+# Add exit code if non-zero
+prompt_exit() {
+  local ex="$?"
+  if [[ "$ex" -ne 0 ]]; then
+    printf "${style_exit}$ex "
+  fi
+}
 
 # Set the terminal title to the current working directory
 PS1="\[\033]0;\w\007\]"
 # Build the prompt
 PS1+="\n" # Newline
+PS1+="\$(prompt_exit)" # Exit code
 PS1+="${style_user}\u" # Username
 PS1+="${style_chars}@" # @
 PS1+="${style_host}\h" # Host
@@ -169,15 +166,13 @@ export GPG_TTY=$(tty)
 PATH="${HOME}/bin:${PATH}"
 
 # Include Go installation and local binaries
-if [ -n "${GOPATH-}" ]
-then
+if [ -n "${GOPATH-}" ]; then
   PATH="${PATH}:/usr/local/go/bin"
   PATH="${PATH}:${GOPATH}/bin"
 fi
 
 # rbenv if installed manually
-if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]
-then
+if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]; then
   PATH="${HOME}/.rbenv/bin:${PATH}"
 fi
 
@@ -210,8 +205,7 @@ alias e.="${EDITOR} ."
 alias h=history
 
 # Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1
-then # GNU `ls`
+if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
 else # OS X `ls`
 	colorflag="-G"
@@ -293,17 +287,13 @@ targz() {
   )
 
   local cmd=""
-  if (( size < 52428800 )) && hash zopfli 2> /dev/null
-  then
+  if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
     # the .tar file is smaller than 50 MB and Zopfli is available; use it
     cmd="zopfli"
+  elif hash pigz 2> /dev/null; then
+    cmd="pigz"
   else
-    if hash pigz 2> /dev/null
-    then
-      cmd="pigz"
-    else
-      cmd="gzip"
-    fi
+    cmd="gzip"
   fi
 
   echo "Compressing .tar using \`${cmd}\`…"
@@ -314,14 +304,12 @@ targz() {
 
 # Determine size of a file or total size of a directory
 fs() {
-  if du -b /dev/null > /dev/null 2>&1
-  then
+  if du -b /dev/null > /dev/null 2>&1; then
     local arg=-sbh
   else
     local arg=-sh
   fi
-  if [[ -n "$@" ]]
-  then
+  if [[ -n "$@" ]]; then
     du $arg -- "$@"
   else
     du $arg .[^.]* *
@@ -331,8 +319,7 @@ fs() {
 # Create a data URL from a file
 dataurl() {
   local mimeType=$(file -b --mime-type "$1")
-  if [[ ${mimeType} == text/* ]]
-  then
+  if [[ ${mimeType} == text/* ]]; then
     mimeType="${mimeType};charset=utf-8"
   fi
   echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
@@ -354,8 +341,7 @@ digga() {
 
 # opens the given location
 o() {
-  if [ "$1" = "" ]
-  then
+  if [ "$1" = "" ]; then
     open .
   else
     open "$1"
@@ -405,12 +391,10 @@ done
 # Add tab completion for many Bash commands
 
 # macOS
-if [ -f /usr/local/etc/bash_completion ]
-then
+if [ -f /usr/local/etc/bash_completion ]; then
   . /usr/local/etc/bash_completion
 # Linux
-elif [ -f /etc/bash_completion ]
-then
+elif [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
 
@@ -418,13 +402,6 @@ fi
 if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
 	complete -o default -o nospace -F _git g;
 fi;
-
-
-# Enable rbenv if it exists
-# which rbenv &> /dev/null && eval "$(rbenv init -)"
-
-# added by travis gem
-# [ -f ${HOME}/.travis/travis.sh ] && . ${HOME}/.travis/travis.sh
 
 
 # Setup fzf
