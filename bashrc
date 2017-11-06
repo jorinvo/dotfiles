@@ -32,6 +32,7 @@ style_path="\[${RESET}${GREEN}\]"
 style_chars="\[${RESET}${MAGENTA}\]"
 style_branch="${CYAN}"
 style_exit="${RED}"
+style_jobs="\[${RESET}${YELLOW}\]"
 
 if [[ "${SSH_TTY}" ]]; then
   # connected via ssh
@@ -110,6 +111,11 @@ prompt_exit() {
   fi
 }
 
+# Counting background jobs
+prompt_jobscount() {
+    jobs -p | wc -l | bc | awk '{if ($0>0) print " (" $0 ")" }';
+}
+
 # Set the terminal title to the current working directory
 PS1="\[\033]0;\w\007\]"
 # Build the prompt
@@ -121,6 +127,7 @@ PS1+="${style_host}\h" # Host
 PS1+="${style_chars}: " # :
 PS1+="${style_path}\w" # Working directory
 PS1+="\$(prompt_git)" # Git details
+PS1+="${style_jobs}\$(prompt_jobscount)" # Background jobs
 PS1+="\n" # Newline
 PS1+="${style_chars}\$ \[${RESET}\]" # $ (and reset color)
 
