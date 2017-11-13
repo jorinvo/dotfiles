@@ -3,6 +3,7 @@ bash-completion
 cloc
 coreutils
 dep
+exa
 diff-so-fancy
 ffmpeg
 findutils
@@ -25,6 +26,7 @@ node
 openssh
 postgresql
 pup
+rename
 ripgrep
 shellcheck
 the_silver_searcher
@@ -47,10 +49,10 @@ Caskroom/cask/google-chrome
 Caskroom/cask/gpgtools
 Caskroom/cask/insomnia
 Caskroom/cask/java
+Caskroom/cask/kap
 Caskroom/cask/skype
 Caskroom/cask/spectacle
 Caskroom/cask/spotify
-Caskroom/cask/standard-notes
 Caskroom/cask/sync
 Caskroom/cask/telegram
 Caskroom/cask/tunnelbear

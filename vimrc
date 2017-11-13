@@ -45,7 +45,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
   Plug 'https://github.com/w0rp/ale', { 'for': 'javascript' } " Lint and fix
-  Plug 'https://github.com/ternjs/tern_for_vim', { 'for': 'javascript', 'do': 'npm i' } " Jump to def, rename, docs
 
   Plug 'https://github.com/posva/vim-vue', { 'for': 'vue' }
 
@@ -368,18 +367,10 @@ augroup go_bindings
 augroup end
 
 
-" JS
-augroup tern_key_map
-  autocmd!
-  autocmd Filetype javascript noremap K :TernDoc<CR>
-  autocmd Filetype javascript noremap gd :TernDef<CR>
-  autocmd Filetype javascript noremap gm :TernRename<CR>
-  autocmd Filetype javascript noremap gr :TernRefs<CR>
-augroup end
 " Ale fix
 if filereadable('package.json') && match(readfile('package.json'), '"standard":')
   let g:ale_linters = {'javascript': ['standard']}
-  let g:ale_fixers = { 'javascript': ['standard'] }
+  let g:ale_fixers =  {'javascript': ['standard']}
   let g:ale_fix_on_save = 1
 endif
 
