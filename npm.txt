@@ -2,7 +2,4 @@ ci-watch
 emoj
 instagram-save
 npm
-pa11y
-snyk
 speed-test
-tern

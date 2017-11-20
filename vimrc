@@ -58,6 +58,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/klen/python-mode', { 'for': 'python' } " For linting, syntax, motions
   Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' } " For navigation and doc commands
 
+  Plug 'https://github.com/chr4/nginx.vim'
+
   " Add plugins to &runtimepath
   call plug#end()
 endif
@@ -214,18 +216,15 @@ endif
 set wildignore+=*.gif,*.jpg,*.png,*.ico,*.pdf
 set wildignore+=node_modules/*,bower_components/*,vendor/*,.git/*
 
+set spellfile=~/.vimspell.add
+
+
 
 
 "
 " Auto-commands
 "
 augroup rc_cmds
-  " Spell checking
-  " Enable spell checking for text files. See :help mkspell
-  autocmd BufNewFile,BufRead *.md,*.txt,*.tex,*.plaintex setlocal spell spelllang=en_us
-  autocmd BufNewFile,BufRead *.md,*.tex,*.plaintex setlocal complete+=kspell
-  set spellfile=~/.vimspell.add
-
   " Strip trailing whitespace on save
   function! StripWhitespace()
     let save_cursor = getpos('.')
@@ -301,7 +300,7 @@ nnoremap <tab> <c-^>
 noremap gb :Buffers<CR>
 
 " Fuzzy open file. Same shortcut also works in my bash.
-map <C-T> :Files<CR>
+map <C-P> :Files<CR>
 
 " Use something faster than grep
 if executable('rg')
@@ -367,8 +366,12 @@ augroup go_bindings
 augroup end
 
 
-" Ale fix
-if filereadable('package.json') && match(readfile('package.json'), '"standard":')
+" Ale lint and fix
+if filereadable('.eslintrc')
+  let g:ale_linters = {'javascript': ['eslint']}
+  let g:ale_fixers =  {'javascript': ['eslint']}
+  let g:ale_fix_on_save = 1
+elseif filereadable('package.json') && match(readfile('package.json'), '"standard":')
   let g:ale_linters = {'javascript': ['standard']}
   let g:ale_fixers =  {'javascript': ['standard']}
   let g:ale_fix_on_save = 1

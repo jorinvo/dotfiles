@@ -3,7 +3,6 @@ bash-completion
 cloc
 coreutils
 dep
-exa
 diff-so-fancy
 ffmpeg
 findutils
@@ -13,7 +12,6 @@ git
 gnu-sed
 gnupg
 go
-go-delve/delve/delve
 graphicsmagick
 grep
 htop
@@ -42,11 +40,9 @@ Caskroom/cask/android-file-transfer
 Caskroom/cask/anki
 Caskroom/cask/authy-desktop
 Caskroom/cask/docker
-Caskroom/cask/filezilla
 Caskroom/cask/firefox
 Caskroom/cask/flux
 Caskroom/cask/google-chrome
-Caskroom/cask/gpgtools
 Caskroom/cask/insomnia
 Caskroom/cask/java
 Caskroom/cask/kap
