@@ -60,6 +60,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/chr4/nginx.vim'
 
+  Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
+
   " Add plugins to &runtimepath
   call plug#end()
 endif

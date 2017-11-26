@@ -27,7 +27,8 @@ tic xterm-256color-italic.terminfo
 # Create folders
 mkdir -p \
   ~/bin \
-  ~/projects
+  ~/projects \
+  ~/.lein
 
 
 # Create Symlinks
@@ -51,6 +52,7 @@ link_dotfile psqlrc
 link_dotfile sqliterc
 link_to $(pwd)/nvim-client ~/bin/nvim-client
 link_to ~/Sync/ssh/config ~/.ssh/config
+link_to $(pwd)/profiles.clj ~/.lein/profiles.clj
 link_to "$(pwd)/Terminal Edit.app" "/Applications/Terminal Edit.app"
 
 

@@ -9,6 +9,7 @@ findutils
 fzf
 ghostscript
 git
+git-quick-stats
 gnu-sed
 gnupg
 go
@@ -17,6 +18,8 @@ grep
 htop
 hugo
 jq
+leiningen
+lumo
 mercurial
 moreutils
 neovim
@@ -46,6 +49,7 @@ Caskroom/cask/google-chrome
 Caskroom/cask/insomnia
 Caskroom/cask/java
 Caskroom/cask/kap
+Caskroom/cask/libreoffice
 Caskroom/cask/skype
 Caskroom/cask/spectacle
 Caskroom/cask/spotify
