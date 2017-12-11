@@ -41,6 +41,7 @@ youtube-dl
 Caskroom/cask/1password
 Caskroom/cask/anki
 Caskroom/cask/docker
+Caskroom/cask/dropbox
 Caskroom/cask/firefox
 Caskroom/cask/flux
 Caskroom/cask/google-chrome
