@@ -266,6 +266,8 @@ alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:
 # Gives me a nice `make help` command
 alias make=mmake
 
+alias todo="e ~/todo.md"
+alias p="c ~/projects"
 
 
 #############

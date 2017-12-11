@@ -33,8 +33,9 @@ mkdir -p \
 
 # Create Symlinks
 link_to() {
-  if [ ! -e "$2" ]
-  then
+  if [ ! -e "$1" ]; then
+    prtinf "\nWARNING: cannot link $1 because it does not exist\n"
+  elif [ ! -e "$2" ]; then
     ln -s "$1" "$2"
     printf "\nLinked $2"
   fi
@@ -100,7 +101,11 @@ brew cleanup
 
 
 # FZF - Install key bindings and fuzzy completion
-$(brew --prefix)/opt/fzf/install
+$(brew --prefix)/opt/fzf/install \
+  --no-zsh \
+  --no-update-rc \
+  --key-bindings \
+  --completion
 
 
 # NPM packages
@@ -109,6 +114,9 @@ cat npm.txt | xargs npm i -g
 
 
 # Neovim
+pip2 install --user neovim
+pip3 install --user neovim
+
 test -d ~/.vim || mkdir ~/.vim
 if [ ! -d ~/.config/nvim ]; then
   ln -s ~/.vim ~/.config/nvim

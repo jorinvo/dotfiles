@@ -44,7 +44,9 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
-  Plug 'https://github.com/w0rp/ale', { 'for': 'javascript' } " Lint and fix
+  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript'] } " Lint and fix
+  Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
+  " Plug 'https://github.com/Quramy/tsuquyomi', { 'for': 'typescript' }
 
   Plug 'https://github.com/posva/vim-vue', { 'for': 'vue' }
 
@@ -349,6 +351,10 @@ function! PyLog()
 endfunction
 autocmd BufNewFile,BufRead *.py :call PyLog()
 
+command RC e ~/.vimrc
+command Todo e ~/todo.md
+
+
 
 
 "
@@ -368,16 +374,20 @@ augroup go_bindings
 augroup end
 
 
-" Ale lint and fix
+" JavaScript and TypeScript
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
 if filereadable('.eslintrc')
   let g:ale_linters = {'javascript': ['eslint']}
   let g:ale_fixers =  {'javascript': ['eslint']}
-  let g:ale_fix_on_save = 1
 elseif filereadable('package.json') && match(readfile('package.json'), '"standard":')
   let g:ale_linters = {'javascript': ['standard']}
   let g:ale_fixers =  {'javascript': ['standard']}
-  let g:ale_fix_on_save = 1
+else
+  " let g:ale_fixers =  {'javascript': ['prettier'], 'typescript': ['prettier']}
 endif
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_options = ''
 
 
 " Python

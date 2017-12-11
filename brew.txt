@@ -2,6 +2,7 @@ bash
 bash-completion
 cloc
 coreutils
+cowsay
 dep
 diff-so-fancy
 ffmpeg
@@ -27,6 +28,7 @@ node
 openssh
 postgresql
 pup
+python3
 rename
 ripgrep
 shellcheck
@@ -37,11 +39,7 @@ wget
 xsv
 youtube-dl
 Caskroom/cask/1password
-Caskroom/cask/1password-cli
-Caskroom/cask/anaconda
-Caskroom/cask/android-file-transfer
 Caskroom/cask/anki
-Caskroom/cask/authy-desktop
 Caskroom/cask/docker
 Caskroom/cask/firefox
 Caskroom/cask/flux
@@ -50,6 +48,8 @@ Caskroom/cask/insomnia
 Caskroom/cask/java
 Caskroom/cask/kap
 Caskroom/cask/libreoffice
+Caskroom/cask/macpass
+Caskroom/cask/owncloud
 Caskroom/cask/skype
 Caskroom/cask/spectacle
 Caskroom/cask/spotify
