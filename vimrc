@@ -339,7 +339,7 @@ function! JsLog()
   nmap gl ^iconsole.log(<esc>$a)<esc>
   vmap gl cconsole.log(<esc>pa)<esc>
 endfunction
-autocmd BufNewFile,BufRead *.js,*.jsx :call JsLog()
+autocmd BufNewFile,BufRead *.js,*.jsx,*.ts :call JsLog()
 function! GoLog()
   nmap gl ^ifmt.Println(<esc>$a)<esc>
   vmap gl cfmt.Println(<esc>pa)<esc>
