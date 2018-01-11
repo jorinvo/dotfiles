@@ -50,7 +50,8 @@ Caskroom/cask/java
 Caskroom/cask/kap
 Caskroom/cask/libreoffice
 Caskroom/cask/macpass
-Caskroom/cask/owncloud
+Caskroom/cask/nextcloud
+Caskroom/cask/slack
 Caskroom/cask/skype
 Caskroom/cask/spectacle
 Caskroom/cask/spotify
