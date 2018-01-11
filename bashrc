@@ -16,14 +16,11 @@ fi
 # Base styles and color palette
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
-BLACK=$(tput setaf 0)
 RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
 YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
 MAGENTA=$(tput setaf 5)
 CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 255)
 ORANGE=$(tput setaf 172)
 
 style_user="\[${RESET}${ORANGE}\]"
@@ -269,6 +266,7 @@ alias make=mmake
 alias todo="e ~/todo.md"
 alias p="c ~/projects"
 
+alias dc="docker-compose"
 
 #############
 # Functions #
