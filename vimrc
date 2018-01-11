@@ -287,7 +287,7 @@ nnoremap <C-l> <C-w>l
 
 " Quit window
 " (Overwrites built-in ex mode command)
-nnoremap Q :q<CR>
+nnoremap Q <C-w>c
 
 " Go terminal - Open a terminal v-split
 nnoremap gt :term<Space>
