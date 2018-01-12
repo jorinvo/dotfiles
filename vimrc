@@ -302,6 +302,13 @@ nnoremap <tab> <c-^>
 
 " Go buffer - list buffers and open prompt
 noremap gb :Buffers<CR>
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call NetrwMapping()
+augroup END
+function! NetrwMapping()
+    noremap <buffer> gb :Buffers<CR>
+endfunction
 
 " Fuzzy open file. Same shortcut also works in my bash.
 map <C-P> :Files<CR>
