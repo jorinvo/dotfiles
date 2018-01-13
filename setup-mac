@@ -69,6 +69,7 @@ fi
 if ! command -v brew > /dev/null 2>&1; then
   printf "\nInstalling Brew\n"
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew analytics off
 fi
 
 printf "\nInstalling Brew formulas\n"
@@ -135,4 +136,3 @@ nvim +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +UpdateRemotePlugins +qal
 
 
 printf "\n\n\nAll good. Enjoy your day human."
-

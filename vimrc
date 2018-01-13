@@ -9,6 +9,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   " Misc
   Plug 'https://github.com/editorconfig/editorconfig-vim'
+  " Plug 'https://github.com/jiangmiao/auto-pairs'
   " Theme
   Plug 'https://github.com/NLKNguyen/papercolor-theme'
   " Navigation
@@ -63,6 +64,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/chr4/nginx.vim'
 
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
+  " Plug 'https://github.com/tpope/vim-salve', { 'for': 'clojure' }
+  " Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
+  " Plug 'https://github.com/clojure-vim/acid.nvim', { 'for': 'clojure' }
+  " Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
+  " Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -208,7 +214,7 @@ endif
 set display+=lastline
 
 if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+  set listchars=tab:→\ ,nbsp:␣,trail:·
 endif
 
 " Delete comment character when joining commented lines
@@ -427,3 +433,15 @@ end
 
 " Markdown
 let g:vim_markdown_frontmatter = 1
+
+
+
+
+" set cursorcolumn
+
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap ]g :GitGutterNextHunk<CR>
+nnoremap [g :GitGutterPrevHunk<CR>
+nnoremap g<C-u> :GitGutterUndoHunk<CR>
