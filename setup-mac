@@ -33,11 +33,13 @@ mkdir -p \
 
 # Create Symlinks
 link_to() {
-  if [ ! -e "$1" ]; then
-    prtinf "\nWARNING: cannot link $1 because it does not exist\n"
-  elif [ ! -e "$2" ]; then
-    ln -s "$1" "$2"
-    printf "\nLinked $2"
+  if [ ! -e "$2" ]; then
+		if [ ! -e "$1" ]; then
+			prtinf "\nWARNING: cannot link $1 because it does not exist\n"
+		else
+			ln -s "$1" "$2"
+			printf "\nLinked $2"
+		fi
   fi
 }
 link_dotfile() {
