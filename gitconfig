@@ -161,3 +161,9 @@
 [status]
   short = true
   branch = true
+
+
+# Allow overwriting configuration
+
+[include]
+path = ~/projects/.gitconfig

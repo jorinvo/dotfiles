@@ -21,6 +21,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/tpope/vim-rhubarb' " Support for :Gbrowse Github command
+  Plug 'https://github.com/shumphrey/fugitive-gitlab.vim' " Support for :Gbrowse on Gitlab
   Plug 'https://github.com/airblade/vim-gitgutter'
   " Shortcuts
   Plug 'https://github.com/tpope/vim-repeat'
@@ -44,8 +45,9 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
 
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
-  Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
+  " Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
   Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript'] } " Lint and fix
+  Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
   " Plug 'https://github.com/Quramy/tsuquyomi', { 'for': 'typescript' }
 
@@ -391,13 +393,11 @@ augroup end
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 if filereadable('.eslintrc')
-  let g:ale_linters = {'javascript': ['eslint']}
-  let g:ale_fixers =  {'javascript': ['eslint']}
+  let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['prettier']}
+  let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['prettier']}
 elseif filereadable('package.json') && match(readfile('package.json'), '"standard":')
   let g:ale_linters = {'javascript': ['standard']}
   let g:ale_fixers =  {'javascript': ['standard']}
-else
-  " let g:ale_fixers =  {'javascript': ['prettier'], 'typescript': ['prettier']}
 endif
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
@@ -445,3 +445,14 @@ vnoremap > >gv
 nnoremap ]g :GitGutterNextHunk<CR>
 nnoremap [g :GitGutterPrevHunk<CR>
 nnoremap g<C-u> :GitGutterUndoHunk<CR>
+
+
+
+autocmd BufNewFile,BufRead *.babelrc set syntax=json
+autocmd BufNewFile,BufRead *.eslintrc set syntax=json
+autocmd BufNewFile,BufRead Dockerfile.* set syntax=dockerfile
+
+
+
+" Allow overwriting configuration
+silent! source ~/projects/.vimrc
