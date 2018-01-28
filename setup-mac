@@ -10,8 +10,8 @@ set -e
 
 
 # Run in dotfiles folder
-cd "$(dirname "${BASH_SOURCE}")"
-
+REAL_PATH="$(readlink "${BASH_SOURCE}")"
+cd -P "$(dirname "${REAL_PATH}")"
 
 # Become super user before starting work
 sudo -v
