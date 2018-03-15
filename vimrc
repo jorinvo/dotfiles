@@ -231,7 +231,9 @@ set wildignore+=node_modules/*,bower_components/*,vendor/*,.git/*
 set spellfile=~/.vimspell.add
 
 
-
+augroup filetypedetect
+    au BufRead,BufNewFile *.boot setfiletype clojure
+augroup END
 
 "
 " Auto-commands
