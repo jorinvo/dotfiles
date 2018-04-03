@@ -138,6 +138,7 @@ PS1+="${style_chars}\$ \[${RESET}\]" # $ (and reset color)
 
 # Neovim as editor (fall back to Vim)
 export EDITOR="$((which nvim-client &> /dev/null && echo nvim-client) || (which nvim &> /dev/null && echo nvim) || echo vim)"
+export ELIXIR_EDITOR="$EDITOR +__LINE__ __FILE__"
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768'

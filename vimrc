@@ -48,7 +48,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   " Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
-  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript'] } " Lint and fix
+  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'elixir'] } " Lint and fix
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
   " Plug 'https://github.com/Quramy/tsuquyomi', { 'for': 'typescript' }
@@ -66,11 +66,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/chr4/nginx.vim'
 
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
-  " Plug 'https://github.com/tpope/vim-salve', { 'for': 'clojure' }
-  " Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
-  " Plug 'https://github.com/clojure-vim/acid.nvim', { 'for': 'clojure' }
-  " Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
-  " Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
+  Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
+
+  Plug 'https://github.com/elixir-editors/vim-elixir'
+  Plug 'https://github.com/slashmili/alchemist.vim', { 'for': 'elixir' }
+  Plug 'https://github.com/tpope/vim-endwise', { 'for': 'elixir' }
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -392,16 +392,13 @@ augroup go_bindings
 augroup end
 
 
-" JavaScript and TypeScript
+" Linting
 let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
-if filereadable('.eslintrc')
-  let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['prettier']}
-  let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['prettier']}
-elseif filereadable('package.json') && match(readfile('package.json'), '"standard":')
-  let g:ale_linters = {'javascript': ['standard']}
-  let g:ale_fixers =  {'javascript': ['standard']}
-endif
+" let g:ale_completion_enabled = 1
+let g:ale_linters = {'elixir': ['credo'], 'javascript': ['eslint'], 'typescript': ['prettier']}
+let g:ale_fixers =  {'elixir': ['mix_format'], 'javascript': ['eslint'], 'typescript': ['prettier']}
+
+" TypeScript
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 
@@ -456,6 +453,10 @@ autocmd BufNewFile,BufRead *.babelrc set syntax=json
 autocmd BufNewFile,BufRead *.eslintrc set syntax=json
 autocmd BufNewFile,BufRead Dockerfile.* set syntax=dockerfile
 
+
+" Elixir
+let g:alchemist_tag_map = 'gd'
+let g:alchemist#elixir_erlang_src = $HOME."/projects"
 
 
 " Allow overwriting configuration
