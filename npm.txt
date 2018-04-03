@@ -1,8 +1,5 @@
-calvin-cljs
 ci-watch
 emoj
 instagram-save
 npm
-prettier
 speed-test
-typescript
