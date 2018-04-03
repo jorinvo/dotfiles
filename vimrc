@@ -9,7 +9,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   " Misc
   Plug 'https://github.com/editorconfig/editorconfig-vim'
-  " Plug 'https://github.com/jiangmiao/auto-pairs'
+  Plug 'https://github.com/jiangmiao/auto-pairs'
+  Plug 'https://github.com/tpope/vim-speeddating'
   " Theme
   Plug 'https://github.com/NLKNguyen/papercolor-theme'
   " Navigation
@@ -28,6 +29,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-surround'
   Plug 'https://github.com/tpope/vim-commentary'
   Plug 'https://github.com/tpope/vim-unimpaired' " Pairwise shortcuts
+  Plug 'https://github.com/kassio/neoterm'
   " Text objects
   Plug 'https://github.com/michaeljsmith/vim-indent-object'
   Plug 'https://github.com/wellle/targets.vim'
@@ -50,8 +52,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
   " Plug 'https://github.com/Quramy/tsuquyomi', { 'for': 'typescript' }
-
-  Plug 'https://github.com/posva/vim-vue', { 'for': 'vue' }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
@@ -299,10 +299,11 @@ nnoremap <C-l> <C-w>l
 " (Overwrites built-in ex mode command)
 nnoremap Q <C-w>c
 
-" Go terminal - Open a terminal v-split
+
+" Go terminal - Open a terminal
 nnoremap gt :term<Space>
-" Opens terminal and runs selction as cmd
-vnoremap gt "ty<C-W>v:term <C-R>t<CR>
+" Runs selection in REPL
+vnoremap gr :TREPLSendSelection<CR>
 
 " SPACE to save and also disable highlighting of last search
 nmap <space> :nohlsearch <bar> w<CR>
@@ -446,7 +447,8 @@ vnoremap > >gv
 
 nnoremap ]g :GitGutterNextHunk<CR>
 nnoremap [g :GitGutterPrevHunk<CR>
-nnoremap g<C-u> :GitGutterUndoHunk<CR>
+nnoremap <C-g><C-u> :GitGutterUndoHunk<CR>
+nnoremap <C-g><C-s> :GitGutterStageHunk<CR>
 
 
 
