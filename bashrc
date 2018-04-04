@@ -251,6 +251,7 @@ alias yt-audio='youtube-dl --verbose --extract-audio --audio-format "mp3" -o "%(
 
 # Git
 alias g="git"
+alias gst="g st"
 
 # Also accepts a port as optional argument
 alias server='python3 -m http.server'

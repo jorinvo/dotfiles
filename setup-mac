@@ -112,7 +112,6 @@ cat npm.txt | xargs npm i -g
 
 
 # Neovim
-pip2 install --user neovim
 pip3 install --user neovim
 
 test -d ~/.vim || mkdir ~/.vim

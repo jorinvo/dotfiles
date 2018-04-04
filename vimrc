@@ -42,21 +42,21 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
     Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
     Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
+  " Linting
+  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml'] } " Lint and fix
   " Languages
   Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
 
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
-  " Plug 'https://github.com/mxw/vim-jsx', { 'for': 'javascript' }
-  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'elixir'] } " Lint and fix
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
   " Plug 'https://github.com/Quramy/tsuquyomi', { 'for': 'typescript' }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
-  Plug 'https://github.com/cespare/vim-toml', { 'for': ['toml', 'markdown'] }
-  Plug 'https://github.com/plasticboy/vim-markdown', { 'for': 'markdown' }
+  " Plug 'https://github.com/cespare/vim-toml', { 'for': ['toml', 'markdown'] }
+  " Plug 'https://github.com/plasticboy/vim-markdown', { 'for': 'markdown' }
 
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go', 'do': 'nvim +GoInstallBinaries +qall' }
 
@@ -71,6 +71,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/elixir-editors/vim-elixir'
   Plug 'https://github.com/slashmili/alchemist.vim', { 'for': 'elixir' }
   Plug 'https://github.com/tpope/vim-endwise', { 'for': 'elixir' }
+
+  Plug 'https://github.com/tpope/vim-dadbod'
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -340,6 +342,9 @@ endif
 nnoremap gs :silent grep<space>
 vnoremap gs "vy:silent grep "<C-R>v"<CR>:cw<CR>
 
+nnoremap gst :Gstatus<CR>
+vnoremap gst :Gstatus<CR>
+
 " Make quickfix list editable;
 " useful to delete matches before using :cdo
 :autocmd BufReadPost quickfix set modifiable
@@ -394,9 +399,9 @@ augroup end
 
 " Linting
 let g:ale_fix_on_save = 1
-" let g:ale_completion_enabled = 1
-let g:ale_linters = {'elixir': ['credo'], 'javascript': ['eslint'], 'typescript': ['prettier']}
-let g:ale_fixers =  {'elixir': ['mix_format'], 'javascript': ['eslint'], 'typescript': ['prettier']}
+let g:ale_completion_enabled = 1
+let g:ale_linters = {'elixir': ['credo'], 'javascript': ['eslint'], 'typescript': ['tsserver', 'tslint', 'prettier']}
+let g:ale_fixers =  {'elixir': ['mix_format'], 'javascript': ['eslint'], 'typescript': ['prettier', 'tslint']}
 
 " TypeScript
 let g:typescript_compiler_binary = 'tsc'
