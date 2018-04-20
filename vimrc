@@ -433,7 +433,7 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#align_class = 1
 " Use fuzzy matches
 if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has('nvim')
-  call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
+  call deoplete#custom#source('_', 'matchers',  ['matcher_full_fuzzy', 'matcher_length'])
 end
 
 " Markdown
@@ -466,3 +466,6 @@ let g:alchemist#elixir_erlang_src = $HOME."/projects"
 
 " Allow overwriting configuration
 silent! source ~/projects/.vimrc
+
+
+autocmd BufReadPost quickfix set modifiable
