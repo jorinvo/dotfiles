@@ -53,6 +53,7 @@ Caskroom/cask/dropbox
 Caskroom/cask/filezilla
 Caskroom/cask/firefox
 Caskroom/cask/flux
+Caskroom/cask/flycut
 Caskroom/cask/google-chrome
 Caskroom/cask/gpgtools
 Caskroom/cask/java
