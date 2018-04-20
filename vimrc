@@ -51,7 +51,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
-  " Plug 'https://github.com/Quramy/tsuquyomi', { 'for': 'typescript' }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
@@ -399,7 +398,10 @@ let g:ale_fixers =  {'elixir': ['mix_format'], 'javascript': ['eslint'], 'typesc
 " TypeScript
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
-
+augroup ts_bindings
+  autocmd!
+  autocmd Filetype typescript noremap gd :ALEGoToDefinition<CR>
+augroup end
 
 " Python
 let g:pymode_python = 'python3'
