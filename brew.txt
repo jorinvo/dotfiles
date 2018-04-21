@@ -35,6 +35,7 @@ pup
 python
 rename
 ripgrep
+rlwrap
 shellcheck
 the_silver_searcher
 trash
@@ -45,6 +46,7 @@ xsv
 youtube-dl
 Caskroom/cask/android-file-transfer
 Caskroom/cask/anki
+Caskroom/cask/authy-desktop
 Caskroom/cask/calibre
 Caskroom/cask/docker
 Caskroom/cask/dropbox
@@ -52,6 +54,7 @@ Caskroom/cask/filezilla
 Caskroom/cask/firefox
 Caskroom/cask/flux
 Caskroom/cask/google-chrome
+Caskroom/cask/gpgtools
 Caskroom/cask/java
 Caskroom/cask/kap
 Caskroom/cask/keepassxc

@@ -43,7 +43,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
     Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
   " Linting
-  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml'] } " Lint and fix
+  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml', 'elixir'] } " Lint and fix
   " Languages
   Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
@@ -217,9 +217,7 @@ if !&sidescrolloff
 endif
 set display+=lastline
 
-if &listchars ==# 'eol:$'
-  set listchars=tab:→\ ,nbsp:␣,trail:·
-endif
+set listchars=tab:→\ ,nbsp:␣,trail:·
 
 " Delete comment character when joining commented lines
 if v:version > 703 || v:version == 703 && has('patch541')
@@ -359,20 +357,15 @@ augroup end
 " puts a line or a visual selection into a log/print statement
 " Support for: js, go, py, md
 function! JsLog()
-  nmap gl ^iconsole.log(<esc>$a)<esc>
-  vmap gl cconsole.log(<esc>pa)<esc>
+  nmap gl ^iconsole.log(<esc>lx$a)<esc>
+  vmap gl cconsole.log(<esc>lxpa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.js,*.jsx,*.ts :call JsLog()
 function! GoLog()
-  nmap gl ^ifmt.Println(<esc>$a)<esc>
-  vmap gl cfmt.Println(<esc>pa)<esc>
+  nmap gl ^ifmt.Println(<esc>lx$a)<esc>
+  vmap gl cfmt.Println(<esc>lxpa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.go :call GoLog()
-function! PyLog()
-  nmap gl ^iprint(<esc>$a)<esc>
-  vmap gl cprint(<esc>pa)<esc>
-endfunction
-autocmd BufNewFile,BufRead *.py :call PyLog()
 
 command RC e ~/.vimrc
 command Todo e ~/todo.md
