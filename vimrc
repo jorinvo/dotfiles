@@ -431,6 +431,7 @@ end
 
 " Markdown
 let g:vim_markdown_frontmatter = 1
+autocmd BufNewFile,BufRead *.md setlocal spell
 
 
 
@@ -456,9 +457,5 @@ autocmd BufNewFile,BufRead Dockerfile.* set syntax=dockerfile
 let g:alchemist_tag_map = 'gd'
 let g:alchemist#elixir_erlang_src = $HOME."/projects"
 
-
 " Allow overwriting configuration
 silent! source ~/projects/.vimrc
-
-
-autocmd BufReadPost quickfix set modifiable
