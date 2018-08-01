@@ -50,6 +50,7 @@ Caskroom/cask/authy-desktop
 Caskroom/cask/calibre
 Caskroom/cask/docker
 Caskroom/cask/dropbox
+Caskroom/cask/evernote
 Caskroom/cask/filezilla
 Caskroom/cask/firefox
 Caskroom/cask/flux
