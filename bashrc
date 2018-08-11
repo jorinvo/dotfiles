@@ -139,6 +139,7 @@ PS1+="${style_chars}\$ \[${RESET}\]" # $ (and reset color)
 # Neovim as editor (fall back to Vim)
 export EDITOR="$((which nvim-client &> /dev/null && echo nvim-client) || (which nvim &> /dev/null && echo nvim) || echo vim)"
 export ELIXIR_EDITOR="$EDITOR +__LINE__ __FILE__"
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768'
@@ -269,6 +270,10 @@ alias todo="e ~/todo.md"
 alias p="c ~/projects"
 
 alias dc="docker-compose"
+
+alias gg="lazygit"
+
+
 
 #############
 # Functions #

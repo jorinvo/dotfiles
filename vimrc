@@ -71,6 +71,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/slashmili/alchemist.vim', { 'for': 'elixir' }
   Plug 'https://github.com/tpope/vim-endwise', { 'for': 'elixir' }
 
+  Plug 'https://github.com/rust-lang/rust.vim'
+
   Plug 'https://github.com/tpope/vim-dadbod'
 
   " Add plugins to &runtimepath
@@ -300,12 +302,14 @@ nnoremap Q <C-w>c
 
 
 " Go terminal - Open a terminal
-nnoremap gt :term<Space>
+nnoremap gt :term<space>
 " Runs selection in REPL
 vnoremap gr :TREPLSendSelection<CR>
 
 " SPACE to save and also disable highlighting of last search
 nmap <space> :nohlsearch <bar> w<CR>
+
+nnoremap <silent> "" :registers "0123456789abcdefghijklmnopqrstuvwxyz*+.<CR>
 
 " Switch between the last two files with TAB
 nnoremap <tab> <c-^>
@@ -458,6 +462,7 @@ autocmd BufNewFile,BufRead Dockerfile.* set syntax=dockerfile
 " Elixir
 let g:alchemist_tag_map = 'gd'
 let g:alchemist#elixir_erlang_src = $HOME."/projects"
+
 
 " Allow overwriting configuration
 silent! source ~/projects/.vimrc
