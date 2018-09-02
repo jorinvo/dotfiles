@@ -43,7 +43,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
     Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
   " Linting
-  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml', 'elixir'] } " Lint and fix
+  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml', 'elixir', 'clojure'] } " Lint and fix
   " Languages
   Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
   Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
@@ -66,6 +66,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
   Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
+  Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
+  " Plug 'SevereOverfl0w/clojure-check', { 'for': 'clojure', 'do': './install' }
 
   Plug 'https://github.com/elixir-editors/vim-elixir'
   Plug 'https://github.com/slashmili/alchemist.vim', { 'for': 'elixir' }
@@ -434,6 +436,10 @@ let g:deoplete#sources#go#align_class = 1
 if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has('nvim')
   call deoplete#custom#source('_', 'matchers',  ['matcher_full_fuzzy', 'matcher_length'])
 end
+
+" Clojure
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 " Markdown
 let g:vim_markdown_frontmatter = 1
