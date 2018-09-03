@@ -67,6 +67,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
   Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
   Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
+  Plug 'https://github.com/venantius/vim-cljfmt', { 'for': 'clojure' }
   " Plug 'SevereOverfl0w/clojure-check', { 'for': 'clojure', 'do': './install' }
 
   Plug 'https://github.com/elixir-editors/vim-elixir'
@@ -313,8 +314,9 @@ nmap <space> :nohlsearch <bar> w<CR>
 
 nnoremap <silent> "" :registers "0123456789abcdefghijklmnopqrstuvwxyz*+.<CR>
 
-" Switch between the last two files with TAB
+" Switch between the last two files
 nnoremap <tab> <c-^>
+nnoremap gp <c-^>
 
 " Go buffer - list buffers and open prompt
 noremap gb :Buffers<CR>
