@@ -34,7 +34,7 @@ mkdir -p \
 link_to() {
   if [ ! -e "$2" ]; then
 		if [ ! -e "$1" ]; then
-			prtinf "\nWARNING: cannot link $1 because it does not exist\n"
+			printf "\nWARNING: cannot link $1 because it does not exist\n"
 		else
 			ln -s "$1" "$2"
 			printf "\nLinked $2"
