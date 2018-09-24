@@ -1,5 +1,9 @@
 ci-watch
-emoj
+depcheck
+eslint
 instagram-save
 npm
+prettier
 speed-test
+typescript
+yarn

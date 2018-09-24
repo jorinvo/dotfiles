@@ -73,28 +73,17 @@ if ! command -v brew > /dev/null 2>&1; then
   brew analytics off
 fi
 
-printf "\nInstalling Brew formulas\n"
+printf "\nUpdating Brew\n"
 brew update
 brew upgrade
-
-# Install new taps from brew.txt
-comm -23 \
-  <(sort brew.txt) \
-  <( \
-    { \
-      brew ls --full-name; \
-      brew cask ls | sed -e 's#^#Caskroom/cask/#'; \
-    } \
-    | sort \
-  ) \
-  | xargs brew install
-
+printf "\nInstalling Brew taps\n"
+comm -23 <(sort brew.txt) <(brew leaves) | xargs brew install
 # Update brew.txt
-cat \
-  <(brew leaves) \
-  <(brew cask ls | sed -e 's#^#Caskroom/cask/#') \
-  > brew.txt
-
+brew leaves > brew.txt
+printf "\nInstalling Cask taps\n"
+comm -23 <(sort cask.txt) <(brew cask ls) | xargs brew cask install
+# Update brew.txt
+brew cask ls > cask.txt
 brew cleanup
 
 
@@ -109,6 +98,7 @@ $(brew --prefix)/opt/fzf/install \
 # NPM packages
 printf "\nUpdating npm packages\n"
 cat npm.txt | xargs npm i -g
+ls /usr/local/lib/node_modules > npm.txt
 
 
 # Neovim
