@@ -40,7 +40,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
     Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
   " Linting
-  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml', 'elixir', 'clojure'] } " Lint and fix
+  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml', 'clojure'] } " Lint and fix
   " Languages
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] } " gf command for path and modules in js
@@ -60,10 +60,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
   Plug 'https://github.com/venantius/vim-cljfmt', { 'for': 'clojure' }
   " Plug 'SevereOverfl0w/clojure-check', { 'for': 'clojure', 'do': './install' }
-
-  Plug 'https://github.com/elixir-editors/vim-elixir'
-  Plug 'https://github.com/slashmili/alchemist.vim', { 'for': 'elixir' }
-  Plug 'https://github.com/tpope/vim-endwise', { 'for': 'elixir' }
 
   Plug 'https://github.com/rust-lang/rust.vim'
 
@@ -389,8 +385,8 @@ augroup end
 " Linting
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'elixir': ['credo'], 'javascript': ['eslint'], 'typescript': ['tsserver', 'tslint', 'prettier']}
-let g:ale_fixers =  {'elixir': ['mix_format'], 'javascript': ['eslint'], 'typescript': ['prettier', 'tslint']}
+let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['prettier', 'tslint', 'tsserver']}
+let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['prettier', 'tslint']}
 
 " TypeScript
 let g:typescript_compiler_binary = 'tsc'
@@ -454,8 +450,3 @@ nnoremap <C-g><C-s> :GitGutterStageHunk<CR>
 autocmd BufNewFile,BufRead *.babelrc set syntax=json
 autocmd BufNewFile,BufRead *.eslintrc set syntax=json
 autocmd BufNewFile,BufRead Dockerfile.* set syntax=dockerfile
-
-
-" Elixir
-let g:alchemist_tag_map = 'gd'
-let g:alchemist#elixir_erlang_src = $HOME."/projects"
