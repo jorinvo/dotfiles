@@ -9,7 +9,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   " Misc
   Plug 'https://github.com/editorconfig/editorconfig-vim'
-  Plug 'https://github.com/jiangmiao/auto-pairs'
   Plug 'https://github.com/tpope/vim-speeddating'
   " Theme
   Plug 'https://github.com/NLKNguyen/papercolor-theme'
@@ -22,20 +21,18 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/tpope/vim-rhubarb' " Support for :Gbrowse Github command
-  Plug 'https://github.com/shumphrey/fugitive-gitlab.vim' " Support for :Gbrowse on Gitlab
   Plug 'https://github.com/airblade/vim-gitgutter'
   " Shortcuts
   Plug 'https://github.com/tpope/vim-repeat'
   Plug 'https://github.com/tpope/vim-surround'
   Plug 'https://github.com/tpope/vim-commentary'
   Plug 'https://github.com/tpope/vim-unimpaired' " Pairwise shortcuts
-  Plug 'https://github.com/kassio/neoterm'
   " Text objects
   Plug 'https://github.com/michaeljsmith/vim-indent-object'
-  Plug 'https://github.com/wellle/targets.vim'
-  Plug 'https://github.com/kana/vim-textobj-user'
-  Plug 'https://github.com/kana/vim-textobj-entire'
-  Plug 'https://github.com/kana/vim-textobj-line'
+  Plug 'https://github.com/wellle/targets.vim' " i text object
+  Plug 'https://github.com/kana/vim-textobj-user' " Reqired for ones below
+  Plug 'https://github.com/kana/vim-textobj-entire' " e text object
+  Plug 'https://github.com/kana/vim-textobj-line' " l text object
   " Completion
   if has('nvim')
     Plug 'https://github.com/Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -45,17 +42,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Linting
   Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml', 'elixir', 'clojure'] } " Lint and fix
   " Languages
-  Plug 'https://github.com/hail2u/vim-css3-syntax', { 'for': 'css' }
-  Plug 'https://github.com/groenewege/vim-less', { 'for': 'less' }
-
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
-  Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] }
+  Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] } " gf command for path and modules in js
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
-
-  " Plug 'https://github.com/cespare/vim-toml', { 'for': ['toml', 'markdown'] }
-  " Plug 'https://github.com/plasticboy/vim-markdown', { 'for': 'markdown' }
 
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go', 'do': 'nvim +GoInstallBinaries +qall' }
 
@@ -75,8 +66,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-endwise', { 'for': 'elixir' }
 
   Plug 'https://github.com/rust-lang/rust.vim'
-
-  Plug 'https://github.com/tpope/vim-dadbod'
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -470,7 +459,3 @@ autocmd BufNewFile,BufRead Dockerfile.* set syntax=dockerfile
 " Elixir
 let g:alchemist_tag_map = 'gd'
 let g:alchemist#elixir_erlang_src = $HOME."/projects"
-
-
-" Allow overwriting configuration
-silent! source ~/projects/.vimrc
