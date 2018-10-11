@@ -10,6 +10,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Misc
   Plug 'https://github.com/editorconfig/editorconfig-vim'
   Plug 'https://github.com/tpope/vim-speeddating'
+  Plug 'https://github.com/jiangmiao/auto-pairs'
   " Theme
   Plug 'https://github.com/NLKNguyen/papercolor-theme'
   " Navigation
@@ -56,10 +57,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/chr4/nginx.vim'
 
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
-  Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
   Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
-  Plug 'https://github.com/venantius/vim-cljfmt', { 'for': 'clojure' }
-  " Plug 'SevereOverfl0w/clojure-check', { 'for': 'clojure', 'do': './install' }
+  " Plug 'https://github.com/venantius/vim-cljfmt', { 'for': 'clojure' }
+  " Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
+  " Plug 'https://github.com/vim-scripts/paredit.vim', { 'for': 'clojure' }
+  " Plug 'https://github.com/SevereOverfl0w/clojure-check', { 'for': 'clojure', 'do': './install' }
 
   Plug 'https://github.com/rust-lang/rust.vim'
 
@@ -303,6 +305,8 @@ nnoremap <silent> "" :registers "0123456789abcdefghijklmnopqrstuvwxyz*+.<CR>
 nnoremap <tab> <c-^>
 nnoremap gp <c-^>
 
+nmap ; :
+
 " Go buffer - list buffers and open prompt
 noremap gb :Buffers<CR>
 augroup netrw_mapping
@@ -385,7 +389,7 @@ augroup end
 " Linting
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['prettier', 'tslint', 'tsserver']}
+let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['prettier', 'tslint', 'tsserver'], 'clojure': ['joker']}
 let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['prettier', 'tslint']}
 
 " TypeScript
