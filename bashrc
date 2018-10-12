@@ -324,9 +324,9 @@ fs() {
     local arg=-sh
   fi
   if [[ -n "$@" ]]; then
-    du $arg -- "$@"
+    du $arg -- "$@" | sort -hr
   else
-    du $arg .[^.]* *
+    du $arg .[^.]* * | sort -hr
   fi
 }
 
