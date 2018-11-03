@@ -1,6 +1,4 @@
-android-file-transfer
 anki
-calibre
 docker
 dropbox
 evernote
@@ -9,18 +7,15 @@ firefox
 flux
 google-chrome
 java
-kap
 keepassxc
-libreoffice
-multidoge
 nextcloud
+nordvpn
 skype
 slack
 spectacle
 spotify
 sync
 telegram
-tunnelbear
 visualvm
 vlc
 wireshark
