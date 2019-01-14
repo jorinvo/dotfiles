@@ -21,15 +21,15 @@ GREEN=$(tput setaf 2)
 YELLOW=$(tput setaf 3)
 MAGENTA=$(tput setaf 5)
 CYAN=$(tput setaf 6)
-ORANGE=$(tput setaf 172)
+BLUE=$(tput setaf 4)
 
-style_user="\[${RESET}${ORANGE}\]"
+style_user="\[${RESET}${YELLOW}\]"
 style_host="\[${RESET}${YELLOW}\]"
 style_path="\[${RESET}${GREEN}\]"
-style_chars="\[${RESET}${MAGENTA}\]"
-style_branch="${CYAN}"
+style_chars="\[${RESET}${BLUE}\]"
+style_branch="${MAGENTA}"
 style_exit="${RED}"
-style_jobs="\[${RESET}${YELLOW}\]"
+style_jobs="\[${RESET}${BLUE}\]"
 
 if [[ "${SSH_TTY}" ]]; then
   # connected via ssh
@@ -97,7 +97,7 @@ prompt_git() {
     git_info="${git_info}[${git_state}]"
   fi
 
-  printf "${MAGENTA} on ${style_branch}${git_info}"
+  printf "${BLUE} on ${style_branch}${git_info}"
 }
 
 # Add exit code if non-zero
