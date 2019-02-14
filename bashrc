@@ -12,6 +12,7 @@ elif [ -e /usr/share/terminfo/x/xterm-256color ] || [ -e /usr/share/terminfo/x/x
   export TERM='xterm-256color'
 fi
 
+if [ -t 1 ] ; then
 
 # Base styles and color palette
 BOLD=$(tput bold)
@@ -129,6 +130,7 @@ PS1+="\n" # Newline
 PS1+="${style_chars}\$ \[${RESET}\]" # $ (and reset color)
 
 
+fi # only in TTY
 
 
 ###########

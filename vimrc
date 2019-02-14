@@ -77,7 +77,7 @@ endif
 " Enable syntax highlighting
 " Needs to be first.
 syntax on
-set background=light
+set background=dark
 let g:PaperColor_Theme_Options = { 'theme': { 'default': { 'transparent_background': 1 } } }
 silent! colorscheme PaperColor
 " Enable italic
@@ -389,8 +389,8 @@ augroup end
 " Linting
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['prettier', 'tslint', 'tsserver'], 'clojure': ['joker']}
-let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['prettier', 'tslint']}
+let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['tslint', 'tsserver'], 'clojure': ['joker']}
+let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['tslint']}
 
 " TypeScript
 let g:typescript_compiler_binary = 'tsc'
