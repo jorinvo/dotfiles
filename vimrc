@@ -11,6 +11,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/editorconfig/editorconfig-vim'
   Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/jiangmiao/auto-pairs'
+  Plug 'https://github.com/tpope/vim-eunuch'
   " Theme
   Plug 'https://github.com/NLKNguyen/papercolor-theme'
   " Navigation
@@ -77,7 +78,7 @@ endif
 " Enable syntax highlighting
 " Needs to be first.
 syntax on
-set background=dark
+set background=light
 let g:PaperColor_Theme_Options = { 'theme': { 'default': { 'transparent_background': 1 } } }
 silent! colorscheme PaperColor
 " Enable italic

@@ -1,4 +1,6 @@
+anki
 docker
+dropbox
 evernote
 firefox
 flux
@@ -12,6 +14,8 @@ slack
 spectacle
 spotify
 sync
+telegram
+tunnelblick
 visualvm
 vlc
 wireshark
