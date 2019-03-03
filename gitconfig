@@ -1,3 +1,9 @@
+[rebase]
+autostash = true
+
+[pull]
+rebase = true
+
 [alias]
 
   # Show verbose output about tags, branches or remotes
