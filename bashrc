@@ -249,8 +249,8 @@ command -v hd > /dev/null || alias hd="hexdump -C"
 alias pubkey="more ~/.ssh/id_rsa.pub | copy && echo '=> Public key copied to pasteboard.'"
 
 # Youtube Downloader
-alias yt='youtube-dl'
-alias yt-audio='youtube-dl --verbose --extract-audio --audio-format "mp3" -o "%(title)s.%(ext)s"'
+alias yt='youtube-dl -f bestvideo+bestaudio/best --all-subs --embed-subs'
+alias yt-audio='youtube-dl --verbose -f bestaudio/best --extract-audio --audio-format "mp3" -o "%(title)s.%(ext)s"'
 
 # Git
 alias g="git"
@@ -377,6 +377,35 @@ ql() {
   qlmanage -p "$1" &>/dev/null
 }
 
+# Like pkill but select process interactively via fzf
+fkill() {
+    local pid
+    if [ "$UID" != "0" ]; then
+        pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
+    else
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    fi
+
+    if [ "x$pid" != "x" ]
+    then
+        echo $pid | xargs kill -${1:-9}
+    fi
+}
+
+# fco - checkout git branch/tag
+fco() {
+  local tags branches target
+  tags=$(
+    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  branches=$(
+    git branch --all --sort=-committerdate | grep -v HEAD |
+    sed "s/.* //" | sed "s#remotes/[^/]*/##" |
+    sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$branches"; echo "$tags") |
+    fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+  git checkout $(echo "$target" | awk '{print $2}')
+}
 
 
 ###########

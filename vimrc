@@ -12,6 +12,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/jiangmiao/auto-pairs'
   Plug 'https://github.com/tpope/vim-eunuch'
+  Plug 'https://github.com/nelstrom/vim-visual-star-search'
   " Theme
   Plug 'https://github.com/NLKNguyen/papercolor-theme'
   " Navigation
@@ -58,13 +59,12 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/chr4/nginx.vim'
 
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
-  Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
+  " Plug 'https://github.com/liquidz/vim-iced', { 'for': 'clojure' }
+  " Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
   " Plug 'https://github.com/venantius/vim-cljfmt', { 'for': 'clojure' }
   " Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
   " Plug 'https://github.com/vim-scripts/paredit.vim', { 'for': 'clojure' }
   " Plug 'https://github.com/SevereOverfl0w/clojure-check', { 'for': 'clojure', 'do': './install' }
-
-  Plug 'https://github.com/rust-lang/rust.vim'
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -224,8 +224,12 @@ set spellfile=~/.vimspell.add
 
 
 augroup filetypedetect
-    au BufRead,BufNewFile *.boot setfiletype clojure
+  au BufNewFile,BufRead *.boot setfiletype clojure
+  au BufNewFile,BufRead *.babelrc setfiletype json
+  au BufNewFile,BufRead *.eslintrc setfiletype json
+  au BufNewFile,BufRead Dockerfile.* setfiletype dockerfile
 augroup END
+
 
 "
 " Auto-commands
@@ -291,11 +295,10 @@ nnoremap <C-l> <C-w>l
 " (Overwrites built-in ex mode command)
 nnoremap Q <C-w>c
 
+nmap ; :
 
 " Go terminal - Open a terminal
-nnoremap gt :term<space>
-" Runs selection in REPL
-vnoremap gr :TREPLSendSelection<CR>
+nnoremap gt :term<CR>i
 
 " SPACE to save and also disable highlighting of last search
 nmap <space> :nohlsearch <bar> w<CR>
@@ -304,9 +307,6 @@ nnoremap <silent> "" :registers "0123456789abcdefghijklmnopqrstuvwxyz*+.<CR>
 
 " Switch between the last two files
 nnoremap <tab> <c-^>
-nnoremap gp <c-^>
-
-nmap ; :
 
 " Go buffer - list buffers and open prompt
 noremap gb :Buffers<CR>
@@ -318,7 +318,7 @@ function! NetrwMapping()
     noremap <buffer> gb :Buffers<CR>
 endfunction
 
-" Fuzzy open file. Same shortcut also works in my bash.
+" Fuzzy open file.
 map <C-P> :Files<CR>
 
 " Use something faster than grep
@@ -333,12 +333,21 @@ elseif executable('ack')
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
-" Grep search
-nnoremap gs :silent grep<space>
-vnoremap gs "vy:silent grep "<C-R>v"<CR>:cw<CR>
+" Grep project
+nnoremap gp :silent grep<space>
+vnoremap gp "vy:silent grep "<C-R>v"<CR>:cw<CR>
 
+" Git stuff
+
+" git status
 nnoremap gst :Gstatus<CR>
 vnoremap gst :Gstatus<CR>
+" git search branch
+nnoremap gsb :term bash -i -c 'fco'<CR>:f fco<CR>i
+" git stage stage
+nnoremap gss :GitGutterStageHunk<CR>
+" git stage undo
+nnoremap gsu :GitGutterUndoHunk<CR>
 
 " Make quickfix list editable;
 " useful to delete matches before using :cdo
@@ -364,9 +373,16 @@ function! GoLog()
 endfunction
 autocmd BufNewFile,BufRead *.go :call GoLog()
 
-command RC e ~/.vimrc
-command Todo e ~/todo.md
+vnoremap < <gv
+vnoremap > >gv
 
+
+"
+" Commands
+"
+
+command RC e ~/.vimrc
+command Todo e ~/todo.txt
 
 
 
@@ -437,21 +453,3 @@ let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 let g:vim_markdown_frontmatter = 1
 autocmd BufNewFile,BufRead *.md setlocal spell
 
-
-
-
-" set cursorcolumn
-
-vnoremap < <gv
-vnoremap > >gv
-
-nnoremap ]g :GitGutterNextHunk<CR>
-nnoremap [g :GitGutterPrevHunk<CR>
-nnoremap <C-g><C-u> :GitGutterUndoHunk<CR>
-nnoremap <C-g><C-s> :GitGutterStageHunk<CR>
-
-
-
-autocmd BufNewFile,BufRead *.babelrc set syntax=json
-autocmd BufNewFile,BufRead *.eslintrc set syntax=json
-autocmd BufNewFile,BufRead Dockerfile.* set syntax=dockerfile
