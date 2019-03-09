@@ -383,7 +383,7 @@ vnoremap > >gv
 
 command RC e ~/.vimrc
 command Todo e ~/todo.txt
-
+command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>:e scratchpad<CR>:set ft=clojure<CR>i(ns scratch)<CR><CR>
 
 
 "
