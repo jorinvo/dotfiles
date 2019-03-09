@@ -5,6 +5,7 @@ evernote
 firefox
 flux
 google-chrome
+gpgtools
 java
 keepassxc
 nextcloud
