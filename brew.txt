@@ -1,7 +1,6 @@
 ansible
 bash
 bash-completion
-bat
 boot-clj
 cloc
 clojure

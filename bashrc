@@ -171,7 +171,10 @@ export GPG_TTY=$(tty)
 
 
 # Include user specific binaries
-PATH="${HOME}/bin:${PATH}"
+PATH="${HOME}/bin:/usr/local/bin:/usr/local/sbin:${PATH}"
+
+PATH="${PATH}:~/.vim/plugged/vim-iced/bin"
+
 
 # Include Go installation and local binaries
 if [ -n "${GOPATH-}" ]; then
@@ -264,9 +267,6 @@ alias ip='ifconfig | grep broadcast | cut -d" " -f2'
 
 # Change mac address
 alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'`"
-
-# Gives me a nice `make help` command
-alias make=mmake
 
 alias todo="e ~/todo.md"
 alias p="c ~/projects"
@@ -393,8 +393,8 @@ fkill() {
     fi
 }
 
-# fco - checkout git branch/tag
-fco() {
+# gsb - git search branch
+gsb() {
   local tags branches target
   tags=$(
     git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return

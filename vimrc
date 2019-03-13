@@ -59,12 +59,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/chr4/nginx.vim'
 
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
-  " Plug 'https://github.com/liquidz/vim-iced', { 'for': 'clojure' }
-  " Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
-  " Plug 'https://github.com/venantius/vim-cljfmt', { 'for': 'clojure' }
+  Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
   " Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
-  " Plug 'https://github.com/vim-scripts/paredit.vim', { 'for': 'clojure' }
-  " Plug 'https://github.com/SevereOverfl0w/clojure-check', { 'for': 'clojure', 'do': './install' }
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -383,7 +379,7 @@ vnoremap > >gv
 
 command RC e ~/.vimrc
 command Todo e ~/todo.txt
-command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>:e scratchpad<CR>:set ft=clojure<CR>i(ns scratch)<CR><CR>
+command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>
 
 
 "
