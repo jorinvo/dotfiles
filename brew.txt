@@ -21,7 +21,6 @@ gnu-sed
 gnupg
 gobject-introspection
 graphicsmagick
-graphviz
 grep
 hadolint
 htop
@@ -39,7 +38,6 @@ openssh
 openssl@1.1
 postgresql
 pup
-pv
 rename
 ripgrep
 shellcheck

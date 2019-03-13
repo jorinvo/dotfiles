@@ -329,9 +329,9 @@ elseif executable('ack')
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
-" Grep project
-nnoremap gp :silent grep<space>
-vnoremap gp "vy:silent grep "<C-R>v"<CR>:cw<CR>
+" `gr`ep
+nnoremap gr :silent grep<space>
+vnoremap gr "vy:silent grep "<C-R>v"<CR>:cw<CR>
 
 " Git stuff
 
@@ -378,7 +378,7 @@ vnoremap > >gv
 "
 
 command RC e ~/.vimrc
-command Todo e ~/todo.txt
+command Todo e ~/todo.md
 command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>
 
 
@@ -394,7 +394,7 @@ let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'staticcheck', 'unus
 augroup go_bindings
   autocmd!
   autocmd Filetype go noremap gm :GoRename<CR>
-  autocmd Filetype go noremap gr :GoReferrers<CR>
+  " autocmd Filetype go noremap gr :GoReferrers<CR>
   autocmd Filetype go :GoPath ~/go
 augroup end
 

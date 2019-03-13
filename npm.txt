@@ -2,6 +2,7 @@ ci-watch
 depcheck
 eslint
 instagram-save
+neovim
 npm
 prettier
 speed-test
