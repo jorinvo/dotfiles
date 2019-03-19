@@ -266,10 +266,6 @@ vnoremap . :norm.<CR>
 " Overwrite Y to behave like other uppercase commands
 nmap Y y$
 
-" Search for selection in visual mode
-vmap / y/<C-R>"<CR>
-
-
 " Jump to first character or column
 nnoremap <silent> 0 :call FirstCharOrFirstCol()<cr>
 function! FirstCharOrFirstCol()
@@ -315,7 +311,7 @@ function! NetrwMapping()
 endfunction
 
 " Fuzzy open file.
-map <C-P> :Files<CR>
+map gp :Files<CR>
 
 " Use something faster than grep
 if executable('rg')
