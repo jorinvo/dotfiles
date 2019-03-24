@@ -373,8 +373,10 @@ vnoremap > >gv
 " Commands
 "
 
-command RC e ~/.vimrc
-command Todo e ~/todo.md
+" Expanding links allows me to better use git and file browser
+command RC execute "e ".resolve(expand("~/.vimrc"))
+command Todo execute "e ".resolve(expand("~/todo.md"))
+
 command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>
 
 

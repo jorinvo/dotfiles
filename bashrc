@@ -268,7 +268,8 @@ alias ip='ifconfig | grep broadcast | cut -d" " -f2'
 # Change mac address
 alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'`"
 
-alias todo="e ~/todo.md"
+# Expanding the link allows be to go to my other note files quickly
+alias todo="e $(readlink ~/todo.md)"
 alias p="c ~/projects"
 
 alias dc="docker-compose"
