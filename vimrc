@@ -60,6 +60,9 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
   Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
+  Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
+  Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
+  " Plug 'https://github.com/Olical/conjure', { 'tag': 'v0.7.0', 'do': 'make compile', 'for': 'clojure', 'on': 'ConjureAdd'  }
   " Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
 
   " Add plugins to &runtimepath
@@ -312,6 +315,14 @@ endfunction
 
 " Fuzzy open file.
 map gp :Files<CR>
+" Also make it work in file browser
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call NetrwMapping()
+augroup END
+function! NetrwMapping()
+    noremap <buffer> gp :Files<CR>
+endfunction
 
 " Use something faster than grep
 if executable('rg')
