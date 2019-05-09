@@ -43,7 +43,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
     Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
   endif
   " Linting
-  Plug 'https://github.com/w0rp/ale', { 'for': ['javascript', 'typescript', 'dockerfile', 'yaml', 'clojure'] } " Lint and fix
+  Plug 'https://github.com/w0rp/ale' " Lint and fix
   " Languages
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] } " gf command for path and modules in js
@@ -178,7 +178,7 @@ set ruler
 set showcmd
 set showmode
 set wildmenu
-set number
+set nonumber
 
 " swap files are boring
 set noswapfile
@@ -338,7 +338,7 @@ endif
 
 " `gr`ep
 nnoremap gr :silent grep<space>
-vnoremap gr "vy:silent grep "<C-R>v"<CR>:cw<CR>
+vnoremap gr "vy:silent grep "<C-R>v"<space>
 
 " Git stuff
 
@@ -384,11 +384,13 @@ vnoremap > >gv
 " Commands
 "
 
+command JSONFormat :%!jq '.'
+
 " Expanding links allows me to better use git and file browser
 command RC execute "e ".resolve(expand("~/.vimrc"))
 command Todo execute "e ".resolve(expand("~/todo.md"))
 
-command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>
+command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>:e .scratchpad.clj<CR>
 
 
 "
@@ -409,10 +411,11 @@ augroup end
 
 
 " Linting
+let g:ale_sign_column_always = 1
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['tslint', 'tsserver'], 'clojure': ['joker']}
-let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['tslint']}
+let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver'], 'clojure': ['joker']}
+let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['eslint']}
 
 " TypeScript
 let g:typescript_compiler_binary = 'tsc'
@@ -457,4 +460,3 @@ let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 " Markdown
 let g:vim_markdown_frontmatter = 1
 autocmd BufNewFile,BufRead *.md setlocal spell
-
