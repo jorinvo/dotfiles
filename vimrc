@@ -10,7 +10,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Misc
   Plug 'https://github.com/editorconfig/editorconfig-vim'
   Plug 'https://github.com/tpope/vim-speeddating'
-  Plug 'https://github.com/jiangmiao/auto-pairs'
+  " Plug 'https://github.com/jiangmiao/auto-pairs'
   Plug 'https://github.com/tpope/vim-eunuch'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
   " Theme
@@ -293,7 +293,10 @@ nnoremap Q <C-w>c
 nmap ; :
 
 " Go terminal - Open a terminal
-nnoremap gt :term<CR>i
+nnoremap gtt :term<CR>i
+nnoremap gtvt <C-w><C-v>:term<CR>i
+nnoremap gtp :term<space>
+nnoremap gtvp <C-w><C-v>:term<space>
 
 " SPACE to save and also disable highlighting of last search
 nmap <space> :nohlsearch <bar> w<CR>
@@ -305,23 +308,16 @@ nnoremap <tab> <c-^>
 
 " Go buffer - list buffers and open prompt
 noremap gb :Buffers<CR>
-augroup netrw_mapping
-    autocmd!
-    autocmd filetype netrw call NetrwMapping()
-augroup END
-function! NetrwMapping()
-    noremap <buffer> gb :Buffers<CR>
-endfunction
-
 " Fuzzy open file.
 map gp :Files<CR>
-" Also make it work in file browser
+" Also make them work in file browser
 augroup netrw_mapping
     autocmd!
     autocmd filetype netrw call NetrwMapping()
 augroup END
 function! NetrwMapping()
     noremap <buffer> gp :Files<CR>
+    noremap <buffer> gb :Buffers<CR>
 endfunction
 
 " Use something faster than grep
@@ -366,8 +362,8 @@ augroup end
 " puts a line or a visual selection into a log/print statement
 " Support for: js, go, py, md
 function! JsLog()
-  nmap gl ^iconsole.log(<esc>lx$a)<esc>
-  vmap gl cconsole.log(<esc>lxpa)<esc>
+  nmap gl ^iconsole.log(<esc>$a)<esc>
+  vmap gl cconsole.log(<esc>pa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.js,*.jsx,*.ts :call JsLog()
 function! GoLog()
@@ -405,7 +401,7 @@ let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'staticcheck', 'unus
 augroup go_bindings
   autocmd!
   autocmd Filetype go noremap gm :GoRename<CR>
-  " autocmd Filetype go noremap gr :GoReferrers<CR>
+  autocmd Filetype go noremap gtr :GoReferrers<CR>
   autocmd Filetype go :GoPath ~/go
 augroup end
 
@@ -423,6 +419,10 @@ let g:typescript_compiler_options = ''
 augroup ts_bindings
   autocmd!
   autocmd Filetype typescript noremap gd :ALEGoToDefinition<CR>
+  autocmd Filetype typescript noremap K :ALEHover<CR>
+  autocmd Filetype typescript noremap gK :ALEDetail<CR>
+  autocmd Filetype typescript noremap gtr :ALEFindeReferences<CR>
+  autocmd FileType typescript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
 augroup end
 
 " Python
@@ -456,6 +456,13 @@ end
 " Clojure
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+
+augroup clojure_bindings
+  autocmd!
+  autocmd FileType clojure nmap <buffer> cro :Eval<CR>:Eval (do (in-ns 'dev.reload) (reload-browser))<CR>
+  autocmd FileType clojure nmap <buffer> gd ]<C-D>
+  autocmd FileType clojure nmap gl ysaebaprn<space><esc><esc>
+augroup end
 
 " Markdown
 let g:vim_markdown_frontmatter = 1

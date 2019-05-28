@@ -1,15 +1,10 @@
-ansible
 bash
 bash-completion
-boot-clj
 cloc
 clojure
 cmake
 coreutils
-cowsay
-dep
 diff-so-fancy
-elixir
 ffmpeg
 findutils
 fzf
@@ -37,7 +32,6 @@ node
 openssh
 openssl@1.1
 postgresql
-pup
 rename
 ripgrep
 shellcheck

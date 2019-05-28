@@ -276,7 +276,7 @@ alias dc="docker-compose"
 
 alias gg="lazygit"
 
-alias scratch='clojure -Sdeps "{:deps {clj-scratch {:git/url \"https://github.com/jorinvo/clj-scratch\" :sha \"54c64314d744df1c818cbc034ce616a4dc8c46c2\"}}}" -m scratch'
+alias scratch='clojure -Sdeps "{:deps {clj-scratch {:git/url \"https://github.com/jorinvo/clj-scratch\" :sha \"cec1c443e66eb62a15e7f5de04fb640502c9c02a\"}}}" -m scratch'
 
 
 #############
