@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+set -e
+
+
+# macOS development setup
+#
+# Run this script to install and setup basic tools on a machine.
+# Or run it to update current setup to latest changes.
+# Steal the bits you like and adjust it to your needs.
+
+
+# Run in dotfiles folder
+cd -P "$(dirname "${BASH_SOURCE}")"
+
+# Become super user before starting work
+sudo -v
+
+
+printf "\nSetting up system with latest toys ...\n\n"
+
+
+# Create folders
+mkdir -p \
+  ~/bin \
+  ~/projects
+
+
+# Create Symlinks
+link_to() {
+  if [ ! -e "$2" ]; then
+    if [ ! -e "$1" ]; then
+      printf "\nWARNING: cannot link $1 because it does not exist\n"
+    else
+      mkdir -p "$(dirname "$2")"
+      ln -s "$1" "$2"
+      printf "\nLinked $2"
+    fi
+  fi
+}
+link_dotfile() {
+  link_to $(pwd)/$1 ~/.$1
+}
+
+link_dotfile inputrc
+link_dotfile bashrc
+link_dotfile bash_profile
+link_dotfile gitconfig
+link_dotfile vimrc
+link_dotfile psqlrc
+link_dotfile sqliterc
+link_to $(pwd)/nvim-client ~/bin/nvim-client
+link_to ~/Dropbox/more/ssh/config ~/.ssh/config
+link_to $(pwd)/deps.edn ~/.clojure/deps.edn
+
+
+printf "\nUpdating\n"
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get autoremove
+
+test -d ~/.vim || mkdir ~/.vim
+if [ ! -d ~/.config/nvim ]; then
+  ln -s ~/.vim ~/.config/nvim
+  ln -s ~/.vimrc ~/.config/nvim/init.vim
+  printf "\nLinked Neovim config"
+fi
+
+# vim-plug
+if [ ! -e ~/.config/nvim/autoload/plug.vim ]; then
+  printf "\nInstalling vim-plug"
+  curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
+nvim +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +UpdateRemotePlugins +qall
+
+
+printf "\n\n\nAll good. Enjoy your day human.\n"

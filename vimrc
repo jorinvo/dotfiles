@@ -14,7 +14,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-eunuch'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
   " Theme
-  Plug 'https://github.com/NLKNguyen/papercolor-theme'
+  Plug 'https://github.com/jeffkreeftmeijer/vim-dim'
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
@@ -77,9 +77,8 @@ endif
 " Enable syntax highlighting
 " Needs to be first.
 syntax on
-set background=light
-let g:PaperColor_Theme_Options = { 'theme': { 'default': { 'transparent_background': 1 } } }
-silent! colorscheme PaperColor
+set background=dark
+silent! colorscheme dim
 " Enable italic
 hi htmlArg cterm=italic
 hi Comment cterm=italic
