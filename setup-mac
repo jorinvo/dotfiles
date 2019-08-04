@@ -55,13 +55,12 @@ link_dotfile psqlrc
 link_dotfile sqliterc
 link_to $(pwd)/nvim-client ~/bin/nvim-client
 link_to ~/Dropbox/more/ssh/config ~/.ssh/config
-link_to $(pwd)/profiles.clj ~/.lein/profiles.clj
 link_to $(pwd)/deps.edn ~/.clojure/deps.edn
 link_to "$(pwd)/Terminal Edit.app" "/Applications/Terminal Edit.app"
 
 
 printf "\nUpdating macOS\n"
-sudo softwareupdate -i -a
+# sudo softwareupdate -i -a
 
 if [[ "$(xcode-select -p)" == "" ]]; then
   printf "\nInstalling Xcode\n"

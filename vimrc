@@ -10,7 +10,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Misc
   Plug 'https://github.com/editorconfig/editorconfig-vim'
   Plug 'https://github.com/tpope/vim-speeddating'
-  " Plug 'https://github.com/jiangmiao/auto-pairs'
   Plug 'https://github.com/tpope/vim-eunuch'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
   " Theme
@@ -48,6 +47,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] } " gf command for path and modules in js
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
+  Plug 'https://github.com/jiangmiao/auto-pairs', { 'for': ['javascript', 'typescript'] }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
@@ -137,9 +137,6 @@ set gdefault
 " Don’t add empty newlines at the end of files
 set binary
 set noeol
-" Respect modeline in files
-set modeline
-set modelines=4
 " Enable per-directory .vimrc files and disable unsafe commands in them
 set exrc
 set secure
@@ -186,7 +183,7 @@ set nowb
 
 set fileformats+=mac
 
-set history=1000
+set history=10000
 set viminfo^=!
 set sessionoptions-=options
 
@@ -361,7 +358,7 @@ augroup end
 " puts a line or a visual selection into a log/print statement
 " Support for: js, go, py, md
 function! JsLog()
-  nmap gl ^iconsole.log(<esc>$a)<esc>
+  nmap gl ^iconsole.log(<esc>lx$a)<esc>
   vmap gl cconsole.log(<esc>pa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.js,*.jsx,*.ts :call JsLog()
@@ -407,12 +404,14 @@ augroup end
 
 " Linting
 let g:ale_sign_column_always = 1
-let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver'], 'clojure': ['joker']}
-let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['eslint']}
+" TODO they are broken for some reason
+" let g:ale_fix_on_save = 0
+" let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['eslint']}
 
 " TypeScript
+command ESLintFix norm :silent !cd %:p:h; npx eslint --fix %:t<CR>:set expandtab<CR>
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 augroup ts_bindings
@@ -422,7 +421,9 @@ augroup ts_bindings
   autocmd Filetype typescript noremap gK :ALEDetail<CR>
   autocmd Filetype typescript noremap gtr :ALEFindeReferences<CR>
   autocmd FileType typescript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
+  autocmd FileType javascript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
 augroup end
+
 
 " Python
 let g:pymode_python = 'python3'

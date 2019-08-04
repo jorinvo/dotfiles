@@ -4,6 +4,7 @@ cloc
 clojure
 cmake
 coreutils
+cowsay
 diff-so-fancy
 ffmpeg
 findutils
@@ -30,7 +31,6 @@ moreutils
 neovim
 node
 openssh
-openssl@1.1
 postgresql
 rename
 ripgrep
