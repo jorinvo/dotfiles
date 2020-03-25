@@ -359,7 +359,7 @@ digga() {
 
 # opens the given location
 o() {
-  local howtoopen="$(type xdg-open &> /dev/null && echo xdg-open|| open)"
+  local howtoopen="$(type xdg-open &> /dev/null && echo xdg-open|| echo open)"
   if [ "$1" = "" ]; then
     $howtoopen .
   else
