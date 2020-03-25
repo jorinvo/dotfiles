@@ -12,6 +12,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/tpope/vim-eunuch'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
+  Plug 'https://github.com/junegunn/vim-easy-align'
   " Theme
   Plug 'https://github.com/jeffkreeftmeijer/vim-dim'
   " Navigation
@@ -450,12 +451,8 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#align_class = 1
 " Use fuzzy matches
 if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has('nvim')
-  call deoplete#custom#source('_', 'matchers',  ['matcher_full_fuzzy', 'matcher_length'])
+  call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
 end
-
-" Clojure
-let g:deoplete#keyword_patterns = {}
-let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 augroup clojure_bindings
   autocmd!
@@ -466,4 +463,8 @@ augroup end
 
 " Markdown
 let g:vim_markdown_frontmatter = 1
-autocmd BufNewFile,BufRead *.md setlocal spell
+augroup markdown_bindings
+  autocmd!
+  autocmd FileType markdown setlocal spell
+augroup end
+
