@@ -250,6 +250,13 @@ augroup end
 " Shortcut Mappings
 "
 
+" see this bug: https://github.com/neovim/neovim/issues/4612
+if executable('xdg-open')
+  nmap <silent> gx :!xdg-open <cWORD><cr>
+elseif executable('open')
+  nmap <silent> gx :!open <cWORD><cr>
+endif
+
 " `ESC` in terminal to exit insert mode
 " Can still escape in nested vim using ctrl-c
 if has('nvim')
@@ -406,7 +413,7 @@ augroup end
 " Linting
 let g:ale_sign_column_always = 1
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver'], 'clojure': ['joker']}
+let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver'], 'clojure': ['clj-kondo']}
 " TODO they are broken for some reason
 " let g:ale_fix_on_save = 0
 " let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['eslint']}

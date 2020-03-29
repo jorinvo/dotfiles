@@ -64,7 +64,6 @@ trustctime = false
 # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
 precomposeunicode = false
 editor = nvim
-pager = diff-so-fancy | less --tabs=4 -RFX
 quotepath = false
 
 [color]
@@ -126,7 +125,7 @@ followTags = true
 
 [commit]
 
-gpgSign = true
+gpgsign = true
 
 
 # URL shorthands
@@ -161,7 +160,7 @@ email = hi@jorin.me
 user = jorinvo
 
 [credential]
-helper = osxkeychain
+# helper = osxkeychain
 
 [status]
 short = true
