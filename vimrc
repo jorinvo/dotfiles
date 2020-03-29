@@ -8,7 +8,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Using full urls for `gx` command
 
   " Misc
-  Plug 'https://github.com/editorconfig/editorconfig-vim'
   Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/tpope/vim-eunuch'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
@@ -63,8 +62,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
   Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
   Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
-  " Plug 'https://github.com/Olical/conjure', { 'tag': 'v0.7.0', 'do': 'make compile', 'for': 'clojure', 'on': 'ConjureAdd'  }
-  " Plug 'https://github.com/bhurlow/vim-parinfer', { 'for': 'clojure' }
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -252,9 +249,9 @@ augroup end
 
 " see this bug: https://github.com/neovim/neovim/issues/4612
 if executable('xdg-open')
-  nmap <silent> gx :!xdg-open <cWORD><cr>
+  nmap <silent> gx :silent !xdg-open <cWORD><cr>
 elseif executable('open')
-  nmap <silent> gx :!open <cWORD><cr>
+  nmap <silent> gx :silent !open <cWORD><cr>
 endif
 
 " `ESC` in terminal to exit insert mode
