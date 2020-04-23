@@ -60,7 +60,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/chr4/nginx.vim'
 
   Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
-  Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
+  " Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
   Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
   Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
   " Plug 'https://github.com/Olical/conjure', { 'tag': 'v0.7.0', 'do': 'make compile', 'for': 'clojure', 'on': 'ConjureAdd'  }
@@ -416,10 +416,10 @@ let g:ale_completion_enabled = 1
 let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver'], 'clojure': ['clj-kondo']}
 " TODO they are broken for some reason
 " let g:ale_fix_on_save = 0
-" let g:ale_fixers =  {'javascript': ['eslint'], 'typescript': ['eslint']}
+let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint']}
 
 " TypeScript
-command ESLintFix norm :silent !cd %:p:h; npx eslint --fix %:t<CR>:set expandtab<CR>
+command ESLintFix norm :silent !cd %:p:h; npx eslint --fix %:t<CR>
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 augroup ts_bindings
@@ -427,7 +427,10 @@ augroup ts_bindings
   autocmd Filetype typescript noremap gd :ALEGoToDefinition<CR>
   autocmd Filetype typescript noremap K :ALEHover<CR>
   autocmd Filetype typescript noremap gK :ALEDetail<CR>
-  autocmd Filetype typescript noremap gtr :ALEFindeReferences<CR>
+  autocmd Filetype typescript noremap gtr :ALEFindReferences<CR>
+  autocmd Filetype typescript noremap gm :ALERename<CR>
+  autocmd Filetype typescript noremap ]s :ALENextWrap<CR>
+  autocmd Filetype typescript noremap [s :ALEPreviousWrap<CR>
   autocmd FileType typescript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
   autocmd FileType javascript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
 augroup end
@@ -457,9 +460,9 @@ set diffopt=filler,vertical
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#align_class = 1
 " Use fuzzy matches
-if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has('nvim')
-  call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
-end
+" if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has('nvim')
+  " call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
+" end
 
 augroup clojure_bindings
   autocmd!
