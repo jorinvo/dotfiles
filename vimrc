@@ -58,8 +58,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/chr4/nginx.vim'
 
-  Plug 'https://github.com/tpope/vim-fireplace', { 'for': 'clojure' }
-  " Plug 'https://github.com/clojure-vim/async-clj-omni', { 'for': 'clojure' }
+  Plug 'https://github.com/Olical/conjure', {'tag': 'v3.3.0', 'for': 'clojure' }
   Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
   Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 
@@ -267,6 +266,8 @@ cnoremap <C-n> <Down>
 " Allow dot command in visual mode
 vnoremap . :norm.<CR>
 
+let maplocalleader = ","
+
 " Overwrite Y to behave like other uppercase commands
 nmap Y y$
 
@@ -412,6 +413,8 @@ let g:ale_sign_column_always = 1
 let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
 let g:ale_completion_tsserver_autoimport = 1
+let g:ale_linters_explicit = 1
+let g:ale_typescript_prettier_use_local_config = 1
 let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver'], 'clojure': ['clj-kondo']}
 let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint']}
 
@@ -456,15 +459,10 @@ set diffopt=filler,vertical
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#align_class = 1
-" Use fuzzy matches
-" if !empty(glob('~/.vim/plugged/deoplete.nvim')) && has('nvim')
-  " call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
-" end
 
 augroup clojure_bindings
   autocmd!
   autocmd FileType clojure nmap <buffer> cro :Eval<CR>:Eval (do (in-ns 'dev.reload) (reload-browser))<CR>
-  autocmd FileType clojure nmap <buffer> gd ]<C-D>
   autocmd FileType clojure nmap gl ysaebaprn<space><esc><esc>
 augroup end
 
