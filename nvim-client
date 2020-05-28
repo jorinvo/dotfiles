@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Add this script to your path and use it as $EDITOR.
 # Using this instead of Neovim (nvim) directly allows opening
