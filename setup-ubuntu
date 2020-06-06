@@ -45,6 +45,7 @@ link_dotfile inputrc
 link_dotfile bashrc
 link_dotfile bash_profile
 link_dotfile gitconfig
+link_dotfile alacritty.yml
 link_dotfile vimrc
 link_dotfile psqlrc
 link_dotfile sqliterc

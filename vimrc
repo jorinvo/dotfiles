@@ -13,7 +13,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
   Plug 'https://github.com/junegunn/vim-easy-align'
   " Theme
-  Plug 'https://github.com/jeffkreeftmeijer/vim-dim'
+  Plug 'https://github.com/arcticicestudio/nord-vim'
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
@@ -75,7 +75,7 @@ endif
 " Needs to be first.
 syntax on
 set background=dark
-silent! colorscheme dim
+silent! colorscheme nord
 " Enable italic
 hi htmlArg cterm=italic
 hi Comment cterm=italic
