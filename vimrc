@@ -48,6 +48,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] } " gf command for path and modules in js
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
   Plug 'https://github.com/jiangmiao/auto-pairs', { 'for': ['javascript', 'typescript'] }
+  Plug 'https://github.com/zacacollier/vim-javascript-sql', { 'branch': 'add-typescript-support', 'for': ['javascript', 'typescript'] }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
@@ -419,7 +420,6 @@ let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserve
 let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint']}
 
 " TypeScript
-command ESLintFix norm :silent !cd %:p:h; npx eslint --fix %:t<CR>
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 augroup ts_bindings
@@ -434,6 +434,7 @@ augroup ts_bindings
   autocmd FileType typescript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
   autocmd FileType javascript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
 augroup end
+let g:javascript_sql_dialect = 'pgsql'
 
 
 " Python
