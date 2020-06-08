@@ -1,10 +1,2 @@
-depcheck
-eslint
-instagram-save
-lumo-cljs
 neovim
 npm
-prettier
-speed-test
-typescript
-yarn

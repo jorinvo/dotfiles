@@ -1,4 +1,5 @@
 adoptopenjdk11
+alacritty
 coconutbattery
 docker
 dropbox
@@ -12,3 +13,4 @@ slack
 spectacle
 spotify
 tunnelblick
+wireshark
