@@ -35,3 +35,8 @@ colors:
 
 window:
   decorations: 'none'
+  padding:
+    x: 5
+    y: 5
+  dynamic_padding: true
+  startup_mode: Maximized
