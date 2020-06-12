@@ -45,8 +45,9 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/w0rp/ale' " Lint and fix
   " Languages
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
-  Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript'] } " gf command for path and modules in js
-  Plug 'https://github.com/leafgarland/typescript-vim', { 'for': 'typescript' }
+  Plug 'https://github.com/leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
+  Plug 'https://github.com/peitalin/vim-jsx-typescript', { 'for': 'typescriptreact' }
+  Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript', 'typescriptreact'] } " gf command for path and modules in js
   Plug 'https://github.com/jiangmiao/auto-pairs', { 'for': ['javascript', 'typescript'] }
   Plug 'https://github.com/zacacollier/vim-javascript-sql', { 'branch': 'add-typescript-support', 'for': ['javascript', 'typescript'] }
 
