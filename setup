@@ -19,8 +19,8 @@ sudo -v
 printf "\nSetting up system with latest toys ...\n\n"
 
 
-# Enable italic support
-tic xterm-256color-italic.terminfo
+printf "\nPulling latest changes\n"
+git pull
 
 
 # Create folders
@@ -56,63 +56,12 @@ link_dotfile sqliterc
 link_to $(pwd)/nvim-client ~/bin/nvim-client
 link_to ~/Dropbox/more/ssh/config ~/.ssh/config
 link_to $(pwd)/deps.edn ~/.clojure/deps.edn
-link_to "$(pwd)/Terminal Edit.app" "/Applications/Terminal Edit.app"
 
-
-printf "\nUpdating macOS\n"
-# sudo softwareupdate -i -a
-
-if [[ "$(xcode-select -p)" == "" ]]; then
-  printf "\nInstalling Xcode\n"
-  xcode-select --install
-fi
-
-# Brew
-if ! command -v brew > /dev/null 2>&1; then
-  printf "\nInstalling Brew\n"
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  brew analytics off
-fi
-
-printf "\nUpdating Brew\n"
-brew update
-brew upgrade
-printf "\nInstalling Brew taps\n"
-comm -23 <(sort brew.txt) <(brew leaves) | xargs brew install
-# Update brew.txt
-brew leaves > brew.txt
-printf "\nInstalling Cask taps\n"
-comm -23 <(sort cask.txt) <(brew cask ls) | xargs brew cask install
-# Update brew.txt
-brew cask ls > cask.txt
-brew cleanup
-
-
-# FZF - Install key bindings and fuzzy completion
-$(brew --prefix)/opt/fzf/install \
-  --no-zsh \
-  --no-update-rc \
-  --key-bindings \
-  --completion
-
-
-# NPM packages
-printf "\nUpdating npm packages\n"
-cat npm.txt | xargs npm i -g
-ls /usr/local/lib/node_modules > npm.txt
-
-
-# Neovim
-pip install --upgrade pip
-pip3 install --upgrade pip
-pip3 install --user --upgrade neovim
-pip install --user --upgrade neovim
 
 test -d ~/.vim || mkdir ~/.vim
 if [ ! -d ~/.config/nvim ]; then
   ln -s ~/.vim ~/.config/nvim
   ln -s ~/.vimrc ~/.config/nvim/init.vim
-  ln -s /usr/share/vim/vim74/spell/ ~/.config/nvim/
   printf "\nLinked Neovim config"
 fi
 
