@@ -8,7 +8,7 @@ font:
     style: Book Italic
   bold_italic:
     style: Italic
-  size: 14.0
+  size: 8.0
 
 colors:
   primary:
@@ -36,7 +36,7 @@ colors:
 window:
   decorations: 'none'
   padding:
-    x: 5
-    y: 5
+    x: 2
+    y: 2
   dynamic_padding: true
   startup_mode: Maximized
