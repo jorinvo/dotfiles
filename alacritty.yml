@@ -8,7 +8,7 @@ font:
     style: Book Italic
   bold_italic:
     style: Italic
-  size: 8.0
+  size: 7.5
 
 colors:
   primary:

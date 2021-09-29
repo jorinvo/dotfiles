@@ -171,3 +171,5 @@ branch = true
 
 [include]
 path = ~/projects/.gitconfig
+[init]
+	defaultBranch = main

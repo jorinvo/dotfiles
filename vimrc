@@ -12,6 +12,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-eunuch'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
   Plug 'https://github.com/junegunn/vim-easy-align'
+  Plug 'https://github.com/junegunn/vim-peekaboo'
   " Theme
   Plug 'https://github.com/arcticicestudio/nord-vim'
   " Navigation
@@ -23,6 +24,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/tpope/vim-rhubarb' " Support for :Gbrowse Github command
+  Plug 'https://github.com/shumphrey/fugitive-gitlab.vim' " Support for :Gbrowse Gitlab command
   Plug 'https://github.com/airblade/vim-gitgutter'
   " Shortcuts
   Plug 'https://github.com/tpope/vim-repeat'
@@ -37,19 +39,16 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/kana/vim-textobj-line' " l text object
   " Completion
   if has('nvim')
-    Plug 'https://github.com/Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
-    Plug 'https://github.com/zchee/deoplete-jedi', { 'for': 'python' }
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
   endif
   " Linting
-  Plug 'https://github.com/w0rp/ale' " Lint and fix
   " Languages
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
   Plug 'https://github.com/peitalin/vim-jsx-typescript', { 'for': 'typescriptreact' }
+  Plug 'jparise/vim-graphql', { 'for': ['typescript'] }
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript', 'typescriptreact'] } " gf command for path and modules in js
   Plug 'https://github.com/jiangmiao/auto-pairs', { 'for': ['javascript', 'typescript'] }
-  Plug 'https://github.com/zacacollier/vim-javascript-sql', { 'branch': 'add-typescript-support', 'for': ['javascript', 'typescript'] }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
@@ -343,8 +342,8 @@ vnoremap gr "vy:silent grep "<C-R>v"<space>
 " Git stuff
 
 " git status
-nnoremap gst :Gstatus<CR>
-vnoremap gst :Gstatus<CR>
+nnoremap gst :Git<CR>
+vnoremap gst :Git<CR>
 " git search branch
 nnoremap gsb :term bash -i -c 'fco'<CR>:f fco<CR>i
 " git stage stage
@@ -366,8 +365,10 @@ augroup end
 " puts a line or a visual selection into a log/print statement
 " Support for: js, go, py, md
 function! JsLog()
-  nmap gl ^iconsole.log(<esc>lx$a)<esc>
-  vmap gl cconsole.log(<esc>pa)<esc>
+  nmap gl ^iconsole.log(<esc>lx$a);<esc>
+  vmap gl cconsole.log(<esc>pa);<esc>
+  nmap gjl ^iconsole.log(JSON.stringify(<esc>lxx$a, null, 2));<esc>
+  vmap gjl cconsole.log(JSON.stringify(<esc>pa, null, 2));<esc>
 endfunction
 autocmd BufNewFile,BufRead *.js,*.jsx,*.ts :call JsLog()
 function! GoLog()
@@ -397,45 +398,62 @@ command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>:e .scratch
 " Plugin configuration
 "
 
-" Go
-let g:go_fmt_command = 'goimports'
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_deadline = '10s'
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'staticcheck', 'unused']
-augroup go_bindings
-  autocmd!
-  autocmd Filetype go noremap gm :GoRename<CR>
-  autocmd Filetype go noremap gtr :GoReferrers<CR>
-  autocmd Filetype go :GoPath ~/go
-augroup end
+" Linting, fixing and autocompletion
+let g:coc_global_extensions = ['coc-go', 'coc-html', 'coc-css', 'coc-json', 'coc-tsserver', 'coc-eslint']
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gtr <Plug>(coc-references)
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+autocmd CursorHold * silent call CocActionAsync('highlight')
+nmap <leader>rn <Plug>(coc-rename)
 
-
-" Linting
-let g:ale_sign_column_always = 1
-let g:ale_completion_enabled = 1
-let g:ale_fix_on_save = 1
-let g:ale_completion_tsserver_autoimport = 1
-let g:ale_linters_explicit = 1
-let g:ale_typescript_prettier_use_local_config = 1
-let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['eslint', 'tsserver'], 'clojure': ['clj-kondo']}
-let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint']}
+" Golang
+" disable all linters as that is taken care of by coc.nvim
+let g:go_diagnostics_enabled = 0
+let g:go_metalinter_enabled = []
+" don't jump to errors after metalinter is invoked
+let g:go_jump_to_error = 0
+" run go imports on file save
+let g:go_fmt_command = "goimports"
+" automatically highlight variable your cursor is on
+let g:go_auto_sameids = 0
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+" let g:go_metalinter_autosave = 1
+" let g:go_metalinter_deadline = '10s'
+" let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'staticcheck', 'unused']
+" augroup go_bindings
+"   autocmd!
+"   autocmd Filetype go noremap gm :GoRename<CR>
+"   autocmd Filetype go noremap gtr :GoReferrers<CR>
+" augroup end
 
 " TypeScript
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 augroup ts_bindings
   autocmd!
-  autocmd Filetype typescript noremap gd :ALEGoToDefinition<CR>
-  autocmd Filetype typescript noremap K :ALEHover<CR>
-  autocmd Filetype typescript noremap gK :ALEDetail<CR>
-  autocmd Filetype typescript noremap gtr :ALEFindReferences<CR>
-  autocmd Filetype typescript noremap gm :ALERename<CR>
-  autocmd Filetype typescript noremap ]s :ALENextWrap<CR>
-  autocmd Filetype typescript noremap [s :ALEPreviousWrap<CR>
   autocmd FileType typescript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
   autocmd FileType javascript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
 augroup end
-let g:javascript_sql_dialect = 'pgsql'
 
 
 " Python
@@ -458,10 +476,6 @@ let g:vim_json_syntax_conceal = 0
 set diffopt=filler,vertical
 
 
-" Deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#align_class = 1
-
 augroup clojure_bindings
   autocmd!
   autocmd FileType clojure nmap <buffer> cro :Eval<CR>:Eval (do (in-ns 'dev.reload) (reload-browser))<CR>
@@ -474,4 +488,5 @@ augroup markdown_bindings
   autocmd!
   autocmd FileType markdown setlocal spell
 augroup end
+
 
