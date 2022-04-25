@@ -139,7 +139,7 @@ fi # only in TTY
 
 
 # Neovim as editor (fall back to Vim)
-export EDITOR="$((which nvim-client &> /dev/null && echo nvim-client) || (which nvim &> /dev/null && echo nvim) || echo vim)"
+export EDITOR="$( (which nvim-client &> /dev/null && echo nvim-client) || (which nvim &> /dev/null && echo nvim) || echo vim )"
 export ELIXIR_EDITOR="$EDITOR +__LINE__ __FILE__"
 export ERL_AFLAGS="-kernel shell_history enabled"
 
