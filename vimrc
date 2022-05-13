@@ -13,6 +13,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
   Plug 'https://github.com/junegunn/vim-easy-align'
   Plug 'https://github.com/junegunn/vim-peekaboo'
+  Plug 'https://github.com/tpope/vim-abolish' " keep case in search/replace via %S, crs = coarse to snake_case etc.
   " Theme
   Plug 'https://github.com/arcticicestudio/nord-vim'
   " Navigation
@@ -24,7 +25,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Git
   Plug 'https://github.com/tpope/vim-fugitive'
   Plug 'https://github.com/tpope/vim-rhubarb' " Support for :Gbrowse Github command
-  Plug 'https://github.com/shumphrey/fugitive-gitlab.vim' " Support for :Gbrowse Gitlab command
   Plug 'https://github.com/airblade/vim-gitgutter'
   " Shortcuts
   Plug 'https://github.com/tpope/vim-repeat'
@@ -41,7 +41,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   if has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
   endif
-  " Linting
   " Languages
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
@@ -62,6 +61,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/Olical/conjure', {'tag': 'v3.3.0', 'for': 'clojure' }
   Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
   Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
+
+  " Plug 'https://github.com/iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
   " Add plugins to &runtimepath
   call plug#end()
