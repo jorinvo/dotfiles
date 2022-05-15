@@ -20,8 +20,10 @@ The setup mostly links my dotfiles and sets up [neovim](https://neovim.io/)
 - python3
 - [Node.js](https://nodejs.org/) including `npm`
 
+
 ## Notes
 
 Thanks to [Mathias](https://github.com/mathiasbynens/dotfiles) for inspiration!
+
 
 __Licence *MIT*__

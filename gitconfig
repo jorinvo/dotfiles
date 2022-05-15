@@ -125,7 +125,8 @@ followTags = true
 
 [commit]
 
-gpgsign = true
+# not working properly and doesn't seem worth the effort
+gpgsign = false
 
 
 # URL shorthands
