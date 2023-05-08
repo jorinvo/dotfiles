@@ -11,8 +11,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/tpope/vim-eunuch'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
-  Plug 'https://github.com/junegunn/vim-easy-align'
-  Plug 'https://github.com/junegunn/vim-peekaboo'
   Plug 'https://github.com/tpope/vim-abolish' " keep case in search/replace via %S, crs = coarse to snake_case etc.
   " Theme
   Plug 'https://github.com/arcticicestudio/nord-vim'
@@ -37,10 +35,11 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/kana/vim-textobj-user' " Reqired for ones below
   Plug 'https://github.com/kana/vim-textobj-entire' " e text object
   Plug 'https://github.com/kana/vim-textobj-line' " l text object
-  " Completion
-  if has('nvim')
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  endif
+  " Language server support
+  Plug 'https://github.com/prabirshrestha/vim-lsp'
+  Plug 'https://github.com/mattn/vim-lsp-settings'
+  Plug 'https://github.com/prabirshrestha/asyncomplete.vim'
+  Plug 'https://github.com/prabirshrestha/asyncomplete-lsp.vim'
   " Languages
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
@@ -48,21 +47,22 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'jparise/vim-graphql', { 'for': ['typescript'] }
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript', 'typescriptreact'] } " gf command for path and modules in js
   Plug 'https://github.com/jiangmiao/auto-pairs', { 'for': ['javascript', 'typescript'] }
+  Plug 'https://github.com/prisma/vim-prisma'
+  Plug 'https://github.com/prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production', 'branch': 'release/0.x' }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go', 'do': 'nvim +GoInstallBinaries +qall' }
 
   Plug 'https://github.com/klen/python-mode', { 'for': 'python' } " For linting, syntax, motions
-  Plug 'https://github.com/davidhalter/jedi-vim', { 'for': 'python' } " For navigation and doc commands
 
   Plug 'https://github.com/chr4/nginx.vim'
 
-  Plug 'https://github.com/Olical/conjure', {'tag': 'v3.3.0', 'for': 'clojure' }
+  Plug 'https://github.com/Olical/conjure', { 'tag': 'v3.3.0', 'for': 'clojure' }
   Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
   Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 
-  " Plug 'https://github.com/iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+  Plug 'https://github.com/elixir-editors/vim-elixir', { 'for': 'elixir' }
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -337,8 +337,8 @@ elseif executable('ack')
 endif
 
 " `gr`ep
-nnoremap gr :silent grep<space>
-vnoremap gr "vy:silent grep "<C-R>v"<space>
+" nnoremap gr :silent grep<space>
+" vnoremap gr "vy:silent grep "<C-R>v"<space>
 
 " Git stuff
 
@@ -392,33 +392,47 @@ command JSONFormat :%!jq '.'
 command RC execute "e ".resolve(expand("~/.vimrc"))
 command Todo execute "e ".resolve(expand("~/todo.md"))
 
-command Scratch norm :term bash -i -c 'scratch'<CR>:f clj-scratch<CR>:e .scratchpad.clj<CR>
-
 
 "
 " Plugin configuration
 "
 
-" Linting, fixing and autocompletion
-let g:coc_global_extensions = ['coc-go', 'coc-html', 'coc-css', 'coc-json', 'coc-tsserver', 'coc-eslint']
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gtr <Plug>(coc-references)
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
+" LSP
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    " nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    " nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    " nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre * call execute('LspDocumentFormatSync')
+    " refer to doc to add more commands
 endfunction
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-autocmd CursorHold * silent call CocActionAsync('highlight')
-nmap <leader>rn <Plug>(coc-rename)
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+    " Somehow LSP format does eslint but not prettier. Using separate plugin
+    " for prettier for now.
+    " Unfortunately the prettier plugins autoformat doesn't seem to work so we
+    " do it explicitly here.
+    " autocmd! BufWritePre *.ts call execute('Prettier')
+augroup END
+
+" asynccomplete
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 " Golang
 " disable all linters as that is taken care of by coc.nvim
@@ -450,23 +464,6 @@ let g:go_highlight_generate_tags = 1
 " TypeScript
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
-augroup ts_bindings
-  autocmd!
-  autocmd FileType typescript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
-  autocmd FileType javascript nmap <buffer> cro <C-L>i<C-P><CR><ESC><C-H>
-augroup end
-
-
-" Python
-let g:pymode_python = 'python3'
-let g:pymode_rope = 0
-if has('nvim')
-  let g:jedi#completions_enabled = 0
-endif
-let g:jedi#goto_command = 'gD'
-let g:jedi#goto_assignments_command = 'gd'
-let g:jedi#usages_command = 'gr'
-let g:jedi#rename_command = 'gm'
 
 
 " JSON
@@ -480,7 +477,7 @@ set diffopt=filler,vertical
 augroup clojure_bindings
   autocmd!
   autocmd FileType clojure nmap <buffer> cro :Eval<CR>:Eval (do (in-ns 'dev.reload) (reload-browser))<CR>
-  autocmd FileType clojure nmap gl ysaebaprn<space><esc><esc>
+  " autocmd FileType clojure nmap gl ysaebaprn<space><esc><esc>
 augroup end
 
 " Markdown
