@@ -336,21 +336,15 @@ elseif executable('ack')
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
-" `gr`ep
-" nnoremap gr :silent grep<space>
-" vnoremap gr "vy:silent grep "<C-R>v"<space>
+" go search string
+nnoremap gss :silent grep<space>
+vnoremap gss "vy:silent grep "<C-R>v"<space>
 
 " Git stuff
 
 " git status
 nnoremap gst :Git<CR>
 vnoremap gst :Git<CR>
-" git search branch
-nnoremap gsb :term bash -i -c 'fco'<CR>:f fco<CR>i
-" git stage stage
-nnoremap gss :GitGutterStageHunk<CR>
-" git stage undo
-nnoremap gsu :GitGutterUndoHunk<CR>
 
 " Make quickfix list editable;
 " useful to delete matches before using :cdo
