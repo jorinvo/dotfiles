@@ -58,7 +58,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/chr4/nginx.vim'
 
-  Plug 'https://github.com/Olical/conjure', { 'tag': 'v3.3.0', 'for': 'clojure' }
+  Plug 'https://github.com/Olical/conjure', { 'for': 'clojure' }
   Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
   Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 

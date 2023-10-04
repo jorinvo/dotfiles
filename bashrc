@@ -171,7 +171,7 @@ export GPG_TTY=$(tty)
 # Include user specific binaries
 PATH="${HOME}/bin:/usr/local/bin:/usr/local/sbin:${PATH}"
 
-PATH="${PATH}:~/.vim/plugged/vim-iced/bin"
+PATH="${PATH}:~/.mix/escripts"
 
 
 # Include Go installation and local binaries
@@ -179,18 +179,6 @@ if [ -n "${GOPATH-}" ]; then
   PATH="${PATH}:/usr/local/go/bin"
   PATH="${PATH}:${GOPATH}/bin"
 fi
-
-# rbenv if installed manually
-if ! which rbenv &> /dev/null && [ -d ${HOME}/.rbenv ]; then
-  PATH="${HOME}/.rbenv/bin:${PATH}"
-fi
-
-# For python setup
-export PATH="${HOME}/anaconda3/bin:$PATH"
-
-
-
-
 
 ###########
 # Aliases #
