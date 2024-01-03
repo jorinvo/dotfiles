@@ -1,0 +1,48 @@
+[colors.bright]
+black = "0x6C768A"
+blue = "0x81A1C1"
+cyan = "0x8FBCBB"
+green = "0xA3BE8C"
+magenta = "0xB48EAD"
+red = "0xBF616A"
+white = "0xECEFF4"
+yellow = "0xEBCB8B"
+
+[colors.normal]
+black = "0x3B4252"
+blue = "0x81A1C1"
+cyan = "0x88C0D0"
+green = "0xA3BE8C"
+magenta = "0xB48EAD"
+red = "0xBF616A"
+white = "0xE5E9F0"
+yellow = "0xEBCB8B"
+
+[colors.primary]
+background = "0x2E3440"
+foreground = "0xD8DEE9"
+
+[font]
+size = 7.5
+
+[font.bold]
+style = "Regular"
+
+[font.bold_italic]
+style = "Italic"
+
+[font.italic]
+style = "Book Italic"
+
+[font.normal]
+family = "Operator Mono"
+style = "Book"
+
+[window]
+decorations = "none"
+dynamic_padding = true
+startup_mode = "Maximized"
+
+[window.padding]
+x = 2
+y = 2
