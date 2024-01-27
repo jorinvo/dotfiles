@@ -9,7 +9,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   " Misc
   Plug 'https://github.com/tpope/vim-speeddating'
-  Plug 'https://github.com/tpope/vim-eunuch'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
   Plug 'https://github.com/tpope/vim-abolish' " keep case in search/replace via %S, crs = coarse to snake_case etc.
   " Theme
@@ -44,25 +43,22 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
   Plug 'https://github.com/peitalin/vim-jsx-typescript', { 'for': 'typescriptreact' }
-  Plug 'jparise/vim-graphql', { 'for': ['typescript'] }
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript', 'typescriptreact'] } " gf command for path and modules in js
-  Plug 'https://github.com/jiangmiao/auto-pairs', { 'for': ['javascript', 'typescript'] }
-  Plug 'https://github.com/prisma/vim-prisma'
   Plug 'https://github.com/prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production', 'branch': 'release/0.x' }
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
   Plug 'https://github.com/fatih/vim-go', { 'for': 'go', 'do': 'nvim +GoInstallBinaries +qall' }
 
-  Plug 'https://github.com/klen/python-mode', { 'for': 'python' } " For linting, syntax, motions
-
-  Plug 'https://github.com/chr4/nginx.vim'
-
   Plug 'https://github.com/Olical/conjure', { 'for': 'clojure' }
   Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
   Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 
   Plug 'https://github.com/elixir-editors/vim-elixir', { 'for': 'elixir' }
+
+  Plug 'https://github.com/preservim/vim-markdown', { 'for': 'markdown' }
+
+  Plug 'https://github.com/github/copilot.vim'
 
   " Add plugins to &runtimepath
   call plug#end()
@@ -79,9 +75,10 @@ syntax on
 set background=dark
 silent! colorscheme nord
 " Enable italic
-hi htmlArg cterm=italic
-hi Comment cterm=italic
-hi Type    cterm=italic
+hi htmlArg    cterm=italic
+hi htmlItalic cterm=italic
+hi Comment    cterm=italic
+hi Type       cterm=italic
 
 
 "
@@ -210,10 +207,6 @@ if v:version > 703 || v:version == 703 && has('patch541')
   set formatoptions+=j
 endif
 
-" Ignore dirs for path expansion
-set wildignore+=*.gif,*.jpg,*.png,*.ico,*.pdf
-set wildignore+=node_modules/*,bower_components/*,vendor/*,.git/*
-
 set spellfile=~/.vimspell.add
 
 
@@ -222,6 +215,7 @@ augroup filetypedetect
   au BufNewFile,BufRead *.babelrc setfiletype json
   au BufNewFile,BufRead *.eslintrc setfiletype json
   au BufNewFile,BufRead Dockerfile.* setfiletype dockerfile
+  au BufNewFile,BufRead *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
 augroup END
 
 
@@ -298,9 +292,7 @@ nmap ; :
 
 " Go terminal - Open a terminal
 nnoremap gtt :term<CR>i
-nnoremap gtvt <C-w><C-v>:term<CR>i
 nnoremap gtp :term<space>
-nnoremap gtvp <C-w><C-v>:term<space>
 
 " SPACE to save and also disable highlighting of last search
 nmap <space> :nohlsearch <bar> w<CR>
@@ -346,16 +338,6 @@ vnoremap gss "vy:silent grep "<C-R>v"<space>
 nnoremap gst :Git<CR>
 vnoremap gst :Git<CR>
 
-" Make quickfix list editable;
-" useful to delete matches before using :cdo
-:autocmd BufReadPost quickfix set modifiable
-" Automatically open quickfix /location list after quickfix ran
-augroup quickfix
-  autocmd!
-  autocmd QuickFixCmdPost [^l]* cwindow
-  autocmd QuickFixCmdPost l*    lwindow
-augroup end
-
 " gl: Go Log command
 " puts a line or a visual selection into a log/print statement
 " Support for: js, go, py, md
@@ -371,6 +353,11 @@ function! GoLog()
   vmap gl cfmt.Println(<esc>lxpa)<esc>
 endfunction
 autocmd BufNewFile,BufRead *.go :call GoLog()
+function! ElixirLog()
+  nmap gl ^iIO.inspect(<esc>l$a)<esc>
+  vmap gl cIO.inspect(<esc>pa)<esc>
+endfunction
+autocmd BufNewFile,BufRead *.ex,*.exs :call ElixirLog()
 
 vnoremap < <gv
 vnoremap > >gv
@@ -392,35 +379,25 @@ command Todo execute "e ".resolve(expand("~/todo.md"))
 "
 
 " LSP
+let g:lsp_settings_filetype_elixir = ['elixir-ls', 'tailwindcss-intellisense']
+let g:lsp_settings_filetype_eelixir = ['elixir-ls', 'html-languageserver', 'tailwindcss-intellisense']
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
     nmap <buffer> gd <plug>(lsp-definition)
-    " nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    " nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
     nmap <buffer> gr <plug>(lsp-references)
     nmap <buffer> gi <plug>(lsp-implementation)
     nmap <buffer> gt <plug>(lsp-type-definition)
-    " nmap <buffer> <leader>rn <plug>(lsp-rename)
     nmap <buffer> [g <plug>(lsp-previous-diagnostic)
     nmap <buffer> ]g <plug>(lsp-next-diagnostic)
     nmap <buffer> K <plug>(lsp-hover)
-    " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
     let g:lsp_format_sync_timeout = 1000
     autocmd! BufWritePre * call execute('LspDocumentFormatSync')
-    " refer to doc to add more commands
 endfunction
 augroup lsp_install
     au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-    " Somehow LSP format does eslint but not prettier. Using separate plugin
-    " for prettier for now.
-    " Unfortunately the prettier plugins autoformat doesn't seem to work so we
-    " do it explicitly here.
-    " autocmd! BufWritePre *.ts call execute('Prettier')
 augroup END
 
 " asynccomplete
@@ -446,14 +423,6 @@ let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_generate_tags = 1
-" let g:go_metalinter_autosave = 1
-" let g:go_metalinter_deadline = '10s'
-" let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'staticcheck', 'unused']
-" augroup go_bindings
-"   autocmd!
-"   autocmd Filetype go noremap gm :GoRename<CR>
-"   autocmd Filetype go noremap gtr :GoReferrers<CR>
-" augroup end
 
 " TypeScript
 let g:typescript_compiler_binary = 'tsc'
@@ -471,10 +440,10 @@ set diffopt=filler,vertical
 augroup clojure_bindings
   autocmd!
   autocmd FileType clojure nmap <buffer> cro :Eval<CR>:Eval (do (in-ns 'dev.reload) (reload-browser))<CR>
-  " autocmd FileType clojure nmap gl ysaebaprn<space><esc><esc>
 augroup end
 
 " Markdown
+set conceallevel=2
 let g:vim_markdown_frontmatter = 1
 augroup markdown_bindings
   autocmd!
