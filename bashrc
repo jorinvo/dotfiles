@@ -449,3 +449,6 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,
 
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+export FLYCTL_INSTALL="/home/jorin/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
