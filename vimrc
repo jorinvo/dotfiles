@@ -8,11 +8,13 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Using full urls for `gx` command
 
   " Misc
-  Plug 'https://github.com/tpope/vim-speeddating'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
-  Plug 'https://github.com/tpope/vim-abolish' " keep case in search/replace via %S, crs = coarse to snake_case etc.
+  Plug 'https://github.com/github/copilot.vim'
+  Plug 'https://github.com/stevearc/dressing.nvim'
+  Plug 'https://github.com/ziontee113/icon-picker.nvim'
+  Plug 'https://github.com/willothy/flatten.nvim'
   " Theme
-  Plug 'https://github.com/arcticicestudio/nord-vim'
+  Plug 'https://github.com/shaunsingh/nord.nvim'
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
@@ -34,7 +36,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/kana/vim-textobj-user' " Reqired for ones below
   Plug 'https://github.com/kana/vim-textobj-entire' " e text object
   Plug 'https://github.com/kana/vim-textobj-line' " l text object
-  " Language server support
+  " Language server support, auto-completion, diagnostics, docs, go-to-def, ...
   Plug 'https://github.com/prabirshrestha/vim-lsp'
   Plug 'https://github.com/mattn/vim-lsp-settings'
   Plug 'https://github.com/prabirshrestha/asyncomplete.vim'
@@ -58,8 +60,6 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
 
   Plug 'https://github.com/preservim/vim-markdown', { 'for': 'markdown' }
 
-  Plug 'https://github.com/github/copilot.vim'
-
   " Add plugins to &runtimepath
   call plug#end()
 endif
@@ -73,7 +73,6 @@ endif
 " Needs to be first.
 syntax on
 set background=dark
-silent! colorscheme nord
 " Enable italic
 hi htmlArg    cterm=italic
 hi htmlItalic cterm=italic
@@ -211,11 +210,9 @@ set spellfile=~/.vimspell.add
 
 
 augroup filetypedetect
-  au BufNewFile,BufRead *.boot setfiletype clojure
   au BufNewFile,BufRead *.babelrc setfiletype json
   au BufNewFile,BufRead *.eslintrc setfiletype json
   au BufNewFile,BufRead Dockerfile.* setfiletype dockerfile
-  au BufNewFile,BufRead *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
 augroup END
 
 
@@ -262,7 +259,6 @@ cnoremap <C-n> <Down>
 " Allow dot command in visual mode
 vnoremap . :norm.<CR>
 
-let maplocalleader = ","
 
 " Overwrite Y to behave like other uppercase commands
 nmap Y y$
@@ -450,4 +446,46 @@ augroup markdown_bindings
   autocmd FileType markdown setlocal spell
 augroup end
 
+lua << EOF
 
+vim.cmd[[colorscheme nord]]
+--require('lualine').setup {
+  --options = {
+    --theme = 'nord'
+  --}
+--}
+
+vim.g.mapleader = ","
+
+require("icon-picker").setup({ disable_legacy_commands = true })
+vim.keymap.set("n", "ge", "<cmd>IconPickerNormal emoji<cr>", { noremap = true, silent = true })
+
+require("flatten").setup({
+  -- your config
+})
+
+EOF
+
+
+" TODO: Give nvim lua things a try
+" better fzf https://github.com/nvim-telescope/telescope.nvim
+" package manager https://github.com/folke/lazy.nvim
+" install LSP and other tools https://github.com/williamboman/mason.nvim
+" config built-in LSP https://github.com/neovim/nvim-lspconfig
+" improve LSP https://github.com/nvimdev/lspsaga.nvim
+" completion https://github.com/ms-jpq/coq_nvim or https://github.com/hrsh7th/nvim-cmp
+" copilot in lua https://github.com/zbirenbaum/copilot.lua (more efficient than vimscript)
+" better highlighting https://github.com/nvim-treesitter/nvim-treesitter
+" lua version of surround https://github.com/kylechui/nvim-surround
+" history manager https://github.com/AckslD/nvim-neoclip.lua
+" register preview https://github.com/tversteeg/registers.nvim or https://github.com/gennaro-tedesco/nvim-peekup
+" enhance search https://github.com/kevinhwang91/nvim-hlslens or https://github.com/roobert/search-replace.nvim
+" statusline https://github.com/nvim-lualine/lualine.nvim
+" icons in UI https://github.com/nvim-tree/nvim-web-devicons
+" open files in current nvim https://github.com/willothy/flatten.nvim
+" magit inspired git interface https://github.com/NeogitOrg/neogit
+" git integration https://github.com/lewis6991/gitsigns.nvim
+" fast motions https://github.com/ggandor/leap.nvim
+" auto pairs https://github.com/windwp/nvim-autopairs
+" commenting https://github.com/numToStr/Comment.nvim
+" better wild menu https://github.com/gelguy/wilder.nvim

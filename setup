@@ -53,7 +53,6 @@ link_dotfile alacritty.toml
 link_dotfile vimrc
 link_dotfile psqlrc
 link_dotfile sqliterc
-link_to $(pwd)/nvim-client ~/bin/nvim-client
 link_to ~/Dropbox/more/ssh/config ~/.ssh/config
 link_to $(pwd)/deps.edn ~/.clojure/deps.edn
 
