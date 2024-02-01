@@ -13,6 +13,15 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/stevearc/dressing.nvim'
   Plug 'https://github.com/ziontee113/icon-picker.nvim'
   Plug 'https://github.com/willothy/flatten.nvim'
+  Plug 'https://github.com/windwp/nvim-autopairs'
+  Plug 'https://github.com/gennaro-tedesco/nvim-peekup'
+
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+  Plug 'https://github.com/gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
   " Theme
   Plug 'https://github.com/shaunsingh/nord.nvim'
   " Navigation
@@ -56,7 +65,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/guns/vim-sexp', { 'for': 'clojure' }
   Plug 'https://github.com/tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 
-  Plug 'https://github.com/elixir-editors/vim-elixir', { 'for': 'elixir' }
+  " Cannot pin to elixir only. Otherwise doesn't detect heex files and so on.
+  Plug 'https://github.com/elixir-editors/vim-elixir', { 'for': ['elixir', 'eelixir'] }
 
   Plug 'https://github.com/preservim/vim-markdown', { 'for': 'markdown' }
 
@@ -84,30 +94,8 @@ hi Type       cterm=italic
 " Basics
 "
 
-" These are default in NeoVim
-if !has('nvim')
-  set nocompatible
-  filetype off
-  filetype plugin indent on
-
-  set ttyfast
-  set ttymouse=xterm2
-  set ttyscroll=3
-
-  set laststatus=2                " Always show status line
-  set encoding=utf-8              " Set default encoding to UTF-8
-  set autoread                    " Automatically reread changed files without asking me anything
-  set autoindent
-  set backspace=indent,eol,start  " Makes backspace key more powerful.
-  set incsearch                   " Shows the match while typing
-  set hlsearch                    " Highlight found searches
-  set mouse=a
-endif
-
 " Show replacement incrementally in NeoVim
-if exists('&inccommand')
-  set inccommand=nosplit
-endif
+set inccommand=nosplit
 
 
 " Statusline
@@ -213,6 +201,7 @@ augroup filetypedetect
   au BufNewFile,BufRead *.babelrc setfiletype json
   au BufNewFile,BufRead *.eslintrc setfiletype json
   au BufNewFile,BufRead Dockerfile.* setfiletype dockerfile
+  au BufNewFile,BufRead *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
 augroup END
 
 
@@ -234,6 +223,12 @@ augroup rc_cmds
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe "norm! g`\"" | endif
 augroup end
 
+" Automatically open quickfix /location list after quickfix ran
+augroup quickfix
+  autocmd!
+  autocmd QuickFixCmdPost [^l]* cwindow
+  autocmd QuickFixCmdPost l*    lwindow
+augroup end
 
 "
 " Shortcut Mappings
@@ -248,9 +243,7 @@ endif
 
 " `ESC` in terminal to exit insert mode
 " Can still escape in nested vim using ctrl-c
-if has('nvim')
-  tnoremap <esc> <C-\><C-n>
-endif
+tnoremap <esc> <C-\><C-n>
 
 " Command line history completion with ctrl-p and ctrl-n
 cnoremap <C-p> <Up>
@@ -464,10 +457,41 @@ require("flatten").setup({
   -- your config
 })
 
+require("nvim-autopairs").setup {}
+
+local wilder = require('wilder')
+wilder.setup({modes = {':', '/', '?'}})
+wilder.set_option('pipeline', {
+  wilder.branch(
+    wilder.cmdline_pipeline({
+      fuzzy = 1,
+      set_pcre2_pattern = 1,
+    }),
+    wilder.python_search_pipeline({
+      pattern = 'fuzzy',
+    })
+  ),
+})
+local highlighters = {
+  wilder.pcre2_highlighter(),
+  wilder.basic_highlighter(),
+}
+wilder.set_option('renderer', wilder.popupmenu_renderer(
+  wilder.popupmenu_border_theme({
+    highlighter = highlighters,
+    highlights = {
+      border = 'Normal', -- highlight to use for the border
+    },
+    -- 'single', 'double', 'rounded' or 'solid'
+    -- can also be a list of 8 characters, see :h wilder#popupmenu_border_theme() for more details
+    border = 'rounded',
+  })
+))
+
 EOF
 
-
 " TODO: Give nvim lua things a try
+" https://github.com/elixir-tools/elixir-tools.nvim
 " better fzf https://github.com/nvim-telescope/telescope.nvim
 " package manager https://github.com/folke/lazy.nvim
 " install LSP and other tools https://github.com/williamboman/mason.nvim
@@ -478,14 +502,10 @@ EOF
 " better highlighting https://github.com/nvim-treesitter/nvim-treesitter
 " lua version of surround https://github.com/kylechui/nvim-surround
 " history manager https://github.com/AckslD/nvim-neoclip.lua
-" register preview https://github.com/tversteeg/registers.nvim or https://github.com/gennaro-tedesco/nvim-peekup
-" enhance search https://github.com/kevinhwang91/nvim-hlslens or https://github.com/roobert/search-replace.nvim
 " statusline https://github.com/nvim-lualine/lualine.nvim
 " icons in UI https://github.com/nvim-tree/nvim-web-devicons
 " open files in current nvim https://github.com/willothy/flatten.nvim
 " magit inspired git interface https://github.com/NeogitOrg/neogit
 " git integration https://github.com/lewis6991/gitsigns.nvim
 " fast motions https://github.com/ggandor/leap.nvim
-" auto pairs https://github.com/windwp/nvim-autopairs
 " commenting https://github.com/numToStr/Comment.nvim
-" better wild menu https://github.com/gelguy/wilder.nvim
