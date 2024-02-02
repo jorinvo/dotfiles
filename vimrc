@@ -361,6 +361,7 @@ command JSONFormat :%!jq '.'
 " Expanding links allows me to better use git and file browser
 command RC execute "e ".resolve(expand("~/.vimrc"))
 command Todo execute "e ".resolve(expand("~/todo.md"))
+command Biz execute "e ".resolve(expand("~/notes/biz/todo.md"))
 
 
 "

@@ -256,6 +256,7 @@ alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:
 
 # Expanding the link allows be to go to my other note files quickly
 alias todo='(cd $(dirname $(readlink -f ~/todo.md)) && e todo.md)'
+alias biz='(cd ~/notes/biz && e todo.md)'
 alias p="c ~/projects"
 
 alias dc="docker-compose"
