@@ -16,6 +16,10 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/windwp/nvim-autopairs'
   Plug 'https://github.com/gennaro-tedesco/nvim-peekup'
 
+  " AI
+  "Plug 'https://github.com/nvim-lua/plenary.nvim' "Required by parrot
+  "Plug 'https://github.com/frankroeder/parrot.nvim'
+
   function! UpdateRemotePlugins(...)
     " Needed to refresh runtime files
     let &rtp=&rtp
@@ -23,7 +27,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   endfunction
   Plug 'https://github.com/gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
   " Theme
-  Plug 'https://github.com/shaunsingh/nord.nvim'
+  " Plug 'https://github.com/shaunsingh/nord.nvim'
+  Plug 'https://github.com/nyoom-engineering/oxocarbon.nvim'
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
@@ -82,7 +87,6 @@ endif
 " Enable syntax highlighting
 " Needs to be first.
 syntax on
-set background=dark
 " Enable italic
 hi htmlArg    cterm=italic
 hi htmlItalic cterm=italic
@@ -252,6 +256,11 @@ cnoremap <C-n> <Down>
 " Allow dot command in visual mode
 vnoremap . :norm.<CR>
 
+" Easier copying into system clipboard.
+" I am not using ' for jump marks anyways.
+nnoremap ' "+
+vnoremap ' "+
+tnoremap ' "+
 
 " Overwrite Y to behave like other uppercase commands
 nmap Y y$
@@ -361,7 +370,6 @@ command JSONFormat :%!jq '.'
 " Expanding links allows me to better use git and file browser
 command RC execute "e ".resolve(expand("~/.vimrc"))
 command Todo execute "e ".resolve(expand("~/todo.md"))
-command Biz execute "e ".resolve(expand("~/notes/biz/todo.md"))
 
 
 "
@@ -442,12 +450,9 @@ augroup end
 
 lua << EOF
 
-vim.cmd[[colorscheme nord]]
---require('lualine').setup {
-  --options = {
-    --theme = 'nord'
-  --}
---}
+-- vim.cmd[[colorscheme nord]]
+vim.cmd[[colorscheme oxocarbon]]
+vim.cmd[[set background=light]]
 
 vim.g.mapleader = ","
 

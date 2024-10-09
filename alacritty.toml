@@ -1,29 +1,30 @@
 [colors.bright]
-black = "0x6C768A"
-blue = "0x81A1C1"
-cyan = "0x8FBCBB"
-green = "0xA3BE8C"
+black =   "0x4C566A"
+red =     "0xbf616a"
+green =   "0xa3be8c"
+yellow =  "0xebcb8b"
+blue =    "0x81a1c1"
 magenta = "0xB48EAD"
-red = "0xBF616A"
-white = "0xECEFF4"
-yellow = "0xEBCB8B"
+cyan =    "0x8FBCBB"
+white =   "0xECEFF4"
+
 
 [colors.normal]
-black = "0x3B4252"
-blue = "0x81A1C1"
-cyan = "0x88C0D0"
-green = "0xA3BE8C"
+black =   "0xd8dee9"
+red =     "0xbf616a"
+green =   "0xa3be8c"
+yellow =  "0xebcb8b"
+blue =    "0x81a1c1"
 magenta = "0xB48EAD"
-red = "0xBF616A"
-white = "0xE5E9F0"
-yellow = "0xEBCB8B"
+cyan =    "0x88C0D0"
+white =   "0xE5E9F0"
 
 [colors.primary]
-background = "0x2E3440"
-foreground = "0xD8DEE9"
+background = "0xffffff"
+foreground = "0x5e81ac"
 
 [font]
-size = 7.5
+size = 14
 
 [font.bold]
 style = "Regular"
@@ -44,5 +45,5 @@ dynamic_padding = true
 startup_mode = "Maximized"
 
 [window.padding]
-x = 2
-y = 2
+x = 3
+y = 3
