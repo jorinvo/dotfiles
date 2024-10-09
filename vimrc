@@ -27,7 +27,7 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   endfunction
   Plug 'https://github.com/gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
   " Theme
-  " Plug 'https://github.com/shaunsingh/nord.nvim'
+  Plug 'https://github.com/shaunsingh/nord.nvim'
   Plug 'https://github.com/nyoom-engineering/oxocarbon.nvim'
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
@@ -450,9 +450,15 @@ augroup end
 
 lua << EOF
 
--- vim.cmd[[colorscheme nord]]
-vim.cmd[[colorscheme oxocarbon]]
-vim.cmd[[set background=light]]
+vim.cmd[[colorscheme nord]]
+-- vim.cmd[[colorscheme oxocarbon]]
+vim.cmd[[set background=dark]]
+
+--require('lualine').setup {
+  --options = {
+    --theme = 'nord'
+  --}
+--}
 
 vim.g.mapleader = ","
 
