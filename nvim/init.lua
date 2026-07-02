@@ -88,8 +88,8 @@ require("lazy").setup({
           -- Only install parsers you actually use to save memory/CPU
           ensure_installed = {
             "javascript", "typescript", "tsx",
-            "go", "elixir", "markdown", "json",
-            "lua", "vim", "vimdoc",
+            "go", "python", "markdown", "json",
+            "lua",
           },
           auto_install = false, -- Don't auto-install to save battery
           highlight = {
@@ -121,10 +121,6 @@ require("lazy").setup({
     ft = "go",
     build = ":GoInstallBinaries",
   },
-  { "Olical/conjure",                             ft = "clojure" },
-  { "guns/vim-sexp",                              ft = "clojure" },
-  { "tpope/vim-sexp-mappings-for-regular-people", ft = "clojure" },
-  { "elixir-editors/vim-elixir",                  ft = { "elixir", "eelixir" } },
   { "preservim/vim-markdown",                     ft = "markdown" },
 })
 
@@ -369,9 +365,9 @@ local function setup_go_log()
   keymap("v", "gl", "cfmt.Println(<esc>pa)<esc>", { buffer = true })
 end
 
-local function setup_elixir_log()
-  keymap("n", "gl", "^iIO.inspect(<esc>l$a)<esc>", { buffer = true })
-  keymap("v", "gl", "cIO.inspect(<esc>pa)<esc>", { buffer = true })
+local function setup_python_log()
+  keymap("n", "gl", "^iprint(<esc>l$a)<esc>==", { buffer = true })
+  keymap("v", "gl", "cprint(<esc>pa)<esc>", { buffer = true })
 end
 
 autocmd("FileType", {
@@ -379,7 +375,7 @@ autocmd("FileType", {
   callback = setup_js_log,
 })
 autocmd("FileType", { pattern = "go", callback = setup_go_log })
-autocmd("FileType", { pattern = { "elixir", "eelixir" }, callback = setup_elixir_log })
+autocmd("FileType", { pattern = "python", callback = setup_python_log })
 
 -- Plugin configs
 
@@ -408,14 +404,6 @@ vim.g.vim_json_syntax_conceal = 0
 -- Fugitive
 vim.opt.diffopt = { "filler", "vertical" }
 
--- Clojure
-autocmd("FileType", {
-  pattern = "clojure",
-  callback = function()
-    keymap("n", "cro", ":Eval<CR>:Eval (do (in-ns 'dev.reload) (reload-browser))<CR>", { buffer = true })
-  end,
-})
-
 -- Markdown
 vim.opt.conceallevel = 2
 vim.g.vim_markdown_frontmatter = 1
@@ -441,7 +429,7 @@ require("mason-lspconfig").setup({
   ensure_installed = {
     "ts_ls",    -- TypeScript/JavaScript
     "gopls",    -- Go
-    "elixirls", -- Elixir
+    "pyright",  -- Python
     "marksman", -- Markdown
     "lua_ls",   -- Lua
     -- "html",         -- HTML (only if you need)
@@ -512,7 +500,7 @@ local on_attach = function(client, bufnr)
   keymap("n", "K", vim.lsp.buf.hover, opts)
 
   -- Format on save
-  if client.supports_method("textDocument/formatting") then
+  if client.server_capabilities.documentFormattingProvider then
     autocmd("BufWritePre", {
       buffer = bufnr,
       callback = function()
@@ -526,9 +514,7 @@ end
 local servers = {
   ts_ls = {},
   gopls = {},
-  elixirls = {
-    cmd = { vim.fn.expand("~/.local/share/nvim/mason/bin/elixir-ls") },
-  },
+  pyright = {},
   marksman = {},
   lua_ls = {
     settings = {
