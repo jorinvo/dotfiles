@@ -8,17 +8,10 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   " Using full urls for `gx` command
 
   " Misc
+  " Plug 'https://github.com/rmagatti/auto-session'
   Plug 'https://github.com/nelstrom/vim-visual-star-search'
-  Plug 'https://github.com/github/copilot.vim'
-  Plug 'https://github.com/stevearc/dressing.nvim'
-  Plug 'https://github.com/ziontee113/icon-picker.nvim'
   Plug 'https://github.com/willothy/flatten.nvim'
   Plug 'https://github.com/windwp/nvim-autopairs'
-  Plug 'https://github.com/gennaro-tedesco/nvim-peekup'
-
-  " AI
-  "Plug 'https://github.com/nvim-lua/plenary.nvim' "Required by parrot
-  "Plug 'https://github.com/frankroeder/parrot.nvim'
 
   function! UpdateRemotePlugins(...)
     " Needed to refresh runtime files
@@ -28,7 +21,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
   " Theme
   Plug 'https://github.com/shaunsingh/nord.nvim'
-  Plug 'https://github.com/nyoom-engineering/oxocarbon.nvim'
+  "Plug 'https://github.com/nyoom-engineering/oxocarbon.nvim'
+  " Plug 'https://github.com/catppuccin/nvim'
   " Navigation
   Plug 'https://github.com/tpope/vim-vinegar' " Enhance netrw - the default directory browser
   Plug 'https://github.com/tpope/vim-rsi' "Readline Style Insertion
@@ -60,7 +54,8 @@ if !empty(glob('~/.vim/autoload/plug.vim'))
   Plug 'https://github.com/leafgarland/typescript-vim', { 'for': ['typescript', 'typescriptreact'] }
   Plug 'https://github.com/peitalin/vim-jsx-typescript', { 'for': 'typescriptreact' }
   Plug 'https://github.com/moll/vim-node', { 'for': ['javascript', 'typescript', 'typescriptreact'] } " gf command for path and modules in js
-  Plug 'https://github.com/prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production', 'branch': 'release/0.x' }
+  " Plug 'https://github.com/prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production', 'branch': 'release/0.x' }
+  Plug 'https://github.com/wuelnerdotexe/vim-astro', { 'for': 'astro'}
 
   Plug 'https://github.com/elzr/vim-json', { 'for': 'json' }
 
@@ -260,7 +255,6 @@ vnoremap . :norm.<CR>
 " I am not using ' for jump marks anyways.
 nnoremap ' "+
 vnoremap ' "+
-tnoremap ' "+
 
 " Overwrite Y to behave like other uppercase commands
 nmap Y y$
@@ -340,22 +334,22 @@ vnoremap gst :Git<CR>
 " puts a line or a visual selection into a log/print statement
 " Support for: js, go, py, md
 function! JsLog()
-  nmap gl ^iconsole.log(<esc>lx$a);<esc>
+  nmap gl ^iconsole.log(<esc>l$a);<esc>==
   vmap gl cconsole.log(<esc>pa);<esc>
   nmap gjl ^iconsole.log(JSON.stringify(<esc>lxx$a, null, 2));<esc>
   vmap gjl cconsole.log(JSON.stringify(<esc>pa, null, 2));<esc>
 endfunction
-autocmd BufNewFile,BufRead *.js,*.jsx,*.ts :call JsLog()
+autocmd BufEnter *.js,*.jsx,*.ts :call JsLog()
 function! GoLog()
-  nmap gl ^ifmt.Println(<esc>lx$a)<esc>
-  vmap gl cfmt.Println(<esc>lxpa)<esc>
+  nmap gl ^ifmt.Println(<esc>l$a)<esc>==
+  vmap gl cfmt.Println(<esc>pa)<esc>
 endfunction
-autocmd BufNewFile,BufRead *.go :call GoLog()
+autocmd BufEnter *.go :call GoLog()
 function! ElixirLog()
   nmap gl ^iIO.inspect(<esc>l$a)<esc>
   vmap gl cIO.inspect(<esc>pa)<esc>
 endfunction
-autocmd BufNewFile,BufRead *.ex,*.exs :call ElixirLog()
+autocmd BufEnter *.ex,*.exs :call ElixirLog()
 
 vnoremap < <gv
 vnoremap > >gv
@@ -377,8 +371,8 @@ command Todo execute "e ".resolve(expand("~/todo.md"))
 "
 
 " LSP
-let g:lsp_settings_filetype_elixir = ['elixir-ls', 'tailwindcss-intellisense']
-let g:lsp_settings_filetype_eelixir = ['elixir-ls', 'html-languageserver', 'tailwindcss-intellisense']
+let g:lsp_settings_filetype_elixir = ['elixir-ls']
+let g:lsp_settings_filetype_eelixir = ['elixir-ls', 'html-languageserver']
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
@@ -448,22 +442,26 @@ augroup markdown_bindings
   autocmd FileType markdown setlocal spell
 augroup end
 
+let g:astro_typescript = 'enable'
+
 lua << EOF
 
 vim.cmd[[colorscheme nord]]
 -- vim.cmd[[colorscheme oxocarbon]]
+-- vim.cmd[[colorscheme catppuccin-latte]]
+-- vim.cmd[[set background=light]]
 vim.cmd[[set background=dark]]
-
---require('lualine').setup {
-  --options = {
-    --theme = 'nord'
-  --}
---}
 
 vim.g.mapleader = ","
 
-require("icon-picker").setup({ disable_legacy_commands = true })
-vim.keymap.set("n", "ge", "<cmd>IconPickerNormal emoji<cr>", { noremap = true, silent = true })
+--require("icon-picker").setup({ disable_legacy_commands = true })
+--vim.keymap.set("n", "ge", "<cmd>IconPickerNormal emoji<cr>", { noremap = true, silent = true })
+
+-- require('auto-session').setup {
+--   log_level = 'error',
+--   auto_session_suppress_dirs = { '~/', '~/Downloads', '/', '~/Desktop' },
+--   auto_session_enable_last_session = false,
+-- }
 
 require("flatten").setup({
   -- your config
@@ -503,21 +501,18 @@ wilder.set_option('renderer', wilder.popupmenu_renderer(
 EOF
 
 " TODO: Give nvim lua things a try
-" https://github.com/elixir-tools/elixir-tools.nvim
 " better fzf https://github.com/nvim-telescope/telescope.nvim
 " package manager https://github.com/folke/lazy.nvim
 " install LSP and other tools https://github.com/williamboman/mason.nvim
 " config built-in LSP https://github.com/neovim/nvim-lspconfig
 " improve LSP https://github.com/nvimdev/lspsaga.nvim
 " completion https://github.com/ms-jpq/coq_nvim or https://github.com/hrsh7th/nvim-cmp
-" copilot in lua https://github.com/zbirenbaum/copilot.lua (more efficient than vimscript)
 " better highlighting https://github.com/nvim-treesitter/nvim-treesitter
 " lua version of surround https://github.com/kylechui/nvim-surround
 " history manager https://github.com/AckslD/nvim-neoclip.lua
 " statusline https://github.com/nvim-lualine/lualine.nvim
-" icons in UI https://github.com/nvim-tree/nvim-web-devicons
-" open files in current nvim https://github.com/willothy/flatten.nvim
-" magit inspired git interface https://github.com/NeogitOrg/neogit
 " git integration https://github.com/lewis6991/gitsigns.nvim
-" fast motions https://github.com/ggandor/leap.nvim
 " commenting https://github.com/numToStr/Comment.nvim
+" icons in UI https://github.com/nvim-tree/nvim-web-devicons
+" fast motions https://github.com/ggandor/leap.nvim
+" magit inspired git interface https://github.com/NeogitOrg/neogit

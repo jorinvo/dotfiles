@@ -109,7 +109,11 @@ prompt_exit() {
 
 # Counting background jobs
 prompt_jobscount() {
-    jobs -p | wc -l | bc | awk '{if ($0>0) print " (" $0 ")" }';
+    local job_count
+    job_count=$(jobs -p | wc -l)
+    if [ "$job_count" -gt 0 ]; then
+        printf " (%d)" "$job_count"
+    fi
 }
 
 # Set the terminal title to the current working directory
@@ -138,7 +142,6 @@ fi # only in TTY
 
 # Neovim as editor (fall back to Vim)
 export EDITOR="$( (which nvim &> /dev/null && echo nvim) || echo vim )"
-# export EDITOR="$( (which zeditor &> /dev/null && echo zeditor) || echo vim )"
 export ELIXIR_EDITOR="$EDITOR +__LINE__ __FILE__"
 export ERL_AFLAGS="-kernel shell_history enabled"
 
@@ -243,7 +246,7 @@ alias gst="g st"
 alias server='python3 -m http.server'
 
 # Network IP for development (works on my system, probably not portable)
-alias ip='ifconfig | grep broadcast | cut -d" " -f2'
+# alias ip='ifconfig | grep broadcast | cut -d" " -f2'
 
 # Change mac address
 alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'`"
@@ -451,5 +454,13 @@ if [[ $- == *i* ]]; then
 fi
 
 
-export FLYCTL_INSTALL="/home/jorin/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
+# pnpm
+export PNPM_HOME="/home/jorin/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Added by dbt installer
+export PATH="$PATH:/home/jorin/.local/bin"
