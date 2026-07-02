@@ -1,6 +1,3 @@
--- Modern Neovim config - migrated from .vimrc
--- Optimized for battery life and performance
-
 vim.g.mapleader = ","
 
 -- Bootstrap lazy.nvim
@@ -46,13 +43,13 @@ require("lazy").setup({
   { "michaeljsmith/vim-indent-object" },
   { "wellle/targets.vim" },
   { "kana/vim-textobj-user" },
-  { "kana/vim-textobj-entire" },
-  { "kana/vim-textobj-line" },
+  { "kana/vim-textobj-entire",        dependencies = { "kana/vim-textobj-user" } },
+  { "kana/vim-textobj-line",          dependencies = { "kana/vim-textobj-user" } },
 
   -- Misc
   { "nelstrom/vim-visual-star-search" },
-  { "willothy/flatten.nvim", opts = {} },
-  { "windwp/nvim-autopairs", opts = {} },
+  { "willothy/flatten.nvim",          opts = {} },
+  { "windwp/nvim-autopairs",          opts = {} },
 
   -- Modern LSP setup
   {
@@ -83,7 +80,11 @@ require("lazy").setup({
     config = function()
       -- Defer to avoid blocking startup
       vim.defer_fn(function()
-        require("nvim-treesitter.configs").setup({
+        local ok, configs = pcall(require, "nvim-treesitter.configs")
+        if not ok then
+          return
+        end
+        configs.setup({
           -- Only install parsers you actually use to save memory/CPU
           ensure_installed = {
             "javascript", "typescript", "tsx",
@@ -109,22 +110,22 @@ require("lazy").setup({
   },
 
   -- Language-specific plugins (lazy loaded)
-  { "pangloss/vim-javascript", ft = "javascript" },
-  { "leafgarland/typescript-vim", ft = { "typescript", "typescriptreact" } },
+  { "pangloss/vim-javascript",     ft = "javascript" },
+  { "leafgarland/typescript-vim",  ft = { "typescript", "typescriptreact" } },
   { "peitalin/vim-jsx-typescript", ft = "typescriptreact" },
-  { "moll/vim-node", ft = { "javascript", "typescript", "typescriptreact" } },
-  { "wuelnerdotexe/vim-astro", ft = "astro" },
-  { "elzr/vim-json", ft = "json" },
+  { "moll/vim-node",               ft = { "javascript", "typescript", "typescriptreact" } },
+  { "wuelnerdotexe/vim-astro",     ft = "astro" },
+  { "elzr/vim-json",               ft = "json" },
   {
     "fatih/vim-go",
     ft = "go",
     build = ":GoInstallBinaries",
   },
-  { "Olical/conjure", ft = "clojure" },
-  { "guns/vim-sexp", ft = "clojure" },
+  { "Olical/conjure",                             ft = "clojure" },
+  { "guns/vim-sexp",                              ft = "clojure" },
   { "tpope/vim-sexp-mappings-for-regular-people", ft = "clojure" },
-  { "elixir-editors/vim-elixir", ft = { "elixir", "eelixir" } },
-  { "preservim/vim-markdown", ft = "markdown" },
+  { "elixir-editors/vim-elixir",                  ft = { "elixir", "eelixir" } },
+  { "preservim/vim-markdown",                     ft = "markdown" },
 })
 
 -- Theme
@@ -438,11 +439,11 @@ require("mason").setup({
 require("mason-lspconfig").setup({
   -- Only install what you need - saves disk space and memory
   ensure_installed = {
-    "ts_ls",        -- TypeScript/JavaScript
-    "gopls",           -- Go
-    "elixirls",        -- Elixir
-    "marksman",        -- Markdown
-    "lua_ls",          -- Lua
+    "ts_ls",    -- TypeScript/JavaScript
+    "gopls",    -- Go
+    "elixirls", -- Elixir
+    "marksman", -- Markdown
+    "lua_ls",   -- Lua
     -- "html",         -- HTML (only if you need)
     -- "cssls",        -- CSS (only if you need)
   },
@@ -485,24 +486,18 @@ cmp.setup({
   }),
   -- Reduce completion frequency to save CPU
   performance = {
-    debounce = 150,      -- Wait 150ms before triggering (default: 60ms)
-    throttle = 60,       -- Throttle to 60ms
+    debounce = 150, -- Wait 150ms before triggering (default: 60ms)
+    throttle = 60,  -- Throttle to 60ms
     fetching_timeout = 200,
   },
 })
 
 -- LSP setup
-local ok_lsp, lspconfig = pcall(require, "lspconfig")
-if not ok_lsp then
-  vim.notify("lspconfig not loaded yet", vim.log.levels.WARN)
-  return
-end
-
 local ok_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 local capabilities = ok_cmp and cmp_nvim_lsp.default_capabilities() or vim.lsp.protocol.make_client_capabilities()
 
 -- Reduce LSP overhead
-vim.lsp.set_log_level("error") -- Don't log unless error
+vim.lsp.log.set_level(vim.log.levels.ERROR)
 
 local on_attach = function(client, bufnr)
   local opts = { buffer = bufnr, silent = true }
@@ -527,7 +522,7 @@ local on_attach = function(client, bufnr)
   end
 end
 
--- Configure LSP servers
+-- Configure LSP servers using modern vim.lsp.config API
 local servers = {
   ts_ls = {},
   gopls = {},
@@ -546,20 +541,24 @@ local servers = {
   },
 }
 
+-- Setup each LSP server with modern API (nvim 0.11+)
 for server, config in pairs(servers) do
-  lspconfig[server].setup(vim.tbl_extend("force", {
+  local server_config = vim.tbl_extend("force", {
     on_attach = on_attach,
     capabilities = capabilities,
     -- Reduce CPU usage
     flags = {
       debounce_text_changes = 150, -- Wait 150ms before sending changes
     },
-  }, config))
+  }, config)
+
+  vim.lsp.config[server] = server_config
+  vim.lsp.enable(server)
 end
 
 -- Diagnostic configuration (reduce visual noise and CPU)
 vim.diagnostic.config({
-  virtual_text = false, -- Disable inline diagnostics to save rendering
+  virtual_text = false,     -- Disable inline diagnostics to save rendering
   signs = true,
   update_in_insert = false, -- Don't update diagnostics while typing
   underline = true,
