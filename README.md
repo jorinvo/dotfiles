@@ -16,9 +16,21 @@ The setup mostly links my dotfiles and sets up [neovim](https://neovim.io/)
 ## Requirements
 
 - bash
-- [neovim](https://neovim.io/)
-- python3
-- [Node.js](https://nodejs.org/) including `npm`
+- [neovim](https://neovim.io/) (v0.9+)
+- git
+
+## Neovim Setup
+
+The config uses modern native LSP with these features:
+- **lazy.nvim** - Fast plugin manager
+- **nvim-lspconfig** - Native LSP (TypeScript, Go, Elixir, Lua, Markdown)
+- **nvim-treesitter** - Better syntax highlighting
+- **nvim-cmp** - Fast completion
+- **mason.nvim** - LSP server installer
+
+After running `./setup`, open nvim and run `:Mason` to install language servers.
+
+Old vim-plug config is backed up in `vimrc.old-vim-plug`.
 
 
 ## Notes
