@@ -22,11 +22,13 @@ require("lazy").setup({
   { "tpope/vim-rsi" },
   { "google/vim-searchindex" },
   {
-    "junegunn/fzf",
-    build = "./install --all",
-    dir = "~/.fzf",
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.8",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
   },
-  { "junegunn/fzf.vim" },
 
   -- Git
   { "tpope/vim-fugitive" },
@@ -36,7 +38,6 @@ require("lazy").setup({
   -- Shortcuts
   { "tpope/vim-repeat" },
   { "tpope/vim-surround" },
-  { "tpope/vim-commentary" },
   { "tpope/vim-unimpaired" },
 
   -- Text objects
@@ -76,36 +77,33 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" }, -- Lazy load
+    event = { "BufReadPost", "BufNewFile" }, -- Lazy load on buffer open
     config = function()
-      -- Defer to avoid blocking startup
-      vim.defer_fn(function()
-        local ok, configs = pcall(require, "nvim-treesitter.configs")
-        if not ok then
-          return
-        end
-        configs.setup({
-          -- Only install parsers you actually use to save memory/CPU
-          ensure_installed = {
-            "javascript", "typescript", "tsx",
-            "go", "python", "markdown", "json",
-            "lua",
-          },
-          auto_install = false, -- Don't auto-install to save battery
-          highlight = {
-            enable = true,
-            -- Disable for large files to save CPU
-            disable = function(lang, buf)
-              local max_filesize = 100 * 1024 -- 100 KB
-              local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-              if ok and stats and stats.size > max_filesize then
-                return true
-              end
-            end,
-          },
-          indent = { enable = true },
-        })
-      end, 0)
+      local ok, configs = pcall(require, "nvim-treesitter.configs")
+      if not ok then
+        return
+      end
+      configs.setup({
+        -- Only install parsers you actually use to save memory/CPU
+        ensure_installed = {
+          "javascript", "typescript", "tsx",
+          "go", "python", "markdown", "json",
+          "lua",
+        },
+        auto_install = false, -- Don't auto-install to save battery
+        highlight = {
+          enable = true,
+          -- Disable for large files to save CPU
+          disable = function(lang, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+              return true
+            end
+          end,
+        },
+        indent = { enable = true },
+      })
     end,
   },
 
@@ -121,7 +119,7 @@ require("lazy").setup({
     ft = "go",
     build = ":GoInstallBinaries",
   },
-  { "preservim/vim-markdown",                     ft = "markdown" },
+  { "preservim/vim-markdown", ft = "markdown" },
 })
 
 -- Theme
@@ -309,9 +307,150 @@ keymap("n", '""', ':registers "0123456789abcdefghijklmnopqrstuvwxyz*+.<CR>', { s
 -- Switch to last file
 keymap("n", "<tab>", "<c-^>")
 
--- FZF
-keymap("n", "gb", ":Buffers<CR>")
-keymap("n", "gp", ":Files<CR>")
+-- Telescope
+local telescope_ok, telescope = pcall(require, "telescope.builtin")
+
+-- Combined buffers + files picker (buffers first, including terminals)
+-- Define outside the if so it's available for netrw autocmd
+local buffers_and_files = function()
+  local pickers = require("telescope.pickers")
+  local finders = require("telescope.finders")
+  local conf = require("telescope.config").values
+  local entry_display = require("telescope.pickers.entry_display")
+
+  -- Get ALL buffers including terminals, sorted by last used
+  local bufnrs = vim.tbl_filter(function(b)
+    return vim.api.nvim_buf_is_loaded(b)
+  end, vim.api.nvim_list_bufs())
+
+  -- Sort by last used (most recent first)
+  table.sort(bufnrs, function(a, b)
+    return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
+  end)
+
+  -- Build buffer entries
+  local results = {}
+  local buffer_paths = {}
+
+  for _, bufnr in ipairs(bufnrs) do
+    local info = vim.fn.getbufinfo(bufnr)[1]
+    local name = info.name
+    local buftype = vim.bo[bufnr].buftype
+
+    local display_name
+    if buftype == "terminal" then
+      -- Terminal buffer
+      display_name = "term://" .. (name:match("term://.*:(%d+)") or name)
+      table.insert(results, {
+        bufnr = bufnr,
+        display = "● " .. display_name,
+        ordinal = "0" .. display_name,
+        is_buffer = true,
+        is_terminal = true,
+      })
+    elseif name ~= "" then
+      -- Regular file buffer
+      local path = vim.fn.fnamemodify(name, ":.")
+      buffer_paths[path] = true
+      table.insert(results, {
+        bufnr = bufnr,
+        path = path,
+        display = "● " .. path,
+        ordinal = "0" .. path,
+        is_buffer = true,
+        is_terminal = false,
+      })
+    end
+  end
+
+  -- Add all files (excluding ones already in buffers)
+  local files = vim.fn.systemlist({ "rg", "--files", "--hidden", "--glob", "!.git/*" })
+  for _, file in ipairs(files) do
+    if not buffer_paths[file] then
+      table.insert(results, {
+        path = file,
+        display = "  " .. file,
+        ordinal = "1" .. file,   -- Sort after buffers
+        is_buffer = false,
+        is_terminal = false,
+      })
+    end
+  end
+
+  pickers.new({}, {
+    prompt_title = "Buffers & Files",
+    finder = finders.new_table({
+      results = results,
+      entry_maker = function(entry)
+        return {
+          value = entry.path or tostring(entry.bufnr),
+          display = entry.display,
+          ordinal = entry.ordinal,
+          filename = entry.path,   -- nil for terminals, which disables preview
+          bufnr = entry.bufnr,
+          is_terminal = entry.is_terminal,
+        }
+      end,
+    }),
+    sorter = conf.generic_sorter({}),
+    previewer = conf.file_previewer({}),
+    attach_mappings = function(prompt_bufnr, map)
+      local actions = require("telescope.actions")
+      local action_state = require("telescope.actions.state")
+
+      actions.select_default:replace(function()
+        local selection = action_state.get_selected_entry()
+        actions.close(prompt_bufnr)
+
+        if selection.is_terminal then
+          -- Jump to terminal buffer
+          vim.cmd("buffer " .. selection.bufnr)
+        elseif selection.bufnr then
+          -- Jump to existing buffer (non-terminal)
+          vim.cmd("buffer " .. selection.bufnr)
+        elseif selection.filename then
+          -- Open file
+          vim.cmd("edit " .. vim.fn.fnameescape(selection.filename))
+        end
+      end)
+
+      return true
+    end,
+  }):find()
+end
+
+if telescope_ok then
+  -- Your shortcuts
+  keymap("n", "gp", buffers_and_files, { desc = "Find buffers & files" })
+  keymap("n", "gb", telescope.buffers, { desc = "List buffers only" })
+
+  -- New powerful shortcuts
+  keymap("n", "gf", telescope.live_grep, { desc = "Live grep in project" })
+  keymap("n", "gw", telescope.grep_string, { desc = "Grep word under cursor" })
+  keymap("n", "gh", telescope.help_tags, { desc = "Search help" })
+  keymap("n", "go", telescope.oldfiles, { desc = "Recent files" })
+  keymap("n", "gc", telescope.commands, { desc = "Search commands" })
+  keymap("n", "gk", telescope.keymaps, { desc = "Search keymaps" })
+  keymap("n", "gm", telescope.marks, { desc = "List marks" })
+  keymap("n", "gq", telescope.quickfix, { desc = "Quickfix list" })
+
+  -- Git shortcuts (enhance your existing git workflow)
+  keymap("n", "gsc", telescope.git_commits, { desc = "Git commits" })
+  keymap("n", "gsb", telescope.git_branches, { desc = "Git branches" })
+  keymap("n", "gsf", telescope.git_status, { desc = "Git status" })
+
+  -- LSP shortcuts (super useful with your LSP setup)
+  keymap("n", "gld", telescope.lsp_definitions, { desc = "LSP definitions" })
+  keymap("n", "glr", telescope.lsp_references, { desc = "LSP references" })
+  keymap("n", "gli", telescope.lsp_implementations, { desc = "LSP implementations" })
+  keymap("n", "glt", telescope.lsp_type_definitions, { desc = "LSP type definitions" })
+  keymap("n", "gls", telescope.lsp_document_symbols, { desc = "LSP document symbols" })
+  keymap("n", "glw", telescope.lsp_workspace_symbols, { desc = "LSP workspace symbols" })
+  keymap("n", "gle", telescope.diagnostics, { desc = "LSP diagnostics" })
+
+  -- Resume last picker (very handy)
+  keymap("n", "g.", telescope.resume, { desc = "Resume last picker" })
+end
 
 -- Grep
 if vim.fn.executable("rg") == 1 then
@@ -377,7 +516,93 @@ autocmd("FileType", {
 autocmd("FileType", { pattern = "go", callback = setup_go_log })
 autocmd("FileType", { pattern = "python", callback = setup_python_log })
 
+-- Override netrw's gp mapping to use telescope
+autocmd("FileType", {
+  pattern = "netrw",
+  callback = function()
+    -- Override gp in netrw buffers to use our telescope picker
+    vim.keymap.set("n", "gp", buffers_and_files, { buffer = true, desc = "Find buffers & files" })
+  end,
+})
+
 -- Plugin configs
+
+-- Telescope
+local telescope_config_ok, telescope_config = pcall(require, "telescope")
+if telescope_config_ok then
+  telescope_config.setup({
+    defaults = {
+      -- Better sorting and filtering
+      file_ignore_patterns = { "node_modules", ".git/", "dist/", "build/" },
+      -- Use layout that matches your workflow
+      layout_strategy = "horizontal",
+      layout_config = {
+        horizontal = {
+          preview_width = 0.55,
+          results_width = 0.8,
+        },
+        width = 0.87,
+        height = 0.80,
+        preview_cutoff = 120,
+      },
+      -- Better visual appearance
+      borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+      -- Use vim syntax instead of treesitter for previews to avoid lazy-load errors
+      preview = {
+        treesitter = false,
+      },
+      -- Mappings inside telescope
+      mappings = {
+        i = {
+          -- Close with single ESC
+          ["<esc>"] = require("telescope.actions").close,
+          -- Better navigation
+          ["<C-j>"] = require("telescope.actions").move_selection_next,
+          ["<C-k>"] = require("telescope.actions").move_selection_previous,
+          -- Send to quickfix
+          ["<C-q>"] = require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist,
+        },
+        n = {
+          ["<C-q>"] = require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist,
+        },
+      },
+    },
+    pickers = {
+      find_files = {
+        hidden = true, -- Show hidden files
+        find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+      },
+      buffers = {
+        sort_lastused = true,
+        mappings = {
+          i = {
+            -- Delete buffer with C-d
+            ["<C-d>"] = require("telescope.actions").delete_buffer,
+          },
+          n = {
+            ["<C-d>"] = require("telescope.actions").delete_buffer,
+          },
+        },
+      },
+      live_grep = {
+        additional_args = function()
+          return { "--hidden", "--glob", "!.git/*" }
+        end,
+      },
+    },
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
+    },
+  })
+
+  -- Load fzf native extension for better performance
+  pcall(telescope_config.load_extension, "fzf")
+end
 
 -- Golang (vim-go)
 vim.g.go_diagnostics_enabled = 0
