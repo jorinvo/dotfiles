@@ -1,34 +1,34 @@
 [colors.primary]
-foreground = "#d8dee9"
-background = "#2e3440"
+foreground = "#4c4f69"
+background = "#eff1f5"
 
 [colors.cursor]
-text = "#2e3440"
-cursor = "#d8dee9"
+text = "#eff1f5"
+cursor = "#dc8a78"
 
 [colors.selection]
-text = "#d8dee9"
-background = "#3f4758"
+text = "#4c4f69"
+background = "#d8dae1"
 
 [colors.normal]
-black = "#3b4252"
-red = "#bf616a"
-green = "#a3be8c"
-yellow = "#ebcb8b"
-blue = "#81a1c1"
-magenta = "#b48ead"
-cyan = "#88c0d0"
-white = "#e5e9f0"
+black = "#5c5f77"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#acb0be"
 
 [colors.bright]
-black = "#4c566a"
-red = "#bf616a"
-green = "#a3be8c"
-yellow = "#ebcb8b"
-blue = "#81a1c1"
-magenta = "#b48ead"
-cyan = "#8fbcbb"
-white = "#eceff4"
+black = "#6c6f85"
+red = "#de293e"
+green = "#49af3d"
+yellow = "#eea02d"
+blue = "#456eff"
+magenta = "#fe85d8"
+cyan = "#2d9fa8"
+white = "#bcc0cc"
 
 [font]
 size = 13

@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugin setup
 require("lazy").setup({
   -- Theme
-  { "shaunsingh/nord.nvim" },
+  { "catppuccin/nvim",       name = "catppuccin" },
 
   -- Navigation
   { "tpope/vim-vinegar" },
@@ -33,7 +33,54 @@ require("lazy").setup({
   -- Git
   { "tpope/vim-fugitive" },
   { "tpope/vim-rhubarb" },
-  { "airblade/vim-gitgutter" },
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      signs = {
+        add          = { text = "┃" },
+        change       = { text = "┃" },
+        delete       = { text = "_" },
+        topdelete    = { text = "‾" },
+        changedelete = { text = "~" },
+        untracked    = { text = "┆" },
+      },
+      current_line_blame = true,
+      current_line_blame_opts = {
+        delay = 500,
+        virt_text_pos = "eol",
+      },
+      on_attach = function(bufnr)
+        local gitsigns = require("gitsigns")
+
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map("n", "]c", function()
+          if vim.wo.diff then
+            return "]c"
+          end
+          vim.schedule(function()
+            gitsigns.nav_hunk("next")
+          end)
+          return "<Ignore>"
+        end, { expr = true, desc = "Next git hunk" })
+
+        map("n", "[c", function()
+          if vim.wo.diff then
+            return "[c"
+          end
+          vim.schedule(function()
+            gitsigns.nav_hunk("prev")
+          end)
+          return "<Ignore>"
+        end, { expr = true, desc = "Previous git hunk" })
+      end,
+    },
+  },
 
   -- Shortcuts
   { "tpope/vim-repeat" },
@@ -123,8 +170,7 @@ require("lazy").setup({
 })
 
 -- Theme
-vim.cmd([[colorscheme nord]])
-vim.cmd([[set background=dark]])
+vim.cmd.colorscheme "catppuccin-nvim"
 
 -- Enable syntax highlighting with italics
 vim.cmd([[
@@ -370,7 +416,7 @@ local buffers_and_files = function()
       table.insert(results, {
         path = file,
         display = "  " .. file,
-        ordinal = "1" .. file,   -- Sort after buffers
+        ordinal = "1" .. file, -- Sort after buffers
         is_buffer = false,
         is_terminal = false,
       })
@@ -386,14 +432,14 @@ local buffers_and_files = function()
           value = entry.path or tostring(entry.bufnr),
           display = entry.display,
           ordinal = entry.ordinal,
-          filename = entry.path,   -- nil for terminals, which disables preview
+          filename = entry.path, -- nil for terminals, which disables preview
           bufnr = entry.bufnr,
           is_terminal = entry.is_terminal,
         }
       end,
     }),
     sorter = conf.generic_sorter({}),
-    previewer = conf.file_previewer({}),
+    previewer = false,
     attach_mappings = function(prompt_bufnr, map)
       local actions = require("telescope.actions")
       local action_state = require("telescope.actions.state")
@@ -532,6 +578,7 @@ local telescope_config_ok, telescope_config = pcall(require, "telescope")
 if telescope_config_ok then
   telescope_config.setup({
     defaults = {
+      previewer = false,
       -- Better sorting and filtering
       file_ignore_patterns = { "node_modules", ".git/", "dist/", "build/" },
       -- Use layout that matches your workflow
